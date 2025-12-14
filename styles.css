@@ -1,0 +1,1335 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.VT323 {
+  font-family: "vt323", monospace;
+  font-weight: 400;
+  font-style: normal;
+}
+html {
+  /* 1. Makes the jump smooth instead of instant */
+  scroll-behavior: smooth;
+  /* 2. Offsets the scroll position */
+  scroll-padding-top: 20px; /*this is for sticky header height*/
+}
+/* 3. Mobile Size Adjustment */
+@media (max-width: 640px) {
+  html {
+    scroll-padding-top: 400px; /* bigger mobile header + padding */
+  }
+}
+:root {
+  /* Blend mode variables - change these to try different effects (e.g. screen, overlay, multiply, normal) */
+  --overlay-blend: multiply;
+  /* Define color and sizing variables */
+  --background-color: #ffedcd;
+  --primary-color: rgb(166, 0, 0);
+  --secondary-color: #459f3791;
+  --thirdary-color: #47240091;
+  --dark-green: #0a390a;
+  --dark-red: #660000;
+  --pink: rgb(255, 128, 159);
+  --yellowgreen: rgb(180, 255, 128);
+  --paragraph-color: #47240091;
+  --font-subheading-size: clamp(1rem, 4vw, 2rem);
+  --font-size-base: clamp(1rem, 4vw, 1.3rem);
+  --font-heading-size: clamp(1.5rem, 5vw, 2rem);
+  --font-family-base: "vt323", monospace;
+  --text-main: #333;
+  /* Responsive heading size between 2rem and 4rem based on viewport width */
+  --spacing-unit: 8px;
+  --radius: 15px;
+  --space: 2rem;
+  /* Width reserved for the price column - keeps prices aligned */
+  --price-col: clamp(4.5rem, 6.5vw, 6rem);
+}
+
+body {
+  width: 100%;
+  min-height: 100vh; /* changed height to min-height */
+  overflow: visible;
+  padding: 0;
+  margin: 0;
+  font-family: var(--font-family-base);
+  cursor: grab;
+}
+@media (max-width: 400px) {
+  body {
+    height: 200vh; /* allow scrolling on mobile */
+  }
+}
+
+#npc-follower {
+  position: fixed;
+  width: 100px; /* Stays on screen even if you scroll */ /* Size of the emoji */
+  pointer-events: none; /* CRITICAL: Lets you click through the character */
+  z-index: 9999; /* Always on top */
+  transition: transform 0.2s ease-out; /* The "lag" effect */
+  image-rendering: pixelated;
+  scale: 2;
+}
+#npc-follower img {
+  width: 3.5rem;
+  margin-left: 0;
+  padding: 0;
+}
+.sparkle {
+  position: fixed;
+  width: 25px;
+  height: 25px;
+  background-image: url("images/sparkle.png");
+  background-size: cover;
+  background-color: transparent;
+  transform: rotate(20deg);
+  /* The animation definition */
+  animation: sparkle-fall 2s ease-in-out forwards;
+  mix-blend-mode: hard-light;
+  z-index: 9999;
+  pointer-events: none;
+}
+
+/* The animation keyframes: fade out, drop down, shrink */
+@keyframes sparkle-fall {
+  0% {
+    opacity: 1;
+    transform: translate(0, 0) scale(1);
+  }
+  50% {
+    opacity: 0.7;
+    transform: translate(var(--random-x), 75px) scale(0); /* Falls down 25px */
+  }
+  100% {
+    opacity: 0;
+    transform: translate(var(--random-x), 150px) scale(0); /* Falls down 50px */
+  }
+}
+
+/* Main Container */
+
+#container {
+  position: relative;
+  width: 100vw;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow: hidden;
+}
+
+header {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between; /* Perfect for Logo -- Menu */
+
+  padding: 0.5rem 4vw;
+
+  width: 100%;
+
+  max-height: 3.5rem;
+
+  margin: 0 auto;
+  overflow: visible !important;
+  z-index: 2000;
+  background-color: rgb(62, 15, 15);
+  box-shadow: 0 4px 30px rgba(17, 75, 4, 0.617);
+}
+
+@media (max-width: 640px) {
+  header {
+    padding: 0.5rem 1rem;
+  }
+}
+/* --- RESPONSIVE LOGO --- */
+.logo {
+  display: flex;
+  align-items: center center;
+  justify-content: center center;
+  /* format: clamp(MIN, IDEAL, MAX) */
+  width: clamp(50px, 15vw, 70px);
+  height: auto;
+  /* Remove margins to let Flexbox handle alignment in the header */
+  margin-top: 0.5rem;
+  padding: 0;
+  z-index: 50; /* Ensure it stays above background */
+}
+
+.logo img {
+  width: 100%; /* Fills the .logo container width */
+  height: auto; /* Maintains aspect ratio */
+  object-fit: contain;
+  object-position: center center;
+  /* Remove 'scale' - it causes layout bugs. 
+       Control size via the .logo width above instead. */
+  transform: rotate(-6deg);
+}
+
+/* Overlay Background */
+/* --- SHARED LAYER STYLES --- */
+.bg-layer {
+  position: fixed; /* Stays stuck to the screen while you scroll */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none; /* Lets clicks pass through to the buttons */
+  z-index: -1; /* Puts it BEHIND your content */
+}
+#overlay-background {
+  background-image: url(images/overlay\ backgr.png);
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  pointer-events: none;
+  opacity: 0.4;
+  z-index: -10;
+}
+
+/* Main Overlay */
+#overlay {
+  background-image: url(images/overlay.png);
+  background-size: cover;
+  background-position: center center;
+  opacity: 0.5; /* Adjust visibility */
+
+  /* Using your variable */
+  mix-blend-mode: var(--overlay-blend);
+  pointer-events: none;
+  z-index: 10;
+}
+
+/* Decorative Artwork */
+/* Update the container to allow free movement */
+.sticker {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  /* Remove flex properties so we can place items anywhere */
+  display: block;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+/* Common style for all stickers to handle sizing */
+.sticker div {
+  position: absolute;
+  z-index: 15;
+}
+
+.sticker img {
+  /* Reset the massive viewport width you had previously */
+  width: auto;
+  height: auto;
+  max-width: 150px; 
+}
+@media (max-width: 640px) {
+  .sticker img {
+    max-width: 100px; 
+  }
+@media (max-width: 400px) {
+    .sticker img {
+      max-width: 75px; 
+    }
+  }
+}
+/* Now, position them specifically! */
+#frog-sticker {
+  top: 20%;
+  left: 15%;
+  scale: 2.5;
+  transform: rotate(-10deg);
+}
+
+#treelog {
+  bottom: 5%;
+  right: 10%;
+  transform: scale(2.5);
+}
+
+#tomato-sticker {
+  top: 30%;
+  right: 5%;
+
+  transform: rotate(20deg);
+}
+
+#cat-sticker {
+  bottom: 15%;
+  left: 25%;
+  scale: 5;
+  rotate: -20deg;
+}
+
+@media (max-width: 640px) {
+  #frog-sticker {
+    top: 25%;
+    left: 35%;
+    scale: 2.8;
+  }
+
+  #treelog {
+    bottom: 20%;
+    right: 5%;
+    scale: 1;
+  }
+
+  #tomato-sticker {
+    top: 35%;
+    right: 2%;
+  }
+
+  #cat-sticker {
+    bottom: 30%;
+    left: 30%;
+    scale: 4;
+  }
+}
+@media (max-width: 400px) {
+  #frog-sticker {
+    top: 30%;
+    left: 40%;
+    scale: 2.5;
+  }
+
+  #treelog {
+    bottom: 25%;
+    right: 2%;
+    scale: 0.8;
+  }
+
+  #tomato-sticker {
+    top: 40%;
+    right: 5%;
+  }
+
+  #cat-sticker {
+    bottom: 35%;
+    left: 35%;
+    scale: 3.5;
+  }
+}
+
+
+.decoration {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  /* Put circles behind everything */
+  z-index: -10;
+}
+
+.circles {
+  position: relative;
+  width: 100%;
+  height: auto;
+  z-index: -1;
+}
+
+/* Circle 1 - Large Pink (Node 18:440) */
+#circle-1 {
+  position: absolute;
+  /* reduced size for subtler background */
+  width: 532px; /* 75% of original 710 */
+  height: 499px; /* 75% of original 665 */
+  background: linear-gradient(135deg, #ffd4e5 0%, #ffc2d8 100%);
+  border-radius: 50%;
+  top: 20%;
+  left: -15%;
+  opacity: 0.6;
+  filter: blur(40px);
+  animation: float-slow 12s ease-in-out infinite;
+}
+
+/* Circle 2 - Medium Mint (Node 1:32) */
+#circle-2 {
+  position: absolute;
+  width: 352px; /* 75% */
+  height: 352px; /* 75% */
+  background: linear-gradient(135deg, #d4ffe5 0%, #b8ffd4 100%);
+  border-radius: 50%;
+  bottom: 15%;
+  left: 5%;
+  opacity: 0.5;
+  filter: blur(35px);
+  animation: float-medium 10s ease-in-out infinite;
+  animation-delay: 1.6s;
+}
+
+/* --- Duplicated circle styles (second layer) ---
+   Use a different blend mode and alternate animations to create
+   a richer layered background. The `.circle-dup` class centralizes
+   shared tweaks; each ID keeps its own size/position but uses
+   staggered animations and slightly different timing. */
+.circle-dup {
+  mix-blend-mode: overlay; /* changed to overlay for a richer blend */
+  will-change: transform, opacity, filter;
+  pointer-events: none;
+  transform-origin: center center;
+  /* make the duplicates slightly less saturated and softer */
+  opacity: 0.35;
+}
+
+#circle-1b {
+  position: absolute;
+  width: 532px;
+  height: 499px;
+  background: linear-gradient(135deg, #ffd4e5 0%, #ffc2d8 100%);
+  border-radius: 50%;
+  top: 22%;
+  left: -5%;
+  filter: blur(48px) hue-rotate(-2deg) saturate(0.95);
+  animation: float-dup-slow 16s cubic-bezier(0.2, 0.8, 0.2, 1) infinite
+    alternate-reverse;
+  animation-delay: 0.6s;
+}
+
+#circle-2b {
+  position: absolute;
+  width: 352px;
+  height: 352px;
+  background: linear-gradient(135deg, #d4ffe5 0%, #b8ffd4 100%);
+  border-radius: 50%;
+  bottom: 18%;
+  left: 18%;
+  filter: blur(38px) hue-rotate(4deg) saturate(1.05);
+  animation: float-medium 12.5s cubic-bezier(0.3, 0.7, 0.25, 1) infinite
+    alternate;
+  animation-delay: 2s;
+}
+
+#circle-3b {
+  position: absolute;
+  width: 216px;
+  height: 216px;
+  background: linear-gradient(135deg, #ffd4e5 0%, #ffb8d8 100%);
+  border-radius: 50%;
+  top: 52%;
+  right: 10%;
+  filter: blur(36px) hue-rotate(-3deg) saturate(0.98);
+  animation: float-fast 9.5s cubic-bezier(0.25, 0.9, 0.3, 1) infinite
+    alternate-reverse;
+  animation-delay: 1.2s;
+}
+
+#circle-4b {
+  position: absolute;
+  width: 543px;
+  height: 543px;
+  background: linear-gradient(135deg, #d4ffe5 0%, #a8ffcc 100%);
+  border-radius: 50%;
+  top: 8%;
+  right: -2%;
+  filter: blur(52px) hue-rotate(2deg) saturate(1.02);
+  animation: float-slow 14s cubic-bezier(0.2, 0.8, 0.2, 1) infinite
+    alternate;
+  animation-delay: 0.2s;
+}
+
+#circle-5b {
+  position: absolute;
+  width: 532px;
+  height: 499px;
+  background: linear-gradient(135deg, #ffd4e5 0%, #ffc2d8 100%);
+  border-radius: 50%;
+  bottom: -6%;
+  right: 8%;
+  filter: blur(44px) hue-rotate(1deg) saturate(1.03);
+  animation: float-medium 13.5s cubic-bezier(0.3, 0.7, 0.25, 1) infinite
+    alternate-reverse;
+  animation-delay: 0.6s;
+}
+
+/* Circle 3 - Small Pink (Node 1:69) */
+#circle-3 {
+  position: absolute;
+  width: 216px; /* 75% */
+  height: 216px; /* 75% */
+  background: linear-gradient(135deg, #ffd4e5 0%, #ffb8d8 100%);
+  border-radius: 50%;
+  top: 50%;
+  right: 15%;
+  opacity: 0.55;
+  filter: blur(30px);
+  animation: float-fast 8s ease-in-out infinite;
+  animation-delay: 0.8s;
+}
+
+#circle-4 {
+  position: absolute;
+  width: 543px; /* 75% */
+  height: 543px; /* 75% */
+  background: linear-gradient(135deg, #d4ffe5 0%, #a8ffcc 100%);
+  border-radius: 50%;
+  top: 10%;
+  right: -10%;
+  opacity: 0.5;
+  filter: blur(50px);
+  animation: float-slow 12s ease-in-out infinite;
+  animation-delay: 2s;
+}
+
+/* Circle 5 - Large Pink (Node 1:25) */
+#circle-5 {
+  position: absolute;
+  width: 532px; 
+  height: 499px;
+  background: linear-gradient(135deg, #ffd4e5 0%, #ffc2d8 100%);
+  border-radius: 50%;
+  bottom: -10%;
+  right: 20%;
+  opacity: 0.2;
+  animation: float-medium 11s ease-in-out infinite;
+  animation-delay: 0.8s;
+  mix-blend-mode: color-burn;
+}
+
+/* Floating animations for circles */
+@keyframes float-slow {
+  0% {
+    transform: translate(0, 0) scale(1);
+    opacity: 1;
+    filter: blur(30px);
+  }
+
+  100% {
+    transform: translate(0, -18px) scale(1.02);
+    opacity: 0.4;
+    filter: blur(5px);
+  }
+}
+
+@keyframes float-medium {
+  0% {
+    transform: translate(0, 0) scale(1);
+    opacity: 1;
+    filter: blur(20px);
+  }
+  
+  
+  100% {
+    transform: translate(0, 0) scale(1.02);
+    opacity: 1;
+    filter: blur(35px);
+  }
+}
+
+@keyframes float-fast {
+  0% {
+    transform: translate(0, 0) scale(1);
+    opacity: 1;
+    filter: blur(18px);
+  }
+
+  50% {
+    transform: translate(90px, 70px) scale(1.15);
+    opacity: 0.5;
+    filter: blur(26px);
+  }
+
+  100% {
+    transform: translate(0, 0) scale(1.03);
+    opacity: 1;
+    filter: blur(30px);
+  }
+}
+
+
+/* Mobile responsiveness for circles */
+@media (max-width: 768px) {
+  /* reduced responsive sizes (approx 75% of previous) */
+  #circle-1 {
+    width: 300px;
+    height: 281px;
+    left: -25%;
+  }
+  #circle-2 {
+    width: 210px;
+    height: 210px;
+    bottom: 20%;
+  }
+  #circle-3 {
+    width: 135px;
+    height: 135px;
+    right: 10%;
+  }
+  #circle-4 {
+    width: 338px;
+    height: 338px;
+    right: -20%;
+  }
+  #circle-5 {
+    width: 300px;
+    height: 281px;
+    right: 15%;
+  }
+  /* duplicated circle responsive sizes */
+  #circle-1b {
+    width: 300px;
+    height: 281px;
+    left: -18%;
+  }
+  #circle-2b {
+    width: 210px;
+    height: 210px;
+    bottom: 22%;
+    left: 10%;
+  }
+  #circle-3b {
+    width: 135px;
+    height: 135px;
+    right: 8%;
+  }
+  #circle-4b {
+    width: 338px;
+    height: 338px;
+    right: -8%;
+  }
+  #circle-5b {
+    width: 300px;
+    height: 281px;
+    right: 10%;
+  }
+}
+
+@media (max-width: 480px) {
+  /* smaller sizes for small screens */
+  #circle-1 {
+    width: 225px;
+    height: 210px;
+    filter: blur(20px);
+  }
+  #circle-2 {
+    width: 150px;
+    height: 150px;
+    filter: blur(16px);
+  }
+  #circle-3 {
+    width: 105px;
+    height: 105px;
+    filter: blur(14px);
+  }
+  #circle-4 {
+    width: 262px;
+    height: 262px;
+    filter: blur(22px);
+  }
+  #circle-5 {
+    width: 225px;
+    height: 210px;
+    filter: blur(20px);
+  }
+  /* duplicated circle small-screen sizes */
+  #circle-1b {
+    width: 225px;
+    height: 210px;
+    filter: blur(22px);
+  }
+  #circle-2b {
+    width: 150px;
+    height: 150px;
+    filter: blur(18px);
+  }
+  #circle-3b {
+    width: 105px;
+    height: 105px;
+    filter: blur(16px);
+  }
+  #circle-4b {
+    width: 262px;
+    height: 262px;
+    filter: blur(24px);
+  }
+  #circle-5b {
+    width: 225px;
+    height: 210px;
+    filter: blur(22px);
+  }
+}
+
+/* Main Title Container */
+.main-title-container {
+  position: absolute;
+  width: 100vw;
+  height: 95vh;
+  top: 5vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+}
+
+.main-title-container img {
+  width: 70%;
+  height: auto;
+  object-fit: contain;
+  object-position: 50% 50%;
+  transform: rotate(-15deg);
+  min-width: 350px;
+}
+
+/* Dropdown Menu Styles */
+/* =========================================
+   1. DESKTOP STYLES (Default)
+   Horizontal menu, No button, Always visible
+   ========================================= */
+
+.dropdown-wrapper {
+  position: relative;
+  display: flex;
+  /* FIX 1: Ensure the wrapper itself fills the available space */
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  background-color: transparent;
+  border-radius: 10px;
+  z-index: 100;
+  overflow: visible !important;
+  margin-left: auto; /* This pushes the wrapper all the way to the right side */
+}
+
+/* HIDE the button on desktop */
+.dropdown-btn {
+  display: none;
+}
+
+/* Reset the menu to be a normal row */
+.dropdown-menu {
+  position: static;
+  display: flex;
+  flex-direction: row;
+  /* FIX 2: Force the menu to stretch to 100% of the wrapper's width */
+  width: 100%;
+
+  /* FIX 3: Use 'space-evenly' for perfect gaps between all items and edges */
+  justify-content: space-evenly;
+
+  /* Override hiding properties */
+  background-color: transparent;
+  pointer-events: auto;
+  overflow: visible;
+  border: 1px dashed rgba(255, 255, 255, 0.06);
+  z-index: 101;
+}
+
+/* Desktop Link Styles */
+.dropdown-menu a {
+  color: whitesmoke;
+  text-decoration: none;
+  font-family: var(--font-family-base);
+  font-size: var(--font-size-base);
+  padding: 0.5rem;
+  transition: color 0.2s ease;
+  display: flex;
+  align-items: flex-start;
+  /* Optional: Center text if links have different widths */
+  justify-content: center;
+  width: 100%;
+}
+
+.dropdown-menu a:hover {
+  color: greenyellow;
+  text-decoration: underline wavy;
+}
+#site-navigation a {
+  gap: 1rem;
+  font-size: clamp(1.2rem, 2vw, 1.7rem);
+}
+
+/* =========================================
+   2. MOBILE STYLES (Max-width: 640px)
+   FIXED: Menu floats absolute so logo doesn't move
+   ========================================= */
+@media (max-width: 640px) {
+  header {
+    /* Ensure header can grow if needed */
+    min-height: 5rem;
+    padding: 0.5rem 1rem;
+    position: relative; 
+  }
+  /* 1. Push the logo down specifically on mobile */
+  .logo {
+    margin-top: 15px; 
+  }
+
+  /* Optional: If the hamburger is too low, you can pull it up */
+  .nav-toggle {
+    margin-top: 0;
+    transform: translateY(-5px); /* Pulls it up slightly */
+  }
+
+  .dropdown-wrapper {
+    /* This keeps the wrapper small, fitting only the button */
+    position: relative;
+    align-items: flex-end;
+    flex-direction: column;
+    width: 100%;
+    background-color: transparent;
+    margin-left: 0; /* Reset left margin for mobile */
+    z-index: 2000; /* Ensure it stays above other elements */
+    overflow: visible !important;
+  }
+
+  /* SHOW the button */
+  .dropdown-btn {
+    display: block;
+    background-color: var(--yellowgreen);
+    color: var(--text-main);
+    padding: 0.5rem 1rem;
+    font-family: var(--font-family-base);
+    font-size: clamp(1rem, 2vw, 1.5rem);
+    border: none;
+    cursor: pointer;
+    border-radius: 10px;
+    transition: background-color 0.3s ease;
+    /* Width adjusted to look good next to logo */
+    width: auto;
+    min-width: 100px;
+    text-align: center;
+    align-items: center;
+  }
+
+  .dropdown-btn:hover {
+    background-color: yellowgreen;
+    font-size: clamp(1rem, 2vw, 1.5rem);
+  }
+
+  /* APPLY the Dropdown Logic */
+
+  .dropdown-menu {
+    position: absolute;
+    min-width: 160px;
+    max-width: 30vw;
+    background-color: rgb(255, 128, 159);
+
+    /* CLOSED STATE: */
+    max-height: 0;
+    opacity: 0;
+    overflow: hidden; /* <--- CRITICAL: Hide content when closed */
+    pointer-events: none;
+    /* Transition settings */
+    transition: max-height 0.3s ease, opacity 0.3s ease;
+    z-index: 2001;
+    border-radius: 10px;
+    flex-direction: column;
+    box-shadow: 0px 8px 16px rgba(57, 0, 0, 0.3);
+  }
+
+  /* OPEN STATE: */
+  .dropdown-menu.open {
+    max-height: 300px;
+    opacity: 1;
+    overflow: visible; /* <--- CRITICAL: Show content when open */
+    pointer-events: auto;
+    padding: 10px 0;
+    z-index: 2001;
+  }
+  .dropdown-menu a {
+    display: block;
+    padding: 0.75rem 1rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  }
+  .dropdown-menu a:last-child {
+    border-bottom: none; /* Remove border from last item */
+  }
+}
+/* END of Dropdown Menu Styles */
+
+/* ========================================= */
+/* RPG Character Card Styles */
+/* About Section Styles */
+.about-section {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: clamp(1rem, 4vw, 2rem);
+  box-sizing: border-box;
+  position: relative; /* Acts as the boundary for the draggable card */
+  overflow: hidden;
+  background-image: url('aboutme-images/aboutme-bg.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+/* The RPG Card Container */
+.character-card {
+  position: absolute;
+  background-color: rgb(253, 239, 214);
+  /* Create a pixelated shadow effect */
+  box-shadow: 8px 8px 0px rgba(92, 23, 23, 0.2);
+  width: 100%;
+  max-width: 800px;
+  border-radius: 15px; /* Slight rounding for a softer pixel look */
+  overflow: hidden;
+}
+
+/* Window Header (Top Bar) */
+.window-header {
+  background-color: var(--pink);
+  color: whitesmoke;
+  padding: 8px 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: var(--font-size-base);
+  border-bottom: 10px solid var(--dark-red);
+  cursor: grab; /* Shows the hand icon */
+  user-select: none; /* Prevents highlighting text while dragging */
+}
+
+.window-header:active {
+    cursor: grabbing; /* Closes the hand when clicking */
+}
+
+
+.window-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  font-size: 1.2rem;
+}
+
+.win-btn {
+  cursor: pointer;
+}
+.win-btn:hover {
+  color: yellowgreen;
+}
+
+/* Layout Grid */
+.rpg-content {
+  display: grid;
+  grid-template-columns: 300px 1fr; /* Fixed width for left col, rest for right */
+  padding: 24px;
+  gap: 24px;
+}
+
+/* --- Left Column: Avatar & Stats --- */
+.avatar-container {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.pixel-frame {
+  width: 100%;
+  /* A double border effect */
+  border: 2px solid var(--secondary-color);
+  border-radius: 20px;
+  padding: 8px;
+  background: #fff;
+}
+
+.pixel-frame img {
+  width: 100%;
+  height: auto;
+  display: block;
+  image-rendering: pixelated; /* Ensures pixel art stays crisp */
+}
+
+/* HP/MP Bars */
+.status-bars {
+  font-size: var(--font-heading-size);
+  border: var(--pink) 2px dashed;
+  padding: 12px;
+  border-radius: 12px;
+  background: white;
+}
+.bar-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+.bar-container {
+  flex-grow: 1;
+  background: #ffffff;
+  height: 20px;
+  border: 2px solid #000;
+  position: relative;
+}
+.bar-fill {
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+.bar-fill.hp {
+  background: var(--pink);
+} /* Red for HP */
+.bar-fill.mp {
+  background: var(--yellowgreen);
+} /* Blue for MP */
+
+/* --- Right Column: Info & Tabs --- */
+.info-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.char-name {
+  font-size: 4rem;
+  line-height: 1;
+  margin: 0 0 8px 0;
+  color: var(--dark-green);
+}
+.char-class {
+  color: var(--pink);
+  font-size: var(--font-subheading-size);
+  margin: 0 0 20px 0;
+  border-bottom: 3px dashed #ffcaca;
+  padding-bottom: 20px;
+}
+
+/* Tabs System */
+.rpg-tabs {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 20px;
+  border-bottom: 4px solid var(--pink);
+}
+
+.tab-btn {
+  background: none;
+  border: none;
+  font-family: var(--font-pixel);
+  font-size: var(--font-subheading-size);
+  cursor: pointer;
+  color: var(--dark-green);
+  padding: 8px 16px;
+  position: relative;
+  top: 4px; /* Push down to align with border */
+  transition: all 0.2s;
+}
+
+.tab-btn:hover {
+  color: yellowgreen;
+}
+
+.tab-btn.active {
+  color: var(--primary-color);
+  background: #fff;
+  border: 4px solid var(--pink);
+  border-bottom: none; /* Hide bottom border to merge */
+  z-index: 1; 
+}
+
+/* Tab Content */
+.tab-content {
+  display: none; /* Hidden by default */
+  font-size: clamp(1rem, 3vw, 1.25rem);
+  line-height: 1.6;
+  color: var(--text-main);
+}
+.tab-content.active {
+  display: block; /* Show if active */
+  animation: fade-in 0.4s ease;
+}
+
+/* Skills & Inventory Styles */
+.skill-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.skill-list li {
+  margin-bottom: 12px;
+  display: flex;
+  justify-content: space-between;
+}
+.stars {
+  color: var(--pink);
+  font-size: 1.5rem;
+}
+
+.inventory-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+  gap: 16px;
+}
+.item {
+  border: 3px dashed var(--yellowgreen);
+  padding: 12px;
+  text-align: center;
+  font-size: var(--font-size-base);
+  color: var(--text-main);
+  background: #fff5f5;
+  transition: transform 0.2s;
+  cursor: help;
+}
+.item:hover {
+  transform: scale(1.05);
+  background: var(--pink);
+  color: #fff5f5;
+}
+.item:active {
+  transform: scale(0.95);
+}
+
+/* --- Mobile Responsive --- */
+@media (max-width: 640px) {
+    
+    
+    .about-section {
+        height: auto; 
+        min-height: auto; 
+        overflow: visible; 
+        padding: 20px 10px;
+        display: block; 
+    }
+    
+    /* 2. Disable the "Floating/Draggable" behavior */
+    .character-card {
+        position: relative !important; /* Force it back into the page flow */
+
+        /* Reset any positions set by the Drag JavaScript */
+        top: auto !important;
+        left: auto !important;
+        transform: none !important;
+        
+        width: 100%;
+        max-width: 100%;
+        margin: 0 auto;
+        
+        box-shadow: none; /* Optional: simplify shadow for mobile */
+    }
+    
+    .window-header {
+        cursor: none; /* Show normal cursor */
+    }
+
+    .rpg-content {
+        grid-template-columns: 1fr; /* Stack avatar on top of info */
+        gap: 10px;
+        padding: 10px;
+    }
+    
+    .avatar-container {
+        max-width: 350px;
+        margin: 0 auto;
+    }
+    
+  #bio,
+  #likes,
+  .skill-list li,
+  .item {
+    text-align: flex-start;
+    font-size: calc(var(--font-size-base));
+    margin-bottom:20px;
+    padding:20px;
+  }
+  .rpg-tabs {
+    justify-content: flex-start;
+    font-size: calc(var(--font-size-base) * 1.2);
+  }
+
+
+.char-name {
+    text-align: center;
+    font-size: calc(var(--font-heading-size) * 1.75);
+  }
+.char-class {
+    text-align: center;
+    font-size: var(--font-heading-size);
+  }
+}
+/* --- RETRO POPUP STYLES --- */
+span#x {
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: white;
+}
+span#x:hover {
+    color: var(--pink);
+}
+.retro-popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    /* Start centered but hidden */
+    transform: translate(-50%, -50%) scale(0); 
+    
+    width: 300px;
+    background: rgb(254, 241, 220); /* Classic Windows Grey */
+    border: 3px solid #fff;
+    border-radius: 10px;
+    border-right-color: #000;
+    border-bottom-color: #000;
+    box-shadow: 4px 4px 10px rgba(0,0,0,0.4);
+    z-index: 99999; /* On top of EVERYTHING */
+    font-family: 'VT323', monospace;
+    display: flex;
+    flex-direction: column;
+    
+    /* We don't use display:none because we want to animate the transform */
+    pointer-events: none; 
+    opacity: 0;
+    transition: opacity 0.2s;
+}
+
+/* THE POPUP ANIMATION STATE */
+.retro-popup.active {
+    pointer-events: auto;
+    opacity: 1;
+    /* The bounce effect */
+    animation: popup-bounce 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+@keyframes popup-bounce {
+    0% {
+        transform: translate(-50%, -50%) scale(0);
+    }
+    100% {
+        transform: translate(-50%, -50%) scale(1);
+    }
+}
+
+/* Header */
+.popup-header {
+    background: var(--dark-green);
+    color: white;
+    padding: 2px 5px;
+    display: flex;
+    justify-content: space-between;
+    font-size: 1.2rem;
+    border-top-left-radius: 7px;
+    border-top-right-radius: 7px;
+}
+
+/* Body */
+.popup-body {
+    padding: 15px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    color: white;
+}
+
+.error-icon {
+    font-size: 2.5rem;
+}
+
+.error-msg p {
+    font-size: 1.2rem;
+    color: black;
+    margin: 0 0 10px 0;
+}
+
+/* The OK Button */
+.ok-btn {
+    background: #675858;
+    border: 3px solid #fff;
+    border-right-color: #000;
+    border-bottom-color: #000;
+    padding: 5px 15px;
+    font-family: inherit;
+    color: white;
+    font-size: 1.2rem;
+    cursor: pointer;
+}
+
+.ok-btn:active {
+    border: 2px solid #fa0000;
+    border-right-color: #fff;
+    border-bottom-color: #fff;
+    transform: translate(1px, 1px);
+}
+
+.cancel-btn {
+    background: var(--pink);
+    border: 3px solid #fff;
+    border-right-color: #000;
+    border-bottom-color: #000;
+    padding: 5px 15px;
+    font-family: inherit;
+    color: white;
+    font-size: 1.2rem;
+    cursor: pointer;
+}
+.cancel-btn:active {
+    background-color: pink;
+    border: 2px solid #000;
+    border-right-color: #fff;
+    border-bottom-color: #fff;
+    transform: translate(1px, 1px);
+}
+/* --- BIO STYLES --- */
+.bio-text {
+    margin-top: 15px;
+    font-size: var(--font-size-base);
+    line-height: 1.5;
+    color: var(--text-main);
+}
+
+.bio-text strong {
+    color: var(--pink);
+    cursor: pointer;
+}
+
+/* The "RPG Dialogue" Box */
+.typewriter {
+    font-size: var(--font-heading-size);
+    color: var(--dark-red);
+    font-weight: 900;
+    overflow: hidden; /* Hide text until typed */
+    border-right: 3px solid var(--yellowgreen); /* The cursor */
+    white-space: nowrap; /* Keep on one line */
+    margin: 0;
+    width: 0; /* Start at 0 width */
+    animation: 
+        typing 2.5s steps(30, end) forwards infinite,
+        blink-caret 0.75s step-end infinite;
+}
+.typewriter {
+    /* ... your other fonts/colors ... */
+    
+    /* 1. Change duration to 5.5s (2.5s Type + 3s Pause) */
+    animation: 
+        typing 5.5s steps(30, end) infinite,
+        blink-caret 0.75s step-end infinite;
+}
+
+@keyframes typing {
+
+    0% { width: 0 }
+   
+    45% { width: 100% }
+    
+    70% { width: 100% }
+
+    100% { width: 0  }
+}
+
+@keyframes blink-caret {
+    from, to { border-color: transparent }
+    50% { border-color: var(--secondary-color); }
+}
+
+
+@media (max-width: 450px) {
+    .typewriter {
+        white-space: normal; /* Allow wrapping */
+        border-right: none;  /* Remove cursor */
+        width: 100%;         /* Show all text immediately */
+        animation: none;     /* Disable animation */
+    }
+}
+

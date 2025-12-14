@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pun's Folio</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=DotGothic16&family=Rubik+Bubbles&family=VT323&family=UnifrakturMaguntia&display=swap" rel="stylesheet">
+    
+</head>
+
+<body>
+    <div id="npc-follower"><img src="images/cursor.png" alt=""></div>
+    <div class="sparkle"></div>
+    <div class="container">
+        <!-- Header -->
+        <header>
+            <a href="mainpage.html"><div class="logo">
+                    <img src="images/pun.png" alt="Pun's logo" />
+                </div></a>
+
+            <!-- Dropdown Menu -->
+            <div class="dropdown-wrapper">
+                <button class="dropdown-btn">Menu ▼</button>
+                <nav class="nav dropdown-menu" id="site-navigation">
+                    <a href="about.html">🌟 About Me</a>
+                    <a href="#works">🛠 Works</a>
+                    <a href="#contact">📬 Contact</a>
+                </nav>
+            </div>
+        </header>
+<section id="about" class="about-section">
+    
+    <div class="character-card">
+        
+        <div class="window-header">
+            <span>CHARACTER_PROFILE.EXE</span>
+            <div class="window-controls">
+                <span class="win-btn">-</span>
+                <span class="win-btn">◻</span>
+                <span class="win-btn close-btn">x</span>
+            </div>
+        </div>
+        <div id="retro-popup" class="retro-popup">
+    <div class="popup-header">
+        <span>SYSTEM_ERROR</span>
+        <a href="about.html"><span id="x">X</span></a>
+    </div>
+    <div class="popup-body">
+        <div class="error-icon">⚠️</div>
+        <div class="error-msg">
+            <p>Wait!!! You haven't finished looking at my portfolio yet!
+               Do you really want to leave? 🥹
+            </p>
+            <a href="mainpage.html"><button class="ok-btn">Yes</button></a>
+            <a href="about.html"><button class="cancel-btn">I'll stay!!!</button></a>
+        </div>
+    </div>
+</div>
+        <div class="rpg-content">
+            <div class="avatar-container">
+                <div class="pixel-frame">
+                    <img src="aboutme-images/avatar.jpeg" alt="Pun's Avatar">
+                </div>
+                <div class="status-bars">
+                    <div class="bar-row">
+                        <span>HP</span>
+                        <div class="bar-container"><div class="bar-fill hp" style="width: 85%;"></div></div>
+                        <span>85/100</span>
+                    </div>
+                    <div class="bar-row">
+                        <span>MP</span>
+                        <div class="bar-container"><div class="bar-fill mp" style="width: 95%;"></div></div>
+                        <span>95/100</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="info-container">
+                <h2 class="char-name">Pun 🐈</h2>
+                <p class="char-class">Lv. 27 RMIT's Survivor</p>
+
+                <div class="rpg-tabs">
+                    <button class="tab-btn active" data-target="bio">Bio</button>
+                    <button class="tab-btn" data-target="skills">Skills</button>
+                    <button class="tab-btn" data-target="likes">Hobbies</button>
+                </div>
+
+                <div class="tab-content-wrapper">
+                    
+                    <div id="bio" class="tab-content active">
+                         <p class="typewriter">> Hello, world! I'm Pun. ✨</p>
+    
+                         <p class="bio-text">
+                         >I spend my days turning daydreams into 2D illustrations, obsessed with bringing <strong>chaos, whimsy, and cutesy stuff</strong> back to the web. 
+                         </p>
+    
+                         <p class="bio-text">
+                         >Right now, I'm on a quest to master <strong>Motion Graphics</strong> and <strong>UI/UX</strong>—teaching my static drawings how to move and interact with the world.
+                         </p>
+                         <p class="bio-text">
+                        <p>> My goal is to make the web weirder, cuter, and more fun.</p>
+                      <div class="dialogue-box">
+                         
+        
+                         <p>> When I'm not illustrating, you can find me doodling weird cats, experiencing new materials, collecting art toys, or daydreaming about a magical world.</p>
+                      </div>
+                    </div>
+                    </div>
+
+                    <div id="skills" class="tab-content">
+                        <ul class="skill-list">
+                            <li>> Illustration <span class="stars">★★★★★</span></li>
+                            <li>> Graphic Design <span class="stars">★★★★★</span></li>
+                            <li>> Motion Graphics <span class="stars">★★★★☆</span></li>
+                            <li>> UI/UX Design <span class="stars">★★★★☆</span></li>
+                            <li>> Traditional Painting, Arts & Crafts <span class="stars">★★★★★</span></li>
+                            <li>> Cats Babysitting <span class="stars">★★★★★★★★★</span></li></ul>
+                    </div>
+
+                    <div id="likes" class="tab-content">
+                        <div class="inventory-grid">
+                            <div class="item" title="A fluffy companion">🐈<br><span>Catssss</span></div>
+                            <div class="item" title="Fuel for coding">🍵<br><span>Matcha</span></div>
+                            <div class="item" title="Retro consoles & handhelds">👾<br><span>Retro Games</span></div>
+                            <div class="item" title="Nostalgic web design">🌐<br><span>Creative Websites</span></div>
+                            <div class="item" title="Weird & cute things">🍄<br><span>Whimsical and Oddities</span></div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="animate.js"> </script>
+</section>
+</body>
+</html>
