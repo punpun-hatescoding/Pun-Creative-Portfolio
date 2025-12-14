@@ -232,12 +232,12 @@ header {
   .sticker img {
     max-width: 100px; 
   }
+}
 @media (max-width: 400px) {
     .sticker img {
       max-width: 75px; 
     }
   }
-}
 /* Now, position them specifically! */
 #frog-sticker {
   top: 20%;
@@ -888,7 +888,7 @@ header {
   justify-content: space-between;
   align-items: center;
   font-size: var(--font-size-base);
-  border-bottom: 10px solid var(--dark-red);
+  border-bottom: 5px solid var(--dark-red);
   cursor: grab; /* Shows the hand icon */
   user-select: none; /* Prevents highlighting text while dragging */
 }
@@ -1011,10 +1011,10 @@ header {
   background: none;
   border: none;
   font-family: var(--font-pixel);
-  font-size: var(--font-subheading-size);
+  font-size: var(--font-size-base);
   cursor: pointer;
-  color: var(--dark-green);
-  padding: 8px 16px;
+  color: var(--text-main);
+  padding: 6px 30px;
   position: relative;
   top: 4px; /* Push down to align with border */
   transition: all 0.2s;
@@ -1034,16 +1034,13 @@ header {
 
 /* Tab Content */
 .tab-content {
-  display: none; /* Hidden by default */
-  font-size: clamp(1rem, 3vw, 1.25rem);
-  line-height: 1.6;
-  color: var(--text-main);
-}
-.tab-content.active {
-  display: block; /* Show if active */
-  animation: fade-in 0.4s ease;
+    display: none; 
 }
 
+/* 2. SHOW only the one with the 'active' class */
+.tab-content.active {
+    display: block; 
+}
 /* Skills & Inventory Styles */
 .skill-list {
   list-style: none;
@@ -1054,6 +1051,8 @@ header {
   margin-bottom: 12px;
   display: flex;
   justify-content: space-between;
+  align-items: center;
+  font-size: var(--font-size-base);
 }
 .stars {
   color: var(--pink);
@@ -1127,7 +1126,7 @@ header {
         margin: 0 auto;
     }
     
-  #bio,
+ 
   #likes,
   .skill-list li,
   .item {
@@ -1272,8 +1271,26 @@ span#x:hover {
     transform: translate(1px, 1px);
 }
 /* --- BIO STYLES --- */
+#bio.active  {
+  display: block; /* <--- Use block instead! */
+    /* flex-direction: column; <--- DELETE THIS LINE (Block does this automatically) */
+    
+    max-height: 250px; 
+    overflow-y: auto; 
+    padding-right: 10px;
+
+}
+@media (max-width: 640px) {
+    #bio.active {
+        max-height: none; 
+        overflow-y: visible; 
+        padding-right: 0; 
+    }
+}
 .bio-text {
-    margin-top: 15px;
+    margin-top: 5px;
+    margin: 10px;
+    line-break:normal;
     font-size: var(--font-size-base);
     line-height: 1.5;
     color: var(--text-main);
@@ -1282,26 +1299,42 @@ span#x:hover {
 .bio-text strong {
     color: var(--pink);
     cursor: pointer;
+    font-weight: 500;
+}
+/* --- CUSTOM CUTE SCROLLBAR --- */
+/* The width of the scrollbar */
+#bio::-webkit-scrollbar {
+    width: 12px;
 }
 
-/* The "RPG Dialogue" Box */
+/* The background of the scrollbar rail */
+#bio::-webkit-scrollbar-track {
+    background: #fff5f5; /* Very light pink */
+    border-radius: 6px;
+    border: 1px solid #ffcaca;
+}
+
+/* The moving part of the scrollbar */
+#bio::-webkit-scrollbar-thumb {
+    background-color: var(--pink); /* Your pink variable */
+    border-radius: 6px;
+    border: 2px solid #fff5f5; /* Makes it look like a capsule */
+}
+
+/* Hover effect */
+#bio::-webkit-scrollbar-thumb:hover {
+    background-color: var(--primary-color);
+}
+/* RPG Dialogue Box */
 .typewriter {
-    font-size: var(--font-heading-size);
-    color: var(--dark-red);
+    font-size: var(--font-subheading-size);
+    color: rgb(160, 0, 0);
     font-weight: 900;
     overflow: hidden; /* Hide text until typed */
     border-right: 3px solid var(--yellowgreen); /* The cursor */
     white-space: nowrap; /* Keep on one line */
-    margin: 0;
+    margin: 10px;
     width: 0; /* Start at 0 width */
-    animation: 
-        typing 2.5s steps(30, end) forwards infinite,
-        blink-caret 0.75s step-end infinite;
-}
-.typewriter {
-    /* ... your other fonts/colors ... */
-    
-    /* 1. Change duration to 5.5s (2.5s Type + 3s Pause) */
     animation: 
         typing 5.5s steps(30, end) infinite,
         blink-caret 0.75s step-end infinite;
@@ -1331,5 +1364,6 @@ span#x:hover {
         width: 100%;         /* Show all text immediately */
         animation: none;     /* Disable animation */
     }
+
 }
 
