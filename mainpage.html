@@ -1,82 +1,100 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Pun's Folio</title>
-    <link rel="stylesheet" href="styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=DotGothic16&family=Rubik+Bubbles&family=VT323&family=UnifrakturMaguntia&display=swap" rel="stylesheet">
-    
-</head>
+    <link rel="stylesheet" href="styles.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DotGothic16&family=Rubik+Bubbles&family=VT323&family=UnifrakturMaguntia&display=swap"
+      rel="stylesheet"
+    />
+  </head>
 
-<body>
-    <div id="npc-follower"><img src="images/cursor.png" alt=""></div>
+  <body>
+    <div id="npc-follower"><img src="images/cursor.png" alt="" /></div>
     <div class="sparkle"></div>
     <div class="container">
-        <!-- Header -->
-        <header>
-            <div class="logo">
-                    <img src="images/pun.png" alt="Pun's logo" />
-                </div>
+      <!-- Header -->
+      <header>
+        <a href="mainpage.html"
+          ><div class="logo">
+            <img src="images/pun.png" alt="Pun's logo" /></div
+        ></a>
 
-            <!-- Dropdown Menu -->
-            <div class="dropdown-wrapper">
-                <button class="dropdown-btn">Menu ▼</button>
-                <nav class="nav dropdown-menu" id="site-navigation">
-                    <a href="about.html">🌟 About Me</a>
-                    <a href="#works">🛠 Works</a>
-                    <a href="#contact">📬 Contact</a>
-                </nav>
-            </div>
-
-        </header>
-<!-- Main Title -->
-        <div class="main-title-container">
-            <img src="images/main-title.png" alt="main title" />
+        <!-- Dropdown Menu -->
+        <div class="dropdown-wrapper">
+          <button class="dropdown-btn">Menu ▼</button>
+          <nav class="nav dropdown-menu" id="site-navigation">
+            <a href="about.html">🌟 About Me</a>
+            <a href="works.html">🛠 Works</a>
+            <a href="contact.html">📬 Contact</a>
+          </nav>
         </div>
-        <!-- Overlay Background -->
-        <div class="bg-layer" id="overlay-background">
+      </header>
+      <!-- Main Title -->
+      <div class="main-title-container">
+        <img src="images/main-title.png" alt="main title" />
+      </div>
+      <!-- Overlay Background -->
+      <div class="bg-layer" id="overlay-background"></div>
+
+      <!-- Overlay -->
+      <div class="bg-layer" id="overlay"></div>
+      <!-- Decorative Artwork -->
+      <div class="sticker">
+        <div id="frog-sticker">
+          <img src="images/frog-sticker.png" alt="frog sticker" />
         </div>
-
-        <!-- Overlay -->
-        <div class="bg-layer" id="overlay">
+        <div id="treelog">
+          <img src="images/treelog.png" alt="tree log sticker" />
         </div>
-        <!-- Decorative Artwork -->
-        <div class="sticker">
-           <div id="frog-sticker"> <img src="images/frog-sticker.png" alt="frog sticker" />    
-           </div>
-           <div id="treelog"> <img src="images/treelog.png" alt="tree log sticker" />    
-           </div>
-           <div id="tomato-sticker"> <img src="images/tomato-sticker.png" alt="tomato sticker" />    
-           </div>
-           <div id="cat-sticker"> <img src="images/cat-sticker.png" alt="cat sticker" />    
-           </div>   
+        <div id="tomato-sticker">
+          <img src="images/tomato-sticker.png" alt="tomato sticker" />
         </div>
-        <div class="decoration">
-            <div class="circles" aria-hidden="true">
-                <!-- Original circles -->
-                <div id="circle-1" class="circle"></div>
-                <div id="circle-2" class="circle"></div>
-                <div id="circle-3" class="circle"></div>
-                <div id="circle-4" class="circle"></div>
-                <div id="circle-5" class="circle"></div>
-
-                <!-- Duplicated circles (mirrors/second layer) -->
-                <div id="circle-1b" class="circle circle-dup" aria-hidden="true"></div>
-                <div id="circle-2b" class="circle circle-dup" aria-hidden="true"></div>
-                <div id="circle-3b" class="circle circle-dup" aria-hidden="true"></div>
-                <div id="circle-4b" class="circle circle-dup" aria-hidden="true"></div>
-                <div id="circle-5b" class="circle circle-dup" aria-hidden="true"></div>
-            </div>
+        <div id="cat-sticker">
+          <img src="images/cat-sticker.png" alt="cat sticker" />
         </div>
-        
-    </div>   
+      </div>
+      <div class="decoration">
+        <div class="circles" aria-hidden="true">
+          <!-- Original circles -->
+          <div id="circle-1" class="circle"></div>
+          <div id="circle-2" class="circle"></div>
+          <div id="circle-3" class="circle"></div>
+          <div id="circle-4" class="circle"></div>
+          <div id="circle-5" class="circle"></div>
 
+          <!-- Duplicated circles (mirrors/second layer) -->
+          <div
+            id="circle-1b"
+            class="circle circle-dup"
+            aria-hidden="true"
+          ></div>
+          <div
+            id="circle-2b"
+            class="circle circle-dup"
+            aria-hidden="true"
+          ></div>
+          <div
+            id="circle-3b"
+            class="circle circle-dup"
+            aria-hidden="true"
+          ></div>
+          <div
+            id="circle-4b"
+            class="circle circle-dup"
+            aria-hidden="true"
+          ></div>
+          <div
+            id="circle-5b"
+            class="circle circle-dup"
+            aria-hidden="true"
+          ></div>
+        </div>
+      </div>
+    </div>
 
-  <script src="animate.js">
-    
-  </script>   
-
-    
-</body>
+    <script src="animate.js"></script>
+  </body>
 </html>

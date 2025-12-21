@@ -236,3 +236,67 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 });
+
+
+// --- D. LEVEL SELECT HOVER LOGIC ---
+    const worldCards = document.querySelectorAll('.world-card');
+    const briefTitle = document.getElementById('brief-title');
+    const briefDesc = document.getElementById('brief-desc');
+    const briefLoot = document.getElementById('brief-loot');
+
+    if (worldCards.length > 0) {
+        worldCards.forEach(card => {
+            // When mouse enters a card
+            card.addEventListener('mouseenter', () => {
+                // Get data from the HTML attributes
+                const title = card.getAttribute('data-title');
+                const desc = card.getAttribute('data-desc');
+                const loot = card.getAttribute('data-loot');
+
+                // Update the text box
+                briefTitle.innerText = title;
+                briefDesc.innerText = desc;
+                briefLoot.innerText = loot;
+                
+                // Optional: Change color slightly to show activity
+                briefTitle.style.color = '#fff';
+            });
+
+            // When mouse leaves (reset to default)
+            card.addEventListener('mouseleave', () => {
+                briefTitle.innerText = "SELECT A WORLD...";
+                briefDesc.innerText = "Hover over a map to view details.";
+                briefLoot.innerText = "---";
+                briefTitle.style.color = 'var(--yellowgreen)'; // Reset color
+            });
+        });
+    }
+
+
+    // --- E. SEND EMAIL LOGIC ---
+    const sendBtn = document.getElementById('send-btn');
+    if (sendBtn) {
+        sendBtn.addEventListener('click', () => {
+            // 1. Change cursor to hourglass
+            document.body.style.cursor = 'wait';
+            
+            // 2. Change Text
+            const originalText = sendBtn.innerHTML;
+            sendBtn.innerHTML = `<span>Sending...</span>`;
+            
+            // 3. Fake delay
+            setTimeout(() => {
+                alert("✨ Message delivered via Magic Cat Mail! 🐱 📨");
+                
+                // Reset
+                sendBtn.innerHTML = originalText;
+                document.body.style.cursor = 'default';
+                
+                // Clear inputs
+                document.querySelector('.retro-input').value = '';
+                document.querySelector('.retro-textarea').value = '';
+                
+            }, 1500);
+        });
+    }
+    
