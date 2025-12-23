@@ -5,23 +5,174 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Pun's Folio</title>
     <link rel="stylesheet" href="styles.css" />
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Aldrich&family=Almendra:ital,wght@0,400;0,700;1,400;1,700&family=Audiowide&family=DotGothic16&family=DynaPuff:wght@400..700&family=Griffy&family=Irish+Grover&family=Jacquard+12&family=Jockey+One&family=Love+Ya+Like+A+Sister&family=Russo+One&family=UnifrakturMaguntia&family=VT323&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Aldrich&family=Almendra:ital,wght@0,400;0,700;1,400;1,700&family=Audiowide&family=DotGothic16&family=DynaPuff:wght@400..700&family=Griffy&family=Irish+Grover&family=Jacquard+12&family=Jockey+One&family=Love+Ya+Like+A+Sister&family=Russo+One&family=UnifrakturMaguntia&family=VT323&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      /* Define CSS variables for easy adjustments. 
+           Colors are sampled directly from your source image.
+        */
+      :root {
+        --pattern-bg-color: #4a2521; /* The deep brown background */
+        --pattern-dot-color: #46a19f; /* The teal/cyan dot color */
+
+        /* Adjust sizes here to change the look pattern density.
+               Desktop/Tablet default sizes:
+            */
+        --dot-radius: 4px; /* How big the dots are */
+        --tile-size: 90px; /* The space between repeating dots */
+      }
+
+      body {
+        margin: 0;
+        padding: 0;
+        min-height: 100vh;
+
+        /* 1. Set the main background color */
+        background-color: var(--pattern-bg-color);
+
+        /* 2. Create the pattern using two radial-gradient layers */
+        background-image: 
+                /* Layer 1: The dots sitting in the "gaps" (shifted) */ radial-gradient(
+            circle,
+            var(--pattern-dot-color) var(--dot-radius),
+            transparent calc(var(--dot-radius) + 0.5px)
+          ),
+          /* Layer 2: The standard grid dots (corners) */
+            radial-gradient(
+              circle,
+              var(--pattern-dot-color) var(--dot-radius),
+              transparent calc(var(--dot-radius) + 0.5px)
+            );
+
+        /* 3. Define the size of the repeating square tile */
+        background-size: var(--tile-size) var(--tile-size);
+
+        /* 4. Position the layers.
+               The first layer is shifted down and right by exactly half 
+               the tile size to create the offset effect.
+               The second layer starts at 0 0.
+            */
+        background-position: calc(var(--tile-size) / 2)
+            calc(var(--tile-size) / 2),
+          /* Position for Layer 1 */ 0 0; /* Position for Layer 2 */
+      }
+
+      /* --- RESPONSIVE TWEAKS --- */
+
+      /* On smaller mobile devices, we slightly shrink the tile size 
+           so the pattern doesn't look too sparse or empty. */
+      @media (max-width: 600px) {
+        :root {
+          --dot-radius: 3.5px;
+          --tile-size: 70px;
+        }
+      }
+   header {
+    /* Ensure header can grow if needed */
+    min-height: 5rem;
+    padding: 0.5rem 1rem;
+    position: relative;
+  }
+  /* Optional: If the hamburger is too low, you can pull it up */
+  .nav-toggle {
+    margin-top: 0;
+    transform: translateY(-5px); /* Pulls it up slightly */
+  }
+
+  .dropdown-wrapper {
+    /* This keeps the wrapper small, fitting only the button */
+    position: relative;
+    align-items: flex-end;
+    flex-direction: column;
+    width: 100%;
+    background-color: transparent;
+    margin-left: 0; /* Reset left margin for mobile */
+    z-index: 2000; /* Ensure it stays above other elements */
+    overflow: visible !important;
+  }
+
+  /* SHOW the button */
+  .dropdown-btn {
+    display: block;
+    background-color: var(--yellowgreen);
+    color: var(--text-main);
+    padding: 0.5rem 1rem;
+    font-family: var(--font-family-base);
+    font-size: clamp(1rem, 2vw, 1.5rem);
+    border: none;
+    cursor: pointer;
+    border-radius: 10px;
+    transition: background-color 0.3s ease;
+    /* Width adjusted to look good next to logo */
+    width: auto;
+    min-width: 100px;
+    text-align: center;
+    align-items: center;
+  }
+
+  .dropdown-btn:hover {
+    background-color: yellowgreen;
+    font-size: clamp(1rem, 2vw, 1.5rem);
+  }
+
+  /* APPLY the Dropdown Logic */
+
+  .dropdown-menu {
+    position: absolute;
+    min-width: 160px;
+    max-width: 30vw;
+    background-color: rgb(255, 128, 159);
+
+    /* CLOSED STATE: */
+    max-height: 0;
+    opacity: 0;
+    overflow: hidden; /* <--- CRITICAL: Hide content when closed */
+    pointer-events: none;
+    /* Transition settings */
+    transition: max-height 0.3s ease, opacity 0.3s ease;
+    z-index: 2001;
+    border-radius: 10px;
+    flex-direction: column;
+    box-shadow: 0px 8px 16px rgba(57, 0, 0, 0.3);
+  }
+
+  /* OPEN STATE: */
+  .dropdown-menu.open {
+    max-height: 300px;
+    opacity: 1;
+    overflow: visible; /* <--- CRITICAL: Show content when open */
+    pointer-events: auto;
+    padding: 10px 0;
+    z-index: 2001;
+  }
+  .dropdown-menu a {
+    display: block;
+    padding: 0.75rem 1rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  }
+  .dropdown-menu a:last-child {
+    border-bottom: none; /* Remove border from last item */
+  }
+
+  </style>
+    
   </head>
 
   <body>
+    
     <div id="npc-follower"><img src="images/cursor.png" alt="" /></div>
     <div class="sparkle"></div>
     <div class="container">
       <!-- Header -->
-      <header>
-        <a href="index.html">
-            <div class="logo">
-            <img src="images/pun.png" alt="Pun's logo" /></div
-        ></a>
-
-        <!-- Dropdown Menu -->
+       <header>
+     <!-- Dropdown Menu -->
+       <a href="index.html"><div class="logo">
+          <img src="main-images/fat-cat.png" alt="Pun's logo" /></div>
+      </a>
         <div class="dropdown-wrapper">
           <button class="dropdown-btn">Menu ▼</button>
           <nav class="nav dropdown-menu" id="site-navigation">
@@ -29,10 +180,42 @@
             <a href="works.html">🛠 Works</a>
             <a href="contact.html">📬 Contact</a>
           </nav>
+          
         </div>
-     </header>
-        <!-- Main Title -->
-        <div class="main-container">
-          <h1 id="this-is">I'm<nav>Pun</nav> a digital artist and this is</h1>
-          <h2 id="my-portfolio">my <nav>Portfolio</nav></h2>
-            </div>
+     
+      </header>
+      <!-- Main Title -->
+      <div id="deco-buttons">
+        <img id="red-btn" src="main-images/red-btn.png" alt="red button" />
+        <img id="yellow-btn" src="main-images/yellow-btn.png" alt="yellow button" />
+        <img id="green-btn" src="main-images/green-btn.png" alt="green button" />
+      </div>
+      <div id="title">
+        <img
+          id="welcome-to"
+          src="main-images/welcome-to.png"
+          alt="welcome to"
+        />
+        <img
+          id="my-portfolio"
+          src="main-images/my-portfolio.png"
+          alt="my portfolio"
+        />
+      
+      <div id="start-exit-buttons">
+    <div id="exit"> 
+        <p id="exit-text">Exit :(</p>
+        <img src="main-images/exit.png" alt="exit">
+    </div>
+    
+    <div id="lets-start"> 
+        <p id="lets-start-text">Let's Start!</p>
+        <img src="main-images/lets-start.png" alt="let's start">
+    </div>
+</div>
+    </div>
+
+    <script src="animate.js"></script>
+  </body>
+  <!-- Main Title -->
+</html>

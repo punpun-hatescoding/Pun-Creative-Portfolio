@@ -28,6 +28,7 @@ html {
   }
 }
 :root {
+
   /* Blend mode variables - change these to try different effects (e.g. screen, overlay, multiply, normal) */
   --overlay-blend: multiply;
   /* Define color and sizing variables */
@@ -69,6 +70,51 @@ body {
 }
 
 #npc-follower {
+
+/* --- Figma screen sections ---
+   These two sections render the designs you referenced. Place the exported
+   Figma images in `main-images/` with the names below.
+*/
+
+.figma-screen {
+  width: 100vw;
+  display: block;
+  background-color: #000;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  position: relative;
+  z-index: 2;
+  /* target laptop canvas: 1440x900 */
+  max-width: 1440px;
+  margin: 0 auto;
+  aspect-ratio: 1440 / 900; /* keeps the section sized to a laptop canvas */
+}
+
+/* Screen A - node-id 96:222 */
+.figma-screen.screen-a {
+  background-image: url('main-images/figma-96-222.png');
+}
+
+/* Screen B - node-id 96:248 */
+.figma-screen.screen-b {
+  background-image: url('main-images/figma-96-248.png');
+  /* slight overlay to match Figma tint */
+}
+.figma-screen.screen-b::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(0,0,0,0.0) 0%, rgba(0,0,0,0.15) 100%);
+  pointer-events: none;
+}
+
+/* Responsive adjustments */
+@media (max-width: 900px) {
+  .figma-screen { background-position: center top; background-size: contain; aspect-ratio: auto; }
+  .figma-screen.screen-a { background-size: 120% auto; }
+}
+
   position: fixed;
   width: 100px; /* Stays on screen even if you scroll */ /* Size of the emoji */
   pointer-events: none; /* CRITICAL: Lets you click through the character */
@@ -131,585 +177,241 @@ header {
   flex-direction: row;
   align-items: center;
   justify-content: space-between; /* Perfect for Logo -- Menu */
-
+  top: 0;
   padding: 0.5rem 4vw;
 
   width: 100%;
-
-  max-height: 3.5rem;
+  height: 4rem;
 
   margin: 0 auto;
   overflow: visible !important;
   z-index: 2000;
-  background-color: rgb(62, 15, 15);
-  box-shadow: 0 4px 30px rgba(17, 75, 4, 0.617);
+  background-color: transparent;
+  /*box-shadow: 0 2px 10px rgba(0, 90, 25, 0.446);*/
 }
 
-@media (max-width: 640px) {
-  header {
-    padding: 0.5rem 1rem;
-  }
-}
+
 /* --- RESPONSIVE LOGO --- */
 .logo {
   display: flex;
   align-items: center center;
   justify-content: center center;
   /* format: clamp(MIN, IDEAL, MAX) */
-  width: clamp(50px, 15vw, 70px);
+  width: clamp(80px, 15vw, 100px);
   height: auto;
   /* Remove margins to let Flexbox handle alignment in the header */
-  margin-top: 0.5rem;
-  padding: 0;
+  margin: 0.5rem;
+  padding: 0.5rem;
   z-index: 50; /* Ensure it stays above background */
 }
 
 .logo img {
-  width: 100%; /* Fills the .logo container width */
+  max-width: 100%; /* Fills the .logo container width */
   height: auto; /* Maintains aspect ratio */
   object-fit: contain;
   object-position: center center;
-  /* Remove 'scale' - it causes layout bugs. 
-       Control size via the .logo width above instead. */
-  transform: rotate(-6deg);
-}
-
-/* Overlay Background */
-/* --- SHARED LAYER STYLES --- */
-.bg-layer {
-  position: fixed; /* Stays stuck to the screen while you scroll */
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none; /* Lets clicks pass through to the buttons */
-  z-index: -1; /* Puts it BEHIND your content */
-}
-#overlay-background {
-  background-image: url(images/overlay\ backgr.png);
-  background-size: cover;
-  background-position: center center;
-  background-repeat: no-repeat;
-  pointer-events: none;
-  opacity: 0.4;
-  z-index: -10;
-}
-
-/* Main Overlay */
-#overlay {
-  background-image: url(images/overlay.png);
-  background-size: cover;
-  background-position: center center;
-  opacity: 0.5; /* Adjust visibility */
-
-  /* Using your variable */
-  mix-blend-mode: var(--overlay-blend);
-  pointer-events: none;
-  z-index: 10;
-}
-.main-container {
-  top: 4rem;
-  left: 0;
-  position: fixed;
-  width: 100%;
-  height: 100%;
-}
-#this-is, #my-portfolio {
-  top: 5rem;
-  width: 100%;
-  height: auto;
-  font-family: Griffy, system-ui;
-  font-size: var(--font-subheading-size);
-  z-index: 10;
-}
-nav {
-  color: greenyellow;
-  top: 5rem;
-  width: 100%;
-  height: auto;
-  font-family: Griffy, system-ui;
-  font-size: clamp(5.5rem, 5vw, 8rem);
-  z-index: 10;
-}
-/* Decorative Artwork */
-/* Update the container to allow free movement */
-.sticker {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  /* Remove flex properties so we can place items anywhere */
-  display: block;
-  top: 0;
-  left: 0;
-  pointer-events: none;
-  overflow: hidden;
-}
-
-/* Common style for all stickers to handle sizing */
-.sticker div {
-  position: absolute;
-  z-index: 15;
-}
-
-.sticker img {
-  /* Reset the massive viewport width you had previously */
-  width: auto;
-  height: auto;
-  max-width: 150px; 
-}
-@media (max-width: 640px) {
-  .sticker img {
-    max-width: 100px; 
-  }
-}
-@media (max-width: 400px) {
-    .sticker img {
-      max-width: 75px; 
-    }
-  }
-/* Now, position them specifically! */
-#frog-sticker {
-  top: 20%;
-  left: 15%;
-  scale: 2.5;
-  transform: rotate(-10deg);
-}
-
-#treelog {
-  bottom: 5%;
-  right: 10%;
-  transform: scale(2.5);
-}
-
-#tomato-sticker {
-  top: 30%;
-  right: 5%;
-
-  transform: rotate(20deg);
-}
-
-#cat-sticker {
-  bottom: 15%;
-  left: 25%;
-  scale: 5;
-  rotate: -20deg;
-}
-
-@media (max-width: 640px) {
-  #frog-sticker {
-    top: 25%;
-    left: 35%;
-    scale: 2.8;
-  }
-
-  #treelog {
-    bottom: 20%;
-    right: 5%;
-    scale: 1;
-  }
-
-  #tomato-sticker {
-    top: 35%;
-    right: 2%;
-  }
-
-  #cat-sticker {
-    bottom: 30%;
-    left: 30%;
-    scale: 4;
-  }
-}
-@media (max-width: 400px) {
-  #frog-sticker {
-    top: 30%;
-    left: 40%;
-    scale: 2.5;
-  }
-
-  #treelog {
-    bottom: 25%;
-    right: 2%;
-    scale: 0.8;
-  }
-
-  #tomato-sticker {
-    top: 40%;
-    right: 5%;
-  }
-
-  #cat-sticker {
-    bottom: 35%;
-    left: 35%;
-    scale: 3.5;
-  }
-}
-/* ========================================= */
-
-/* Floating Circles Background */
-.decoration {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  pointer-events: none;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-
-  /* Put circles behind everything */
-  z-index: -10;
-}
-
-.circles {
-  position: relative;
-  width: 100%;
-  height: auto;
-  z-index: -1;
-}
-
-/* Circle 1 - Large Pink (Node 18:440) */
-#circle-1 {
-  position: absolute;
-  /* reduced size for subtler background */
-  width: 532px; /* 75% of original 710 */
-  height: 499px; /* 75% of original 665 */
-  background: linear-gradient(135deg, #ffd4e5 0%, #ffc2d8 100%);
-  border-radius: 50%;
-  top: 20%;
-  left: -15%;
-  opacity: 0.6;
-  filter: blur(40px);
-  animation: float-slow 12s ease-in-out infinite;
-}
-
-/* Circle 2 - Medium Mint (Node 1:32) */
-#circle-2 {
-  position: absolute;
-  width: 352px; /* 75% */
-  height: 352px; /* 75% */
-  background: linear-gradient(135deg, #d4ffe5 0%, #b8ffd4 100%);
-  border-radius: 50%;
-  bottom: 15%;
-  left: 5%;
-  opacity: 0.5;
-  filter: blur(35px);
-  animation: float-medium 10s ease-in-out infinite;
-  animation-delay: 1.6s;
-}
-
-/* --- Duplicated circle styles (second layer) ---
-   Use a different blend mode and alternate animations to create
-   a richer layered background. The `.circle-dup` class centralizes
-   shared tweaks; each ID keeps its own size/position but uses
-   staggered animations and slightly different timing. */
-.circle-dup {
-  mix-blend-mode: overlay; /* changed to overlay for a richer blend */
-  will-change: transform, opacity, filter;
-  pointer-events: none;
-  transform-origin: center center;
-  /* make the duplicates slightly less saturated and softer */
-  opacity: 0.35;
-}
-
-#circle-1b {
-  position: absolute;
-  width: 532px;
-  height: 499px;
-  background: linear-gradient(135deg, #ffd4e5 0%, #ffc2d8 100%);
-  border-radius: 50%;
-  top: 22%;
-  left: -5%;
-  filter: blur(48px) hue-rotate(-2deg) saturate(0.95);
-  animation: float-dup-slow 16s cubic-bezier(0.2, 0.8, 0.2, 1) infinite
-    alternate-reverse;
-  animation-delay: 0.6s;
-}
-
-#circle-2b {
-  position: absolute;
-  width: 352px;
-  height: 352px;
-  background: linear-gradient(135deg, #d4ffe5 0%, #b8ffd4 100%);
-  border-radius: 50%;
-  bottom: 18%;
-  left: 18%;
-  filter: blur(38px) hue-rotate(4deg) saturate(1.05);
-  animation: float-medium 12.5s cubic-bezier(0.3, 0.7, 0.25, 1) infinite
-    alternate;
-  animation-delay: 2s;
-}
-
-#circle-3b {
-  position: absolute;
-  width: 216px;
-  height: 216px;
-  background: linear-gradient(135deg, #ffd4e5 0%, #ffb8d8 100%);
-  border-radius: 50%;
-  top: 52%;
-  right: 10%;
-  filter: blur(36px) hue-rotate(-3deg) saturate(0.98);
-  animation: float-fast 9.5s cubic-bezier(0.25, 0.9, 0.3, 1) infinite
-    alternate-reverse;
-  animation-delay: 1.2s;
-}
-
-#circle-4b {
-  position: absolute;
-  width: 543px;
-  height: 543px;
-  background: linear-gradient(135deg, #d4ffe5 0%, #a8ffcc 100%);
-  border-radius: 50%;
-  top: 8%;
-  right: -2%;
-  filter: blur(52px) hue-rotate(2deg) saturate(1.02);
-  animation: float-slow 14s cubic-bezier(0.2, 0.8, 0.2, 1) infinite
-    alternate;
-  animation-delay: 0.2s;
-}
-
-#circle-5b {
-  position: absolute;
-  width: 532px;
-  height: 499px;
-  background: linear-gradient(135deg, #ffd4e5 0%, #ffc2d8 100%);
-  border-radius: 50%;
-  bottom: -6%;
-  right: 8%;
-  filter: blur(44px) hue-rotate(1deg) saturate(1.03);
-  animation: float-medium 13.5s cubic-bezier(0.3, 0.7, 0.25, 1) infinite
-    alternate-reverse;
-  animation-delay: 0.6s;
-}
-
-/* Circle 3 - Small Pink (Node 1:69) */
-#circle-3 {
-  position: absolute;
-  width: 216px; /* 75% */
-  height: 216px; /* 75% */
-  background: linear-gradient(135deg, #ffd4e5 0%, #ffb8d8 100%);
-  border-radius: 50%;
-  top: 50%;
-  right: 15%;
-  opacity: 0.55;
-  filter: blur(30px);
-  animation: float-fast 8s ease-in-out infinite;
-  animation-delay: 0.8s;
-}
-
-#circle-4 {
-  position: absolute;
-  width: 543px; /* 75% */
-  height: 543px; /* 75% */
-  background: linear-gradient(135deg, #d4ffe5 0%, #a8ffcc 100%);
-  border-radius: 50%;
-  top: 10%;
-  right: -10%;
-  opacity: 0.5;
-  filter: blur(50px);
-  animation: float-slow 12s ease-in-out infinite;
-  animation-delay: 2s;
-}
-
-/* Circle 5 - Large Pink (Node 1:25) */
-#circle-5 {
-  position: absolute;
-  width: 532px; 
-  height: 499px;
-  background: linear-gradient(135deg, #ffd4e5 0%, #ffc2d8 100%);
-  border-radius: 50%;
-  bottom: -10%;
-  right: 20%;
-  opacity: 0.2;
-  animation: float-medium 11s ease-in-out infinite;
-  animation-delay: 0.8s;
-  mix-blend-mode: color-burn;
-}
-
-/* Floating animations for circles */
-@keyframes float-slow {
-  0% {
-    transform: translate(0, 0) scale(1);
-    opacity: 1;
-    filter: blur(30px);
-  }
-
-  100% {
-    transform: translate(0, -18px) scale(1.02);
-    opacity: 0.4;
-    filter: blur(5px);
-  }
-}
-
-@keyframes float-medium {
-  0% {
-    transform: translate(0, 0) scale(1);
-    opacity: 1;
-    filter: blur(20px);
-  }
-  
-  
-  100% {
-    transform: translate(0, 0) scale(1.02);
-    opacity: 1;
-    filter: blur(35px);
-  }
-}
-
-@keyframes float-fast {
-  0% {
-    transform: translate(0, 0) scale(1);
-    opacity: 1;
-    filter: blur(18px);
-  }
-
-  50% {
-    transform: translate(90px, 70px) scale(1.15);
-    opacity: 0.5;
-    filter: blur(26px);
-  }
-
-  100% {
-    transform: translate(0, 0) scale(1.03);
-    opacity: 1;
-    filter: blur(30px);
-  }
-}
-
-
-/* Mobile responsiveness for circles */
-@media (max-width: 768px) {
-  /* reduced responsive sizes (approx 75% of previous) */
-  #circle-1 {
-    width: 300px;
-    height: 281px;
-    left: -25%;
-  }
-  #circle-2 {
-    width: 210px;
-    height: 210px;
-    bottom: 20%;
-  }
-  #circle-3 {
-    width: 135px;
-    height: 135px;
-    right: 10%;
-  }
-  #circle-4 {
-    width: 338px;
-    height: 338px;
-    right: -20%;
-  }
-  #circle-5 {
-    width: 300px;
-    height: 281px;
-    right: 15%;
-  }
-  /* duplicated circle responsive sizes */
-  #circle-1b {
-    width: 300px;
-    height: 281px;
-    left: -18%;
-  }
-  #circle-2b {
-    width: 210px;
-    height: 210px;
-    bottom: 22%;
-    left: 10%;
-  }
-  #circle-3b {
-    width: 135px;
-    height: 135px;
-    right: 8%;
-  }
-  #circle-4b {
-    width: 338px;
-    height: 338px;
-    right: -8%;
-  }
-  #circle-5b {
-    width: 300px;
-    height: 281px;
-    right: 10%;
-  }
-}
-
-@media (max-width: 480px) {
-  /* smaller sizes for small screens */
-  #circle-1 {
-    width: 225px;
-    height: 210px;
-    filter: blur(20px);
-  }
-  #circle-2 {
-    width: 150px;
-    height: 150px;
-    filter: blur(16px);
-  }
-  #circle-3 {
-    width: 105px;
-    height: 105px;
-    filter: blur(14px);
-  }
-  #circle-4 {
-    width: 262px;
-    height: 262px;
-    filter: blur(22px);
-  }
-  #circle-5 {
-    width: 225px;
-    height: 210px;
-    filter: blur(20px);
-  }
-  /* duplicated circle small-screen sizes */
-  #circle-1b {
-    width: 225px;
-    height: 210px;
-    filter: blur(22px);
-  }
-  #circle-2b {
-    width: 150px;
-    height: 150px;
-    filter: blur(18px);
-  }
-  #circle-3b {
-    width: 105px;
-    height: 105px;
-    filter: blur(16px);
-  }
-  #circle-4b {
-    width: 262px;
-    height: 262px;
-    filter: blur(24px);
-  }
-  #circle-5b {
-    width: 225px;
-    height: 210px;
-    filter: blur(22px);
-  }
 }
 
 /* Main Title Container */
-.main-title-container {
-  position: absolute;
+/* 1. Make the container a Flex column to center everything easily */
+/* .main-title-container-1 {
+  position: absolute; /* Keep this if you need it over a background 
   width: 100vw;
-  height: 95vh;
-  top: 5vh;
+  height: 90vh; /* Takes up most of the viewport 
+  top: 0;
+  left: 0;
   display: flex;
+  flex-direction: column;
+  align-items: center; /* Centers items horizontally 
+  justify-content: center; /* Centers items vertically 
+  z-index: 10; /* Lets clicks pass through to background 
+} */
+
+/* 2. The wrapper for your two images */
+#title {
+  position: relative;
+  width: 100vw;
+  /* CHANGED: Let the height fit the content + some padding */
+  height: auto; 
+  padding-top: 5rem; /* Manually control the top gap */
+  padding-bottom: 5rem;
+  display: flex;
+  flex-direction: column;
+  row-gap: 1rem;
   align-items: center;
-  justify-content: center;
-  z-index: 100;
+}
+@media (max-width: 640px) {
+  #title {
+    padding-bottom: 5rem;
+    row-gap: 3rem;
+  }
+}
+/* 3. Style "Welcome To" */
+#welcome-to {
+  display: flexbox;
+  width: 100%;
+  max-width: 300px; /* Stop it from getting too huge on big screens */
+  min-width: 150px; /* Stop it from getting too tiny on mobile */
+  height: auto;
+  margin-bottom: 1rem; /* Small space between this and the next image */
 }
 
-.main-title-container img {
-  width: 70%;
+/* 4. Style "My Portfolio" */
+#my-portfolio {
+  display: flexbox;
+  width: 100%;
+  scale: 1.2;
+  max-width: 600px;
+  min-width: 280px;
   height: auto;
-  object-fit: contain;
-  object-position: 50% 50%;
-  transform: rotate(-15deg);
-  min-width: 350px;
+  margin-top: 0;
 }
+
+/* 5. Buttons Decorations */
+.deco-buttons {
+  display: block;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  z-index: 5; 
+}
+.deco-buttons img {
+  width: 100%;
+  object-fit: contain;
+  object-position: center center;
+}
+#red-btn {
+  position: absolute;
+  top: 10%;
+  left: 8%;
+  width: 25%;
+  height: auto;
+  opacity: 0.7;
+  image-rendering: pixelated;
+}
+#green-btn {
+  position: absolute;
+  top: 60%;
+  right: 10%;
+  width: 15%;
+  height: auto;
+  image-rendering: pixelated;
+}
+#yellow-btn {
+  position: absolute;
+  bottom: 9%;
+  left: 70%;
+  width: 10%;
+  opacity: 0.5;
+  height: auto;
+  image-rendering: pixelated;
+}
+@media (max-width: 800px) {
+  .deco-buttons {
+    display: none; /* Hide decorations on small screens */
+}
+ #red-btn {
+
+  top: 5%;
+  left: 10%;
+  width: 55%;
+  height: auto;
+  image-rendering: pixelated;
+}
+ #green-btn {
+  
+  top: 5%;
+  right: 10%;
+  width: 35%;
+  height: auto;
+  image-rendering: pixelated;
+}
+ #yellow-btn {
+  bottom: 5%;
+  left: 70%;
+  width: 25%;
+  height: auto;
+  image-rendering: pixelated;
+}
+}
+#start-exit-buttons {
+  display: flex;
+  flex-direction: row; /* Side by side */
+  justify-content: center; 
+  align-items: center;
+  gap: 1rem; /* Space between the buttons */
+  margin-top: 2rem;
+}
+
+#exit, #lets-start {
+  /* 1. This keeps the absolute text INSIDE this box */
+  position: relative; 
+  
+  width: auto; 
+  cursor: pointer;
+  
+  /* 2. Visual Scaling */
+  transform: scale(0.6); /* Adjust size: 1 = normal, 0.5 = half size */
+  transition: transform 0.2s ease; /* Makes hover smooth */
+}
+
+/* Optional: Make them pop when hovered */
+#exit:hover, #lets-start:hover {
+  transform: scale(0.65); 
+}
+
+/* Ensure images don't have weird gaps */
+#exit img, #lets-start img {
+  display: block; 
+  width: 100%;
+  height: auto;
+}
+
+/* 3. Text Styling & Centering */
+p#exit-text, p#lets-start-text {
+  position: absolute;
+  
+  /* CENTER THE TEXT OVER THE IMAGE */
+  top: 45%;
+  left: 50%;
+  transform: translate(-50%, -50%); 
+  
+  margin: 0; /* Remove default paragraph margins */
+  width: 100%; /* Ensure text aligns relative to full width */
+  
+  font-size: clamp(3rem, 1vw, 5rem);
+  font-family: griffy, cursive;
+  color: var(--text-main);
+  text-align: center;
+  pointer-events: none; /* Lets clicks pass through text to the button */
+  white-space: nowrap; /* Stops text from wrapping weirdly */
+}
+#exit:hover, #lets-start:hover {
+  transform: scale(0.55); /* Slightly larger on hover */
+}
+@media (max-width: 800px) {
+  #welcome-to {
+    width: 50%; 
+  }
+  #my-portfolio {
+    width: 80%; 
+  }
+}
+
+@media (max-width: 640px) {
+  #welcome-to {
+    width: 50%; 
+    padding-top: 4rem;
+  }
+  #my-portfolio {
+    width: 80%;
+  }
+}
+
+
+
 
 /* Dropdown Menu Styles */
 /* =========================================
@@ -783,16 +485,23 @@ nav {
    2. MOBILE STYLES (Max-width: 640px)
    FIXED: Menu floats absolute so logo doesn't move
    ========================================= */
-@media (max-width: 640px) {
+@media (max-width: 800px) {
+  header {
+    min-height: 4rem;
+    padding: 0.5rem 1rem;
+    position: relative;
+  }
+}
+ @media (max-width: 640px) {
   header {
     /* Ensure header can grow if needed */
     min-height: 5rem;
     padding: 0.5rem 1rem;
-    position: relative; 
+    position: relative;
   }
   /* 1. Push the logo down specifically on mobile */
   .logo {
-    margin-top: 15px; 
+    margin-top: 15px;
   }
 
   /* Optional: If the hamburger is too low, you can pull it up */
@@ -891,7 +600,7 @@ nav {
   box-sizing: border-box;
   position: relative; /* Acts as the boundary for the draggable card */
   overflow: hidden;
-  background-image: url('aboutme-images/aboutme-bg.png');
+  background-image: url("aboutme-images/aboutme-bg.png");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -924,9 +633,8 @@ nav {
 }
 
 .window-header:active {
-    cursor: grabbing; /* Closes the hand when clicking */
+  cursor: grabbing; /* Closes the hand when clicking */
 }
-
 
 .window-controls {
   display: flex;
@@ -1059,17 +767,17 @@ nav {
   background: #fff;
   border: 4px solid var(--pink);
   border-bottom: none; /* Hide bottom border to merge */
-  z-index: 1; 
+  z-index: 1;
 }
 
 /* Tab Content */
 .tab-content {
-    display: none; 
+  display: none;
 }
 
 /* 2. SHOW only the one with the 'active' class */
 .tab-content.active {
-    display: block; 
+  display: block;
 }
 /* Skills & Inventory Styles */
 .skill-list {
@@ -1115,787 +823,980 @@ nav {
 
 /* --- Mobile Responsive --- */
 @media (max-width: 640px) {
-    
-    
-    .about-section {
-        height: auto; 
-        min-height: auto; 
-        overflow: visible; 
-        padding: 20px 10px;
-        display: block; 
-    }
-    
-    /* 2. Disable the "Floating/Draggable" behavior */
-    .character-card {
-        position: relative !important; /* Force it back into the page flow */
+  .about-section {
+    height: auto;
+    min-height: auto;
+    overflow: visible;
+    padding: 20px 10px;
+    display: block;
+  }
 
-        /* Reset any positions set by the Drag JavaScript */
-        top: auto !important;
-        left: auto !important;
-        transform: none !important;
-        
-        width: 100%;
-        max-width: 100%;
-        margin: 0 auto;
-        
-        box-shadow: none; /* Optional: simplify shadow for mobile */
-    }
-    
-    .window-header {
-        cursor: none; /* Show normal cursor */
-    }
+  /* 2. Disable the "Floating/Draggable" behavior */
+  .character-card {
+    position: relative !important; /* Force it back into the page flow */
 
-    .rpg-content {
-        grid-template-columns: 1fr; /* Stack avatar on top of info */
-        gap: 10px;
-        padding: 10px;
-    }
-    
-    .avatar-container {
-        max-width: 350px;
-        margin: 0 auto;
-    }
-    
- 
+    /* Reset any positions set by the Drag JavaScript */
+    top: auto !important;
+    left: auto !important;
+    transform: none !important;
+
+    width: 100%;
+    max-width: 100%;
+    margin: 0 auto;
+
+    box-shadow: none; /* Optional: simplify shadow for mobile */
+  }
+
+  .window-header {
+    cursor: none; /* Show normal cursor */
+  }
+
+  .rpg-content {
+    grid-template-columns: 1fr; /* Stack avatar on top of info */
+    gap: 10px;
+    padding: 10px;
+  }
+
+  .avatar-container {
+    max-width: 350px;
+    margin: 0 auto;
+  }
+
   #likes,
   .skill-list li,
   .item {
     text-align: flex-start;
     font-size: calc(var(--font-size-base));
-    margin-bottom:20px;
-    padding:20px;
+    margin-bottom: 20px;
+    padding: 20px;
   }
   .rpg-tabs {
     justify-content: flex-start;
     font-size: calc(var(--font-size-base) * 1.2);
   }
 
-
-.char-name {
+  .char-name {
     text-align: center;
     font-size: calc(var(--font-heading-size) * 1.75);
   }
-.char-class {
+  .char-class {
     text-align: center;
     font-size: var(--font-heading-size);
   }
 }
 /* --- RETRO POPUP STYLES --- */
 span#x {
-    font-size: 1.5rem;
-    cursor: pointer;
-    color: white;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: white;
 }
 span#x:hover {
-    color: var(--pink);
+  color: var(--pink);
 }
 .retro-popup {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    /* Start centered but hidden */
-    transform: translate(-50%, -50%) scale(0); 
-    
-    width: 300px;
-    background: rgb(254, 241, 220); /* Classic Windows Grey */
-    border: 3px solid #fff;
-    border-radius: 10px;
-    border-right-color: #000;
-    border-bottom-color: #000;
-    box-shadow: 4px 4px 10px rgba(0,0,0,0.4);
-    z-index: 99999; /* On top of EVERYTHING */
-    font-family: 'VT323', monospace;
-    display: flex;
-    flex-direction: column;
-    
-    /* We don't use display:none because we want to animate the transform */
-    pointer-events: none; 
-    opacity: 0;
-    transition: opacity 0.2s;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  /* Start centered but hidden */
+  transform: translate(-50%, -50%) scale(0);
+
+  width: 300px;
+  background: rgb(254, 241, 220); /* Classic Windows Grey */
+  border: 3px solid #fff;
+  border-radius: 10px;
+  border-right-color: #000;
+  border-bottom-color: #000;
+  box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
+  z-index: 99999; /* On top of EVERYTHING */
+  font-family: "VT323", monospace;
+  display: flex;
+  flex-direction: column;
+
+  /* We don't use display:none because we want to animate the transform */
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.2s;
 }
 
 /* THE POPUP ANIMATION STATE */
 .retro-popup.active {
-    pointer-events: auto;
-    opacity: 1;
-    /* The bounce effect */
-    animation: popup-bounce 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+  pointer-events: auto;
+  opacity: 1;
+  /* The bounce effect */
+  animation: popup-bounce 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
 }
 
 @keyframes popup-bounce {
-    0% {
-        transform: translate(-50%, -50%) scale(0);
-    }
-    100% {
-        transform: translate(-50%, -50%) scale(1);
-    }
+  0% {
+    transform: translate(-50%, -50%) scale(0);
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(1);
+  }
 }
 
 /* Header */
 .popup-header {
-    background: var(--dark-green);
-    color: white;
-    padding: 2px 5px;
-    display: flex;
-    justify-content: space-between;
-    font-size: 1.2rem;
-    border-top-left-radius: 7px;
-    border-top-right-radius: 7px;
+  background: var(--dark-green);
+  color: white;
+  padding: 2px 5px;
+  display: flex;
+  justify-content: space-between;
+  font-size: 1.2rem;
+  border-top-left-radius: 7px;
+  border-top-right-radius: 7px;
 }
 
 /* Body */
 .popup-body {
-    padding: 15px;
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    color: white;
+  padding: 15px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  color: white;
 }
 
 .error-icon {
-    font-size: 2.5rem;
+  font-size: 2.5rem;
 }
 
 .error-msg p {
-    font-size: 1.2rem;
-    color: black;
-    margin: 0 0 10px 0;
+  font-size: 1.2rem;
+  color: black;
+  margin: 0 0 10px 0;
 }
 
 /* The OK Button */
 .ok-btn {
-    background: #675858;
-    border: 3px solid #fff;
-    border-right-color: #000;
-    border-bottom-color: #000;
-    padding: 5px 15px;
-    font-family: inherit;
-    color: white;
-    font-size: 1.2rem;
-    cursor: pointer;
+  background: #675858;
+  border: 3px solid #fff;
+  border-right-color: #000;
+  border-bottom-color: #000;
+  padding: 5px 15px;
+  font-family: inherit;
+  color: white;
+  font-size: 1.2rem;
+  cursor: pointer;
 }
 
 .ok-btn:active {
-    border: 2px solid #fa0000;
-    border-right-color: #fff;
-    border-bottom-color: #fff;
-    transform: translate(1px, 1px);
+  border: 2px solid #fa0000;
+  border-right-color: #fff;
+  border-bottom-color: #fff;
+  transform: translate(1px, 1px);
 }
 
 .cancel-btn {
-    background: var(--pink);
-    border: 3px solid #fff;
-    border-right-color: #000;
-    border-bottom-color: #000;
-    padding: 5px 15px;
-    font-family: inherit;
-    color: white;
-    font-size: 1.2rem;
-    cursor: pointer;
+  background: var(--pink);
+  border: 3px solid #fff;
+  border-right-color: #000;
+  border-bottom-color: #000;
+  padding: 5px 15px;
+  font-family: inherit;
+  color: white;
+  font-size: 1.2rem;
+  cursor: pointer;
 }
 .cancel-btn:active {
-    background-color: pink;
-    border: 2px solid #000;
-    border-right-color: #fff;
-    border-bottom-color: #fff;
-    transform: translate(1px, 1px);
+  background-color: pink;
+  border: 2px solid #000;
+  border-right-color: #fff;
+  border-bottom-color: #fff;
+  transform: translate(1px, 1px);
 }
 /* --- BIO STYLES --- */
-#bio.active  {
+#bio.active {
   display: block; /* <--- Use block instead! */
-    /* flex-direction: column; <--- DELETE THIS LINE (Block does this automatically) */
-    
-    max-height: 320px; 
-    overflow-y: auto; 
-    padding-right: 10px;
+  /* flex-direction: column; <--- DELETE THIS LINE (Block does this automatically) */
 
+  max-height: 320px;
+  overflow-y: auto;
+  padding-right: 10px;
 }
 @media (max-width: 640px) {
-    #bio.active {
-        max-height: none; 
-        overflow-y: visible; 
-        padding-right: 0; 
-    }
+  #bio.active {
+    max-height: none;
+    overflow-y: visible;
+    padding-right: 0;
+  }
 }
 .bio-text {
-    margin-top: 5px;
-    margin: 10px;
-    line-break:normal;
-    font-size: var(--font-size-base);
-    line-height: 1.5;
-    color: var(--text-main);
+  margin-top: 5px;
+  margin: 10px;
+  line-break: normal;
+  font-size: var(--font-size-base);
+  line-height: 1.5;
+  color: var(--text-main);
 }
 
 .bio-text strong {
-    color: var(--pink);
-    cursor: pointer;
-    font-weight: 500;
+  color: var(--pink);
+  cursor: pointer;
+  font-weight: 500;
 }
 /* --- CUSTOM CUTE SCROLLBAR --- */
 /* The width of the scrollbar */
 #bio::-webkit-scrollbar {
-    width: 12px;
+  width: 12px;
 }
 
 /* The background of the scrollbar rail */
 #bio::-webkit-scrollbar-track {
-    background: #fff5f5; /* Very light pink */
-    border-radius: 6px;
-    border: 1px solid #ffcaca;
+  background: #fff5f5; /* Very light pink */
+  border-radius: 6px;
+  border: 1px solid #ffcaca;
 }
 
 /* The moving part of the scrollbar */
 #bio::-webkit-scrollbar-thumb {
-    background-color: var(--pink); /* Your pink variable */
-    border-radius: 6px;
-    border: 2px solid #fff5f5; /* Makes it look like a capsule */
+  background-color: var(--pink); /* Your pink variable */
+  border-radius: 6px;
+  border: 2px solid #fff5f5; /* Makes it look like a capsule */
 }
 
 /* Hover effect */
 #bio::-webkit-scrollbar-thumb:hover {
-    background-color: var(--primary-color);
+  background-color: var(--primary-color);
 }
 /* RPG Dialogue Box */
 .typewriter {
-    font-size: var(--font-subheading-size);
-    color: rgb(160, 0, 0);
-    font-weight: 900;
-    overflow: hidden; /* Hide text until typed */
-    border-right: 3px solid var(--yellowgreen); /* The cursor */
-    white-space: nowrap; /* Keep on one line */
-    margin: 10px;
-    width: 0; /* Start at 0 width */
-    animation: 
-        typing 5.5s steps(30, end) infinite,
-        blink-caret 0.75s step-end infinite;
+  font-size: var(--font-subheading-size);
+  color: rgb(160, 0, 0);
+  font-weight: 900;
+  overflow: hidden; /* Hide text until typed */
+  border-right: 3px solid var(--yellowgreen); /* The cursor */
+  white-space: nowrap; /* Keep on one line */
+  margin: 10px;
+  width: 0; /* Start at 0 width */
+  animation: typing 5.5s steps(30, end) infinite,
+    blink-caret 0.75s step-end infinite;
 }
 
 @keyframes typing {
+  0% {
+    width: 0;
+  }
 
-    0% { width: 0 }
-   
-    45% { width: 100% }
-    
-    70% { width: 100% }
+  45% {
+    width: 100%;
+  }
 
-    100% { width: 0  }
+  70% {
+    width: 100%;
+  }
+
+  100% {
+    width: 0;
+  }
 }
 
 @keyframes blink-caret {
-    from, to { border-color: transparent }
-    50% { border-color: var(--secondary-color); }
+  from,
+  to {
+    border-color: transparent;
+  }
+  50% {
+    border-color: var(--secondary-color);
+  }
 }
-
 
 @media (max-width: 450px) {
-    .typewriter {
-        white-space: normal; /* Allow wrapping */
-        border-right: none;  /* Remove cursor */
-        width: 100%;         /* Show all text immediately */
-        animation: none;     /* Disable animation */
-    }
-
+  .typewriter {
+    white-space: normal; /* Allow wrapping */
+    border-right: none; /* Remove cursor */
+    width: 100%; /* Show all text immediately */
+    animation: none; /* Disable animation */
+  }
 }
-
-
 
 /* --- WORKS SECTION: LEVEL SELECT --- */
 
 .works-section {
-    width: 100%;
-    min-height: 100vh;
-    background-image: url(aboutme-images/aboutme-bg.png);
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-color: transparent; /* Darker background for contrast */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 2rem;
-    position: relative;
-    color: whitesmoke;
-    
+  width: 100%;
+  min-height: 100vh;
+  background-image: url(aboutme-images/aboutme-bg.png);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-color: transparent; /* Darker background for contrast */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+  position: relative;
+  color: whitesmoke;
 }
 
 .level-select-container {
-    max-width: 1000px;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    gap: 30px;
+  max-width: 1000px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
 }
 
 .level-header {
-    text-align: center;
-    font-family: 'VT323', monospace;
+  text-align: center;
+  font-family: "VT323", monospace;
 }
 
 .level-header h2 {
-    font-size: 4rem;
-    color: var(--yellowgreen);
-    text-shadow: 4px 4px 0px #000;
-    margin-bottom: 5px;
-    animation: blink-text 2s infinite;
+  font-size: 4rem;
+  color: var(--yellowgreen);
+  text-shadow: 4px 4px 0px #000;
+  margin-bottom: 5px;
+  animation: blink-text 2s infinite;
 }
 
 .header-decoration {
-    font-size: 1.5rem;
-    color: var(--pink);
-    letter-spacing: 2px;
+  font-size: 1.5rem;
+  color: var(--pink);
+  letter-spacing: 2px;
 }
 
 /* --- THE MAP GRID --- */
 /* --- THE GEOCITIES MAP GRID --- */
 .world-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 25px;
-    padding: 10px;
-    /* No border on the grid itself, the windows ARE the border */
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 25px;
+  padding: 10px;
+  /* No border on the grid itself, the windows ARE the border */
 }
 
 /* 1. The Window Frame (Standard Windows 95 Grey) */
 .geo-window {
-    background-color: #c0c0c0; /* Classic Silver */
-    border-top: 2px solid #fff;
-    border-left: 2px solid #fff;
-    border-right: 2px solid #000;
-    border-bottom: 2px solid #000;
-    box-shadow: 4px 4px 0px rgba(0,0,0,0.5);
-    display: flex;
-    flex-direction: column;
-    padding: 3px;
-    cursor: pointer;
-    transition: transform 0.2s, box-shadow 0.2s;
-    height: 280px; /* Fixed height for uniformity */
+  background-color: #c0c0c0; /* Classic Silver */
+  border-top: 2px solid #fff;
+  border-left: 2px solid #fff;
+  border-right: 2px solid #000;
+  border-bottom: 2px solid #000;
+  box-shadow: 4px 4px 0px rgba(0, 0, 0, 0.5);
+  display: flex;
+  flex-direction: column;
+  padding: 3px;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+  height: 280px; /* Fixed height for uniformity */
 }
 
 .geo-window:hover {
-    transform: translateY(-5px);
-    box-shadow: 8px 8px 0px rgba(0,0,0,0.5);
-    z-index: 10;
+  transform: translateY(-5px);
+  box-shadow: 8px 8px 0px rgba(0, 0, 0, 0.5);
+  z-index: 10;
 }
 
 /* 2. The Title Bar (Blue Gradient) */
 .geo-title-bar {
-    background: linear-gradient(90deg, #000080, #1084d0); /* Navy to Blue */
-    color: white;
-    padding: 2px 4px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    font-family: sans-serif; /* System font */
-    font-size: 12px;
-    font-weight: bold;
-    letter-spacing: 0.5px;
-    margin-bottom: 3px;
+  background: linear-gradient(90deg, #000080, #1084d0); /* Navy to Blue */
+  color: white;
+  padding: 2px 4px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-family: sans-serif; /* System font */
+  font-size: 12px;
+  font-weight: bold;
+  letter-spacing: 0.5px;
+  margin-bottom: 3px;
 }
 
 .win-icon {
-    width: 14px;
-    height: 14px;
-    margin-right: 5px;
+  width: 14px;
+  height: 14px;
+  margin-right: 5px;
 }
 
 .win-btns {
-    display: flex;
-    gap: 2px;
+  display: flex;
+  gap: 2px;
 }
 .win-btns span {
-    background: #c0c0c0;
-    color: black;
-    border: 1px outset #fff;
-    width: 14px;
-    height: 14px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 10px;
-    line-height: 10px;
-    cursor: default;
+  background: #c0c0c0;
+  color: black;
+  border: 1px outset #fff;
+  width: 14px;
+  height: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  line-height: 10px;
+  cursor: default;
 }
 
 /* 3. The "Webpage" Body (Inset look) */
 .geo-body {
-    flex-grow: 1;
-    border: 2px inset #fff; /* Sunken look */
-    background-color: #fff;
-    overflow: hidden;
-    position: relative;
-    font-family: "Times New Roman", Times, serif; /* The most important part! */
+  flex-grow: 1;
+  border: 2px inset #fff; /* Sunken look */
+  background-color: #fff;
+  overflow: hidden;
+  position: relative;
+  font-family: "Times New Roman", Times, serif; /* The most important part! */
 }
 
 /* --- THEMES (Fake Tiled Backgrounds) --- */
 
 /* Forest: Green checkered pattern */
 .theme-forest {
-    background-color: #e0ffe0;
-    background-image: 
-        linear-gradient(45deg, #ccffcc 25%, transparent 25%, transparent 75%, #ccffcc 75%, #ccffcc), 
-        linear-gradient(45deg, #ccffcc 25%, transparent 25%, transparent 75%, #ccffcc 75%, #ccffcc);
-    background-size: 20px 20px;
-    background-position: 0 0, 10px 10px;
+  background-color: #e0ffe0;
+  background-image: linear-gradient(
+      45deg,
+      #ccffcc 25%,
+      transparent 25%,
+      transparent 75%,
+      #ccffcc 75%,
+      #ccffcc
+    ),
+    linear-gradient(
+      45deg,
+      #ccffcc 25%,
+      transparent 25%,
+      transparent 75%,
+      #ccffcc 75%,
+      #ccffcc
+    );
+  background-size: 20px 20px;
+  background-position: 0 0, 10px 10px;
 }
 
 /* Space: Black with stars */
 .theme-space {
-    background-color: #000;
-    background-image: 
-        radial-gradient(white 1px, transparent 1px),
-        radial-gradient(white 1px, transparent 1px);
-    background-size: 50px 50px;
-    background-position: 0 0, 25px 25px;
-    color: white;
+  background-color: #000;
+  background-image: radial-gradient(white 1px, transparent 1px),
+    radial-gradient(white 1px, transparent 1px);
+  background-size: 50px 50px;
+  background-position: 0 0, 25px 25px;
+  color: white;
 }
 
 /* Tech: Grid lines */
 .theme-tech {
-    background-color: #000033;
-    background-image: 
-        linear-gradient(rgba(0, 255, 0, 0.2) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(0, 255, 0, 0.2) 1px, transparent 1px);
-    background-size: 20px 20px;
-    color: #00ff00;
+  background-color: #000033;
+  background-image: linear-gradient(rgba(0, 255, 0, 0.2) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 255, 0, 0.2) 1px, transparent 1px);
+  background-size: 20px 20px;
+  color: #00ff00;
 }
 
 /* Clouds: Blue with CSS clouds */
 .theme-clouds {
-    background-color: #87CEEB;
-    background-image: radial-gradient(white 20%, transparent 20%);
-    background-size: 30px 30px;
-    background-position: 0 0;
+  background-color: #87ceeb;
+  background-image: radial-gradient(white 20%, transparent 20%);
+  background-size: 30px 30px;
+  background-position: 0 0;
 }
 
 /* --- Content Styling --- */
 .geo-content {
-    padding: 10px;
-    text-align: center;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+  padding: 10px;
+  text-align: center;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .geo-header {
-    font-size: 1.2rem;
-    margin: 5px 0;
-    text-align: center;
-    text-decoration: underline;
+  font-size: 1.2rem;
+  margin: 5px 0;
+  text-align: center;
+  text-decoration: underline;
 }
 
 .geo-separator {
-    width: 80%;
-    border-bottom: 2px groove #c0c0c0;
-    margin: 5px auto;
+  width: 80%;
+  border-bottom: 2px groove #c0c0c0;
+  margin: 5px auto;
 }
 
 .center-img {
-    font-size: 3rem;
-    margin: 10px 0;
-    animation: bounce 2s infinite;
+  font-size: 3rem;
+  margin: 10px 0;
+  animation: bounce 2s infinite;
 }
 
 .geo-link {
-    color: blue;
-    text-decoration: underline;
-    font-size: 0.9rem;
-    margin-bottom: auto; /* Pushes text to bottom */
+  color: blue;
+  text-decoration: underline;
+  font-size: 0.9rem;
+  margin-bottom: auto; /* Pushes text to bottom */
 }
-.geo-link:visited { color: purple; }
-.geo-link:active { color: red; }
+.geo-link:visited {
+  color: purple;
+}
+.geo-link:active {
+  color: red;
+}
 
 /* The "Blinking New" GIF simulation */
 .blinking-new {
-    background: red;
-    color: yellow;
-    font-weight: bold;
-    font-size: 0.7rem;
-    padding: 2px 5px;
-    position: absolute;
-    top: 5px;
-    left: 5px;
-    border: 1px dotted yellow;
-    animation: blink-fast 0.5s infinite;
-    transform: rotate(-10deg);
+  background: red;
+  color: yellow;
+  font-weight: bold;
+  font-size: 0.7rem;
+  padding: 2px 5px;
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  border: 1px dotted yellow;
+  animation: blink-fast 0.5s infinite;
+  transform: rotate(-10deg);
 }
 
 /* Marquee Effect at Bottom */
 .scrolling-text {
-    width: 100%;
-    background: #000;
-    color: #00ff00;
-    font-family: "Courier New", monospace;
-    font-size: 10px;
-    white-space: nowrap;
-    overflow: hidden;
-    padding: 2px 0;
-    margin-top: 10px;
-    border: 1px inset #fff;
+  width: 100%;
+  background: #000;
+  color: #00ff00;
+  font-family: "Courier New", monospace;
+  font-size: 10px;
+  white-space: nowrap;
+  overflow: hidden;
+  padding: 2px 0;
+  margin-top: 10px;
+  border: 1px inset #fff;
 }
 
 .scrolling-text span {
-    display: inline-block;
-    padding-left: 100%;
-    animation: marquee 8s linear infinite;
+  display: inline-block;
+  padding-left: 100%;
+  animation: marquee 8s linear infinite;
 }
 
 @keyframes marquee {
-    0%   { transform: translate(0, 0); }
-    100% { transform: translate(-100%, 0); }
+  0% {
+    transform: translate(0, 0);
+  }
+  100% {
+    transform: translate(-100%, 0);
+  }
 }
 
 @keyframes blink-fast {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0; }
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
 }
 
 @keyframes bounce {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-5px); }
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
 }
 
 /* Mobile Tweaks */
 @media (max-width: 640px) {
-    .world-grid {
-        grid-template-columns: 1fr; /* Stack 1 column on phone */
-    }
-    .geo-window {
-        height: auto;
-        min-height: 250px;
-    }
+  .world-grid {
+    grid-template-columns: 1fr; /* Stack 1 column on phone */
+  }
+  .geo-window {
+    height: auto;
+    min-height: 250px;
+  }
 }
 
 /* --- MISSION BRIEFING BOX --- */
 .mission-briefing {
-    background: #000;
-    border: 4px solid var(--pink);
-    padding: 20px;
-    font-family: 'VT323', monospace;
-    position: relative;
-    min-height: 120px; /* Prevents jumping when text changes */
-    box-shadow: 8px 8px 0px rgba(0,0,0,0.5);
+  background: #000;
+  border: 4px solid var(--pink);
+  padding: 20px;
+  font-family: "VT323", monospace;
+  position: relative;
+  min-height: 120px; /* Prevents jumping when text changes */
+  box-shadow: 8px 8px 0px rgba(0, 0, 0, 0.5);
 }
 
 .briefing-header {
-    background: var(--pink);
-    color: var(--text-main);
-    display: inline-block;
-    padding: 2px 8px;
-    font-weight: bold;
-    margin-bottom: 10px;
+  background: var(--pink);
+  color: var(--text-main);
+  display: inline-block;
+  padding: 2px 8px;
+  font-weight: bold;
+  margin-bottom: 10px;
 }
 
 #brief-title {
-    font-size: 2rem;
-    color: var(--yellowgreen);
-    margin: 0;
+  font-size: 2rem;
+  color: var(--yellowgreen);
+  margin: 0;
 }
 
 #brief-desc {
-    font-size: 1.4rem;
-    color: #ccc;
-    margin: 5px 0;
+  font-size: 1.4rem;
+  color: #ccc;
+  margin: 5px 0;
 }
 
 .brief-stats {
-    font-size: 1.2rem;
-    color: var(--pink);
-    margin-top: 10px;
-    border-top: 1px dashed #333;
-    padding-top: 5px;
+  font-size: 1.2rem;
+  color: var(--pink);
+  margin-top: 10px;
+  border-top: 1px dashed #333;
+  padding-top: 5px;
 }
 
 @keyframes blink-text {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.5; }
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
 }
 
 /* Mobile Tweaks */
 @media (max-width: 640px) {
-    .level-header h2 { font-size: 3rem; }
-    .world-grid { grid-template-columns: 1fr; } /* Stack cards on phone */
+  .level-header h2 {
+    font-size: 3rem;
+  }
+  .world-grid {
+    grid-template-columns: 1fr;
+  } /* Stack cards on phone */
 }
-
-
-
 
 /* --- CONTACT SECTION: WHIMSICAL STATIONERY --- */
 .contact-section {
-    width: 100%;
-    min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 2rem;
-    background: transparent;
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+  background: transparent;
 }
 
 /* The Paper Container */
 .letter-container {
-    position: relative;
-    width: 100%;
-    max-width: 600px;
-    animation: float-paper 6s ease-in-out infinite;
+  position: relative;
+  width: 100%;
+  max-width: 600px;
+  animation: float-paper 6s ease-in-out infinite;
 }
 
 /* The Main Paper */
 .stationery-paper {
-    background-color: rgb(203, 255, 239);
-    border-radius: 10px;
-    padding: 40px;
-    box-shadow: 
-        0 0 0 3px var(--dark-red), /* Outer border */
-        15px 15px 2px rgba(200, 77, 95, 0.4);
-    position: relative;
+  background-color: rgb(203, 255, 239);
+  border-radius: 10px;
+  padding: 40px;
+  box-shadow: 0 0 0 3px var(--dark-red),
+    /* Outer border */ 15px 15px 2px rgba(200, 77, 95, 0.4);
+  position: relative;
 }
 
 .letter-header {
-    text-align: center;
-    margin-bottom: 20px;
-    font-family: 'VT323', monospace;
-    font-size: var(--font-heading-size);
-    color: var(--pink);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 15px;
+  text-align: center;
+  margin-bottom: 20px;
+  font-family: "VT323", monospace;
+  font-size: var(--font-heading-size);
+  color: var(--pink);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
 }
 
 .letter-header h2 {
-    font-size: var(--font-heading-size);
-    margin: 0;
-    text-shadow: 2px 2px 0px #fff;
-    color: var(--dark-red);
+  font-size: var(--font-heading-size);
+  margin: 0;
+  text-shadow: 2px 2px 0px #fff;
+  color: var(--dark-red);
 }
 
 .stamp-icon {
-    font-size: var(--font-subheading-size);
-    animation: spin-slow 10s linear infinite;
+  font-size: var(--font-subheading-size);
+  animation: spin-slow 10s linear infinite;
 }
 
 /* Form Styles */
 .form-group {
-    margin-bottom: 15px;
-    font-family: 'VT323', monospace;
-    font-size: var(--font-size-base);
-    color: var(--dark-red);
+  margin-bottom: 15px;
+  font-family: "VT323", monospace;
+  font-size: var(--font-size-base);
+  color: var(--dark-red);
 }
 
 .cute-input {
-    width: 100%;
-    border: none;
-    background: transparent;
-    border-bottom: 2px dashed var(--pink);
-    font-family: 'VT323', monospace;
-    font-size: var(--font-size-base);
-    color: #555;
-    padding: 5px;
-    outline: none;
-    transition: border-color 0.3s;
+  width: 100%;
+  border: none;
+  background: transparent;
+  border-bottom: 2px dashed var(--pink);
+  font-family: "VT323", monospace;
+  font-size: var(--font-size-base);
+  color: #555;
+  padding: 5px;
+  outline: none;
+  transition: border-color 0.3s;
 }
 
 .cute-input:focus {
-    border-bottom: 2px solid var(--yellowgreen);
-    color: #000;
+  border-bottom: 2px solid var(--yellowgreen);
+  color: #000;
 }
 
 .cute-divider {
-    width: 100%;
-    height: 2px;
-    background: repeating-linear-gradient(90deg, var(--pink) 0, var(--pink) 5px, transparent 5px, transparent 10px);
+  width: 100%;
+  height: 2px;
+  background: repeating-linear-gradient(
+    90deg,
+    var(--pink) 0,
+    var(--pink) 5px,
+    transparent 5px,
+    transparent 10px
+  );
 }
 
 /* The Lined Paper Text Area */
 .message-group {
-    margin-top: 20px;
-    background: #fff; /* White box for text */
-    border: 3px solid var(--dark-red);
-    border-radius: 10px;
-    padding: 10px;
-    position: relative;
+  margin-top: 20px;
+  background: #fff; /* White box for text */
+  border: 3px solid var(--dark-red);
+  border-radius: 10px;
+  padding: 10px;
+  position: relative;
 }
 
 /* Create the "Notebook Lines" effect */
 .cute-textarea {
-    width: 100%;
-    height: 150px;
-    border: none;
-    line-height: 30px; /* Matches the gradient lines */
-    font-family: 'VT323', monospace;
-    font-size: var(--font-size-base);
-    padding: 0 10px;
-    outline: none;
-    resize: none;
-    color: #333;
+  width: 100%;
+  height: 150px;
+  border: none;
+  line-height: 30px; /* Matches the gradient lines */
+  font-family: "VT323", monospace;
+  font-size: var(--font-size-base);
+  padding: 0 10px;
+  outline: none;
+  resize: none;
+  color: #333;
 }
 
 /* Footer & Button */
 .letter-footer {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 20px;
 }
 
 .heart-btn {
-    background: var(--pink);
-    color: white;
-    font-family: 'VT323', monospace;
-    font-size: var(--font-size-base);
-    border: 2px solid white;
-    border-radius: 30px;
-    padding: 8px 30px;
-    cursor: pointer;
-    box-shadow: 4px 4px 0px rgba(0,0,0,0.1);
-    transition: transform 0.2s, box-shadow 0.2s;
-    display: flex;
-    align-items: center;
-    gap: 10px;
+  background: var(--pink);
+  color: white;
+  font-family: "VT323", monospace;
+  font-size: var(--font-size-base);
+  border: 2px solid white;
+  border-radius: 30px;
+  padding: 8px 30px;
+  cursor: pointer;
+  box-shadow: 4px 4px 0px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s, box-shadow 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
 .heart-btn:hover {
-    transform: translateY(-3px) scale(1.05);
-    box-shadow: 6px 6px 0px rgba(0,0,0,0.1);
-    background: var(--yellowgreen);
-    color: var(--text-main);
+  transform: translateY(-3px) scale(1.05);
+  box-shadow: 6px 6px 0px rgba(0, 0, 0, 0.1);
+  background: var(--yellowgreen);
+  color: var(--text-main);
 }
 
 .heart-btn:active {
-    transform: translateY(0);
-    box-shadow: 0 0 0;
+  transform: translateY(0);
+  box-shadow: 0 0 0;
 }
 
 .decor-sticker {
-    font-size: calc(var(--font-heading-size) * 2);
-    transform: rotate(10deg);
-    filter: drop-shadow(2px 2px 0px rgba(0,0,0,0.1));
+  font-size: calc(var(--font-heading-size) * 2);
+  transform: rotate(10deg);
+  filter: drop-shadow(2px 2px 0px rgba(0, 0, 0, 0.1));
 }
 
 /* Floating Decorations outside the paper */
-.bg-decoration-1, .bg-decoration-2 {
-    position: absolute;
-    font-size: 4rem;
-    opacity: 0.6;
-    z-index: -1;
-    animation: float-medium 4s ease-in-out infinite;
+.bg-decoration-1,
+.bg-decoration-2 {
+  position: absolute;
+  font-size: 4rem;
+  opacity: 0.6;
+  z-index: -1;
+  animation: float-medium 4s ease-in-out infinite;
 }
 
-.bg-decoration-1 { top: -20px; left: -30px; transform: rotate(-15deg); }
-.bg-decoration-2 { bottom: -20px; right: -30px; transform: rotate(15deg); }
+.bg-decoration-1 {
+  top: -20px;
+  left: -30px;
+  transform: rotate(-15deg);
+}
+.bg-decoration-2 {
+  bottom: -20px;
+  right: -30px;
+  transform: rotate(15deg);
+}
 
 @keyframes float-paper {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-10px); }
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
 }
 
 @keyframes spin-slow {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 /* Mobile Tweaks */
 @media (max-width: 640px) {
-    .stationery-paper { padding: 20px; }
-    .letter-header h2 { font-size: 2rem; }
+  .stationery-paper {
+    padding: 20px;
+  }
+  .letter-header h2 {
+    font-size: 2rem;
+  }
+}
+
+/* ==========================
+   Figma assets (main-images/) overrides
+   These rules render large artwork using background-images from the
+   `main-images/` folder as requested. They keep layout responsive via vw/vh.
+   ========================== */
+
+/* Background layers (use the same element IDs from HTML) */
+.bg-layer#overlay-background {
+  position: absolute;
+  inset: 0; /* fill container */
+  background-image: url("main-images/overlay-backgr.png");
+  background-size: cover;
+  background-position: center;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.bg-layer#overlay {
+  position: absolute;
+  inset: 0;
+  background-image: url("main-images/overlay.png");
+  background-size: cover;
+  background-position: center;
+  opacity: 0.93;
+  mix-blend-mode: var(--overlay-blend);
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Main title as a background image so it scales nicely */
+.main-title-container {
+  position: relative;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 5;
+}
+.main-title {
+  width: 70vw;
+  max-width: 980px;
+  height: 46vh;
+  background-image: url("main-images/main-title.png");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  transform: rotate(-15deg);
+  pointer-events: none;
+}
+
+/* Stickers (decorative elements) pulled from main-images */
+.sticker {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 6;
+}
+.sticker-item {
+  position: absolute;
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+  pointer-events: none;
+}
+
+#frog-sticker {
+  left: 3.5vw;
+  top: 6vh;
+  width: 18vw;
+  height: 22vh;
+  background-image: url("main-images/frog-sticker.png");
+}
+#treelog {
+  left: 6vw;
+  top: 34vh;
+  width: 22vw;
+  height: 24vh;
+  background-image: url("main-images/treelog.png");
+}
+#tomato-sticker {
+  right: 6vw;
+  top: 18vh;
+  width: 12vw;
+  height: 14vh;
+  background-image: url("main-images/tomato-sticker.png");
+}
+#cat-sticker {
+  right: 3vw;
+  top: 6vh;
+  width: 12vw;
+  height: 12vh;
+  background-image: url("main-images/cat-sticker.png");
+}
+
+/* Small adjustments for mobile */
+@media (max-width: 640px) {
+  .main-title {
+    width: 86vw;
+    height: 34vh;
+    transform: rotate(-10deg);
+  }
+  #frog-sticker {
+    left: 6vw;
+    top: 10vh;
+    width: 26vw;
+    height: 24vh;
+  }
+  #treelog {
+    left: 10vw;
+    top: 44vh;
+    width: 28vw;
+    height: 26vh;
+  }
+  #tomato-sticker {
+    right: 4vw;
+    top: 28vh;
+    width: 20vw;
+    height: 18vh;
+  }
+  #cat-sticker {
+    right: 3vw;
+    top: 10vh;
+    width: 18vw;
+    height: 18vh;
+  }
 }

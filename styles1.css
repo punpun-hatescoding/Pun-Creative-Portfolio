@@ -1,0 +1,308 @@
+
+
+html {
+  /* 1. Makes the jump smooth instead of instant */
+  scroll-behavior: smooth;
+  /* 2. Offsets the scroll position */
+  scroll-padding-top: 20px; /*this is for sticky header height*/
+}
+/* 3. Mobile Size Adjustment */
+@media (max-width: 640px) {
+  html {
+    scroll-padding-top: 400px; /* bigger mobile header + padding */
+  }
+}
+:root {
+
+  /* Blend mode variables - change these to try different effects (e.g. screen, overlay, multiply, normal) */
+  --overlay-blend: multiply;
+  /* Define color and sizing variables */
+  --background-color: #ffedcd;
+  --primary-color: rgb(166, 0, 0);
+  --secondary-color: #459f3791;
+  --thirdary-color: #47240091;
+  --dark-green: #0a390a;
+  --dark-red: #660000;
+  --pink: rgb(255, 128, 159);
+  --yellowgreen: rgb(180, 255, 128);
+  --paragraph-color: #47240091;
+  --font-subheading-size: clamp(1rem, 4vw, 2rem);
+  --font-size-base: clamp(1rem, 4vw, 1.3rem);
+  --font-heading-size: clamp(1.5rem, 5vw, 2rem);
+  --font-family-base: "vt323", monospace;
+  --text-main: #333;
+  /* Responsive heading size between 2rem and 4rem based on viewport width */
+  --spacing-unit: 8px;
+  --radius: 15px;
+  --space: 2rem;
+  /* Width reserved for the price column - keeps prices aligned */
+  --price-col: clamp(4.5rem, 6.5vw, 6rem);
+}
+
+body {
+  width: 100%;
+  min-height: 100vh; /* changed height to min-height */
+  overflow: visible;
+  padding: 0;
+  margin: 0;
+  font-family: var(--font-family-base);
+  cursor: grab;
+}
+@media (max-width: 400px) {
+  body {
+    height: 200vh; /* allow scrolling on mobile */
+  }
+}
+
+#npc-follower {
+  position: fixed;
+  width: 100px; /* Stays on screen even if you scroll */ /* Size of the emoji */
+  pointer-events: none; /* CRITICAL: Lets you click through the character */
+  z-index: 9999; /* Always on top */
+  transition: transform 0.2s ease-out; /* The "lag" effect */
+  image-rendering: pixelated;
+  scale: 2;
+}
+#npc-follower img {
+  width: 3.5rem;
+  margin-left: 0;
+  padding: 0;
+}
+.sparkle {
+  position: fixed;
+  width: 25px;
+  height: 25px;
+  background-image: url("images/sparkle.png");
+  background-size: cover;
+  background-color: transparent;
+  transform: rotate(20deg);
+  /* The animation definition */
+  animation: sparkle-fall 2s ease-in-out forwards;
+  mix-blend-mode: hard-light;
+  z-index: 9999;
+  pointer-events: none;
+}
+
+/* The animation keyframes: fade out, drop down, shrink */
+@keyframes sparkle-fall {
+  0% {
+    opacity: 1;
+    transform: translate(0, 0) scale(1);
+  }
+  50% {
+    opacity: 0.7;
+    transform: translate(var(--random-x), 75px) scale(0); /* Falls down 25px */
+  }
+  100% {
+    opacity: 0;
+    transform: translate(var(--random-x), 150px) scale(0); /* Falls down 50px */
+  }
+}
+
+
+header {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between; /* Perfect for Logo -- Menu */
+  top: 0;
+  padding: 0.5rem 4vw;
+
+  width: 100%;
+  height: 4rem;
+
+  margin: 0 auto;
+  overflow: visible !important;
+  z-index: 2000;
+  background-color: rgb(116, 0, 35);
+  box-shadow: 0 2px 10px rgba(0, 90, 25, 0.446);
+}
+
+/* --- RESPONSIVE LOGO --- */
+
+.logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* format: clamp(MIN, IDEAL, MAX) */
+  width: clamp(80px, 15vw, 100px);
+  height: auto;
+  /* Remove margins to let Flexbox handle alignment in the header */
+  margin: 0.5rem;
+  padding: 0.5rem;
+  z-index: 50; /* Ensure it stays above background */
+}
+
+.logo img {
+  max-width: 100%; /* Fills the .logo container width */
+  height: auto; /* Maintains aspect ratio */
+  object-fit: contain;
+  object-position: center center;
+}
+/* Main Title Container */
+/* 1. Make the container a Flex column to center everything easily */
+.main-title-container-1 {
+  position: absolute; /* Keep this if you need it over a background */
+  width: 100vw;
+  height: 90vh; /* Takes up most of the viewport */
+  top: 0;
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Centers items horizontally */
+  justify-content: center; /* Centers items vertically */
+  z-index: 10; /* Lets clicks pass through to background */
+}
+index.html body {
+    margin: 0;
+    padding: 0;
+    /* Dark brown background with teal dot pattern */
+    background-color: #3e2a24;
+    background-image: radial-gradient(#4a9290 20%, transparent 20%), radial-gradient(#4a9290 20%, transparent 20%);
+    background-position: 0 0, 25px 25px;
+    background-size: 50px 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+  }
+
+.frame-container {
+    /* Outer white rounded rectangle frame */
+    background-color: #ffffff;
+    border-radius: 30px;
+    /* Pink shadow effect at the bottom */
+    box-shadow: 0 20px 0 #cfa2a3, 0 25px 15px rgba(0,0,0,0.1);
+    padding: 30px;
+    width: 80%;
+    max-width: 600px;
+    box-sizing: border-box;
+  }
+
+  .content-box {
+    /* Inner white rounded content box */
+    background-color: #ffffff;
+    border-radius: 20px;
+    box-shadow: inset 0 5px 15px rgba(0,0,0,0.1);
+    padding: 20px;
+    min-height: 200px; /* Adjust height as needed for content */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #333;
+    font-family: sans-serif;
+  }
+
+  @media (max-width: 600px) {
+    .frame-container {
+      width: 90%;
+      padding: 20px;
+      border-radius: 20px;
+      box-shadow: 0 15px 0 #cfa2a3, 0 20px 10px rgba(0,0,0,0.1);
+    }
+    .content-box {
+      min-height: 150px;
+    }
+  }
+/* 2. The wrapper for your two images */
+#title {
+  position: relative;
+  width: 100vw;
+  height: 100vh; /* Define the playground size */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+/* 2. The PC Image Wrapper - Positioned Absolute BEHIND text */
+#old-pc {
+  position: absolute;
+  top: 0%;
+  left: 0;
+  z-index: -10; /* Lowest layer */
+  /* Size logic: allow width to grow, but NEVER be taller/wider than screen */
+  width: 100vw;
+  transform: scale(1);
+  display: flex; /* Removes accidental whitespace below image */
+  align-items: center;
+  justify-content: center;
+}
+@media (max-width: 640px) {
+  #old-pc {
+    top: 30%; /* Push it down a bit on mobile */
+  }
+}
+/* 3. The Actual PC Image - Constrained */
+#old-pc img {
+  width: auto;
+  height: auto;
+  /* CRITICAL: Keep it from exploding */
+  max-width: 90vw; 
+  max-height: 80vh; 
+  object-fit: contain;
+}
+
+/* 3. Style "Welcome To" */
+#welcome-to {
+  display: block;
+  /* Instead of scale(0.3), we just set the width to 30% */
+  width: 30%; 
+  max-width: 300px; /* Stop it from getting too huge on big screens */
+  min-width: 150px; /* Stop it from getting too tiny on mobile */
+  height: auto;
+  margin-bottom: 1rem; /* Small space between this and the next image */
+}
+
+/* 4. Style "My Portfolio" */
+#my-portfolio {
+  display: block;
+  /* Instead of scale(0.6), we set width to 60% */
+  width: 60%;
+  max-width: 600px;
+  min-width: 280px;
+  height: auto;
+  margin-top: 0; /* No need for negative margins anymore */
+}
+
+/* --- RESPONSIVE ADJUSTMENTS --- */
+/* We only need to change WIDTH, not positions */
+
+@media (max-width: 800px) {
+  #welcome-to {
+    width: 50%; /* Make it wider on tablets */
+  }
+  #my-portfolio {
+    width: 80%; /* Make it wider on tablets */
+  }
+}
+
+@media (max-width: 640px) {
+  #welcome-to {
+    width: 60%; /* Even wider on mobile */
+    margin-bottom: 0.5rem;
+  }
+  #my-portfolio {
+    width: 90%; /* Fill most of the screen width on mobile */
+  }
+}
+
+
+/* Zoom Button Styles */
+#zoom-btn {
+  position: relative;
+  z-index: 101; /* Above the monitor */
+  margin-top: 1rem;
+  padding: 0.5rem 1rem;
+  font-size:var(--font-subheading-size);
+  font-family: var(--font-family-base);
+  background-color: var(--yellowgreen);
+  color: var(--text-main);
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  width: 30vw;
+  height: 10vh;
+}
