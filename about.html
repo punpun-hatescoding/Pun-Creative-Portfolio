@@ -21,12 +21,14 @@
 
             <!-- Dropdown Menu -->
             <div class="dropdown-wrapper">
+                
                 <button class="dropdown-btn">Menu ▼</button>
                 <nav class="nav dropdown-menu" id="site-navigation">
                     <a href="about.html">🌟 About Me</a>
                     <a href="works.html">🛠 Works</a>
                     <a href="contact.html">📬 Contact</a>
                 </nav>
+                
             </div>
         </header>
 <section id="about" class="about-section">
@@ -36,10 +38,10 @@
         <div class="window-header">
             <span>CHARACTER_PROFILE.EXE</span>
             <div class="window-controls">
-                <span class="win-btn">-</span>
-                <span class="win-btn">◻</span>
-                <span class="win-btn close-btn">x</span>
-            </div>
+    <span class="win-btn">-</span>
+    <span class="win-btn" onclick="toggleMaximize(this)">◻</span> 
+    <span class="win-btn close-btn" onclick="closeFolder('project-folio')">x</span>
+</div>
         </div>
         <div id="retro-popup" class="retro-popup">
     <div class="popup-header">
@@ -52,7 +54,7 @@
             <p>Wait!!! You haven't finished looking at my portfolio yet!
                Do you really want to leave? 🥹
             </p>
-            <a href="mainpage.html"><button class="ok-btn">Yes</button></a>
+            <a href="index.html"><button class="ok-btn">Yes</button></a>
             <a href="about.html"><button class="cancel-btn">I'll stay!!!</button></a>
         </div>
     </div>

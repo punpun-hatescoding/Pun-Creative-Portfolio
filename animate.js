@@ -237,6 +237,25 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
+// --- 4. DRAGGING STATE LOGIC ---
+document.addEventListener('DOMContentLoaded', () => {
+    const card = document.querySelector('.character-card');
+    const header = document.querySelector('.window-header');
+
+    if (card && header) {
+        // 1. Mouse Down: Start "Dragging" state
+        header.addEventListener('mousedown', () => {
+            card.classList.add('is-dragging');
+        });
+
+        // 2. Mouse Up: Stop "Dragging" state
+        // We listen on 'window' in case you drag cursor outside the box
+        window.addEventListener('mouseup', () => {
+            card.classList.remove('is-dragging');
+        });
+    }
+});
+
 
 // --- D. LEVEL SELECT HOVER LOGIC ---
     const worldCards = document.querySelectorAll('.world-card');
@@ -272,11 +291,57 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+// --- TOGGLE MAXIMIZE (With Icon Swap) ---
+// --- TOGGLE MAXIMIZE (With 3 Icon Options) ---
+function toggleMaximize(btn) {
+    const win = btn.closest('.project-window') || btn.closest('.character-card');
+    if (!win) return;
 
-    // --- E. SEND EMAIL LOGIC ---
-    const sendBtn = document.getElementById('send-btn');
-    if (sendBtn) {
-        sendBtn.addEventListener('click', () => {
+    const iconClassic = `
+    <svg viewBox="0 0 24 24" style="width:14px;height:14px;fill:currentColor;display:block;">
+        <path d="M4 8h10v10H4z m12 0h-2V6h6v10h-2z M20 6V4H14v2z"/>
+    </svg>`;
+
+    const restoreIcon = iconClassic; // <--- Change this to iconBoxInBox or iconClassic
+    
+    const maximizeIcon = "◻"; 
+
+    if (win.classList.contains('is-maximized')) {
+        // === RESTORE DOWN ===
+        win.classList.remove('is-maximized');
+
+        // Restore saved position
+        win.style.top = win.dataset.prevTop || '';
+        win.style.left = win.dataset.prevLeft || '';
+        win.style.transform = win.dataset.prevTransform || '';
+        
+        // Clean up memory
+        delete win.dataset.prevTop;
+        delete win.dataset.prevLeft;
+        delete win.dataset.prevTransform;
+
+        // Change icon back to empty square
+        btn.innerHTML = maximizeIcon;
+
+    } else {
+        // === MAXIMIZE ===
+        // Save current position
+        win.dataset.prevTop = win.style.top;
+        win.dataset.prevLeft = win.style.left;
+        win.dataset.prevTransform = win.style.transform;
+
+        win.classList.add('is-maximized');
+        win.style.transform = 'none';
+
+        // Change icon to your selected restore icon
+        btn.innerHTML = restoreIcon;
+    }
+}
+
+// --- E. SEND EMAIL LOGIC ---
+const sendBtn = document.getElementById('send-btn');
+if (sendBtn) {
+    sendBtn.addEventListener('click', () => {
             // 1. Change cursor to hourglass
             document.body.style.cursor = 'wait';
             
@@ -299,4 +364,56 @@ document.addEventListener('DOMContentLoaded', () => {
             }, 1500);
         });
     }
+// --- 5. ANIMATION CHANNEL PLAYLIST LOGIC ---
+// Function to update Player AND Info Box
+function updatePlayer(vimeoID, imageSrc, title, desc, tools, btn) {
     
+    // 1. Update Link & Image
+    const link = document.getElementById('main-video-link');
+    if (link) link.href = `https://vimeo.com/${vimeoID}`;
+
+    const img = document.getElementById('main-preview-image');
+    if (img) img.src = imageSrc;
+
+    // 2. Update Info Box Text
+    document.getElementById('video-title').innerText = title;
+    document.getElementById('video-desc').innerText = desc;
+    document.getElementById('video-tools').innerText = tools;
+
+    // 3. Highlight Active Button
+    const allTapes = document.querySelectorAll('.tape-btn');
+    allTapes.forEach(tape => tape.classList.remove('active'));
+    if (btn) btn.classList.add('active');
+}
+// Function to handle Mobile Arrow Navigation
+function navigatePlaylist(direction) {
+    // 1. Get all the tape buttons
+    const tapes = document.querySelectorAll('.tape-btn');
+    if (tapes.length === 0) return;
+
+    // 2. Find the index of the CURRENTLY active button
+    let currentIndex = 0;
+    tapes.forEach((tape, index) => {
+        if (tape.classList.contains('active')) {
+            currentIndex = index;
+        }
+    });
+
+    // 3. Calculate the NEW index
+    // direction is -1 (Prev) or +1 (Next)
+    let newIndex = currentIndex + direction;
+
+    // 4. Handle Looping (Infinite Scroll)
+    // If we go below 0, jump to the last tape
+    if (newIndex < 0) {
+        newIndex = tapes.length - 1;
+    } 
+    // If we go past the end, jump back to the first tape
+    else if (newIndex >= tapes.length) {
+        newIndex = 0;
+    }
+
+    // 5. Simulate a click on the new button
+    // This triggers your existing updatePlayer() function automatically!
+    tapes[newIndex].click();
+}

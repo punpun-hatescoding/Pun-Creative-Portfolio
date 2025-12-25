@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pun's Folio</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Aldrich&family=Almendra:ital,wght@0,400;0,700;1,400;1,700&family=Audiowide&family=DotGothic16&family=DynaPuff:wght@400..700&family=Griffy&family=Irish+Grover&family=Jacquard+12&family=Jockey+One&family=Love+Ya+Like+A+Sister&family=Russo+One&family=UnifrakturMaguntia&family=VT323&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+     
+      header {
+        display: none;
+      }
+      body {
+        margin: 0;
+        padding: 0;
+        min-height: 100vh;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="window-cinema" class="project-window hidden">
+      <div class="window-header">
+        <span>MEDIA_PLAYER.EXE</span>
+        <div class="window-controls">
+          <span class="win-btn" onclick="window.location.href='works.html'"
+            >-</span
+          >
+
+          <span class="win-btn" onclick="window.location.href='works.html'"
+            >✖</span
+          >
+        </div>
+      </div>
+
+      <div class="window-body"
+        style="
+          background-color: #2b2b2b;
+          color: white;
+          display: flex;
+          flex-direction: row;
+          gap: 20px;
+        ">
+        
+        <div class="cinema-screen" style="max-width: 100%; width: 100%">
+          <a
+            id="main-video-link"
+            href="https://vimeo.com/manage/videos/1149119631"
+            target="_blank"
+          >
+            <img
+              id="main-preview-image"
+              src="main-images/caro-btn.png"
+              alt="Click to Watch"
+            />
+
+            <div class="play-overlay">
+              <div class="play-circle">
+                <span class="play-icon">▶</span>
+              </div>
+              <span class="play-text">WATCH ON VIMEO</span>
+            </div>
+          </a>
+        </div>
+      <div class="mobile-nav">
+            <button class="nav-arrow" onclick="navigatePlaylist(-1)">◀ PREV</button>
+            <span class="nav-label">CHANNEL SELECT</span>
+            <button class="nav-arrow" onclick="navigatePlaylist(1)">NEXT ▶</button>
+        </div>
+        </div>
+        <div class="cinema-playlist">
+          <h3 class="retro-heading">> SELECT_TAPE:</h3>
+
+          <div class="tape-grid">
+            <button
+              class="tape-btn active"
+              onclick="updatePlayer('1149119631', 'main-images/caro-btn.png', 'Caviar', 'A short 2D animation exploring texture and movement.', 'Toon Boom Harmony', this)"
+            >
+              <span class="tape-icon">📼</span>
+              <div class="tape-info">
+                <strong>Caviar</strong>
+                <span style="font-size: 0.8rem; color: #aaa"
+                  >Short 2D Animation</span
+                >
+              </div>
+            </button>
+
+            <button
+              class="tape-btn"
+              onclick="updatePlayer('1149123743', 'main-images/fat-cat.png', 'Morph', 'A traditional animation study on shape shifting and fluid transitions.', 'TVPaint', this)"
+            >
+              <span class="tape-icon">📼</span>
+              <div class="tape-info">
+                <strong>Morph</strong>
+                <span style="font-size: 0.8rem; color: #aaa"
+                  >Traditional Animation</span
+                >
+              </div>
+            </button>
+
+            <button
+              class="tape-btn"
+              onclick="updatePlayer('1149124198', 'previews/flavors_of_home.png', 'Flavors of Home', 'An animatic capturing the essence of nostalgic meals.', 'Storyborder', this)"
+            >
+              <span class="tape-icon">📼</span>
+              <div class="tape-info">
+                <strong>Flavors of Home</strong>
+                <span style="font-size: 0.8rem; color: #aaa">Animatic</span>
+              </div>
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="video-details-panel">
+        <h2 id="video-title">Caviar</h2>
+        <div class="details-grid">
+          <div class="detail-row">
+            <span class="label">DESCRIPTION:</span>
+            <p id="video-desc">
+              A short 2D animation exploring texture and movement.
+            </p>
+          </div>
+          <div class="detail-row">
+            <span class="label">TOOLS:</span>
+            <p id="video-tools" style="color: #b6ffea">Toon Boom Harmony</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="animate.js"></script>
+  </body>
+</html>

@@ -28,7 +28,6 @@ html {
   }
 }
 :root {
-
   /* Blend mode variables - change these to try different effects (e.g. screen, overlay, multiply, normal) */
   --overlay-blend: multiply;
   /* Define color and sizing variables */
@@ -50,6 +49,14 @@ html {
   --spacing-unit: 8px;
   --radius: 15px;
   --space: 2rem;
+  --pattern-bg-color: #4a2521; /* The deep brown background */
+  --pattern-dot-color: #46a19f; /* The teal/cyan dot color */
+
+        /* Adjust sizes here to change the look pattern density.
+               Desktop/Tablet default sizes:
+            */
+  --dot-radius: 1.5px; /* How big the dots are */
+  --tile-size: 30px;
   /* Width reserved for the price column - keeps prices aligned */
   --price-col: clamp(4.5rem, 6.5vw, 6rem);
 }
@@ -62,59 +69,52 @@ body {
   margin: 0;
   font-family: var(--font-family-base);
   cursor: grab;
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  background-color: var(--pattern-bg-color);
+  background-image: 
+  radial-gradient(
+      circle,
+      var(--pattern-dot-color) var(--dot-radius),
+      transparent calc(var(--dot-radius) + 0.5px)
+    ),
+   
+      radial-gradient(
+        circle,
+        var(--pattern-dot-color) var(--dot-radius),
+        transparent calc(var(--dot-radius) + 0.5px)
+      );
+  background-size: var(--tile-size) var(--tile-size);
+  background-position: calc(var(--tile-size) / 2) calc(var(--tile-size) / 2),
+    0 0;
 }
+
 @media (max-width: 400px) {
   body {
-    height: 200vh; /* allow scrolling on mobile */
+    height: auto; /* allow scrolling on mobile */
   }
 }
 
-#npc-follower {
 
-/* --- Figma screen sections ---
-   These two sections render the designs you referenced. Place the exported
-   Figma images in `main-images/` with the names below.
-*/
-
+ 
 .figma-screen {
-  width: 100vw;
-  display: block;
-  background-color: #000;
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: cover;
-  position: relative;
-  z-index: 2;
-  /* target laptop canvas: 1440x900 */
-  max-width: 1440px;
-  margin: 0 auto;
-  aspect-ratio: 1440 / 900; /* keeps the section sized to a laptop canvas */
-}
+    width: 100vw;
+    display: block;
+    background-color: #000;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    position: relative;
+    z-index: 2;
+    /* target laptop canvas: 1440x900 */
+    max-width: 1440px;
+    margin: 0 auto;
+    aspect-ratio: 1440 / 900; /* keeps the section sized to a laptop canvas */
+  }
 
-/* Screen A - node-id 96:222 */
-.figma-screen.screen-a {
-  background-image: url('main-images/figma-96-222.png');
-}
-
-/* Screen B - node-id 96:248 */
-.figma-screen.screen-b {
-  background-image: url('main-images/figma-96-248.png');
-  /* slight overlay to match Figma tint */
-}
-.figma-screen.screen-b::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(180deg, rgba(0,0,0,0.0) 0%, rgba(0,0,0,0.15) 100%);
-  pointer-events: none;
-}
-
-/* Responsive adjustments */
-@media (max-width: 900px) {
-  .figma-screen { background-position: center top; background-size: contain; aspect-ratio: auto; }
-  .figma-screen.screen-a { background-size: 120% auto; }
-}
-
+/* ========================================= */
+#npc-follower {
   position: fixed;
   width: 100px; /* Stays on screen even if you scroll */ /* Size of the emoji */
   pointer-events: none; /* CRITICAL: Lets you click through the character */
@@ -123,6 +123,7 @@ body {
   image-rendering: pixelated;
   scale: 2;
 }
+
 #npc-follower img {
   width: 3.5rem;
   margin-left: 0;
@@ -178,29 +179,25 @@ header {
   align-items: center;
   justify-content: space-between; /* Perfect for Logo -- Menu */
   top: 0;
-  padding: 0.5rem 4vw;
-
+  padding: 0.5rem 3vw;
   width: 100%;
-  height: 4rem;
-
+  height: 4.5rem;
   margin: 0 auto;
+  margin-bottom: 1rem;
   overflow: visible !important;
-  z-index: 2000;
-  background-color: transparent;
-  /*box-shadow: 0 2px 10px rgba(0, 90, 25, 0.446);*/
+  background-color: rgb(54, 200, 178);
+ 
 }
-
 
 /* --- RESPONSIVE LOGO --- */
 .logo {
   display: flex;
-  align-items: center center;
-  justify-content: center center;
+  justify-content: center;
   /* format: clamp(MIN, IDEAL, MAX) */
-  width: clamp(80px, 15vw, 100px);
+  width: clamp(70px, 15vw, 100px);
   height: auto;
   /* Remove margins to let Flexbox handle alignment in the header */
-  margin: 0.5rem;
+  margin: 0.5rem 0;
   padding: 0.5rem;
   z-index: 50; /* Ensure it stays above background */
 }
@@ -212,6 +209,201 @@ header {
   object-position: center center;
 }
 
+/* Dropdown Menu Styles */
+/* =========================================
+   1. DESKTOP STYLES (Default)
+   Horizontal menu, No button, Always visible
+   ========================================= */
+
+
+.dropdown-wrapper {
+  position: relative;
+  display: flex;
+  /* FIX 1: Ensure the wrapper itself fills the available space */
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  background-color: transparent;
+  border-radius: 10px;
+  z-index: 100;
+  overflow: visible !important;
+  margin-left: auto; /* This pushes the wrapper all the way to the right side */
+}
+
+/* HIDE the button on desktop */
+.dropdown-btn {
+  display: none;
+}
+
+/* Reset the menu to be a normal row */
+.dropdown-menu {
+  position: static;
+  display: flex;
+  flex-direction: row;
+  /* FIX 2: Force the menu to stretch to 100% of the wrapper's width */
+  width: 100%;
+ 
+  /* FIX 3: Use 'space-evenly' for perfect gaps between all items and edges */
+  justify-content: space-evenly;
+
+  /* Override hiding properties */
+  background-color: transparent;
+  pointer-events: auto;
+  overflow: visible;
+  border: 1px dashed rgba(255, 255, 255, 0.06);
+  z-index: 101;
+}
+
+/* Desktop Link Styles */
+.dropdown-menu a {
+  color: whitesmoke;
+  text-decoration: none;
+  font-family: var(--font-family-base);
+  font-size: var(--font-size-base);
+  padding: 0.5rem;
+  transition: color 0.2s ease;
+  display: flex;
+  align-items: flex-start;
+  /* Optional: Center text if links have different widths */
+  justify-content: center;
+  width: 100%;
+}
+
+.dropdown-menu a:hover {
+  color: greenyellow;
+
+}
+#site-navigation a {
+  gap: 1rem;
+  font-size: clamp(1.2rem, 2vw, 1.7rem);
+}
+
+@media (max-width: 1000px) {
+  .dropdown-menu a {
+    padding: 0.5rem 2rem; 
+  }
+}
+/* HOVER / ACTIVE STATE (Popped Up Tab) */
+.dropdown-menu a:hover {
+  background-color: greenyellow;
+  color: var(--text-main);
+  border: 3px solid whitesmoke;
+  /* Lift the tab up slightly */
+  transform: translateY(-4px);
+
+  /* Brighten the border */
+  
+  border-radius: 10px 10px 10px 10px;
+  /* Add a shadow to make it pop */
+  box-shadow: 0px -4px 18px rgba(21, 0, 0, 0.2);
+  z-index: 100;
+}
+
+/* Navigation specific font sizing */
+#site-navigation a {
+  font-size: clamp(1.2rem, 1.5vw, 1.5rem);
+}
+/* =========================================
+   2. MOBILE STYLES (Max-width: 640px)
+   FIXED: Menu floats absolute so logo doesn't move
+   ========================================= */
+
+@media (max-width: 640px) {
+  header {
+    /* Ensure header can grow if needed */
+    height: 4rem;
+    padding: 0.5rem 1rem;
+    position: relative;
+    margin-bottom: 1.4rem;
+  }
+   .nav-toggle {
+    margin-top: 0;
+    transform: translateY(-5px); /* Pulls it up slightly */
+  }
+
+  .dropdown-wrapper {
+    /* This keeps the wrapper small, fitting only the button */
+    position: relative;
+    align-items: flex-end;
+    flex-direction: column;
+    width: 100%;
+    background-color: transparent;
+    margin-left: 0; /* Reset left margin for mobile */
+    z-index: 2000; /* Ensure it stays above other elements */
+    overflow: visible !important;
+  }
+
+  /* SHOW the button */
+  .dropdown-btn {
+    display: block;
+    background-color: var(--yellowgreen);
+    color: var(--text-main);
+    padding: 0.5rem 1rem;
+    font-family: var(--font-family-base);
+    font-size: clamp(0.8rem, 3vw, 1.2rem);
+    cursor: pointer;
+    border: none;
+    border-radius: 10px;
+    transition: background-color 0.3s ease;
+    /* Width adjusted to look good next to logo */
+    width: auto;
+    min-width: 60px;
+    text-align: center;
+    align-items: center;
+  }
+
+  .dropdown-btn:hover {
+    background-color: rgb(204, 255, 0);
+  }
+  /* APPLY the Dropdown Logic */
+
+  .dropdown-menu {
+    position: absolute;
+    min-width: 150px;
+    max-width: 20vw;
+    background-color: var(--pink);
+
+    /* CLOSED STATE: */
+    max-height: 0;
+    opacity: 0;
+    overflow: hidden; /* <--- CRITICAL: Hide content when closed */
+    pointer-events: none;
+    transition: max-height 0.3s ease, opacity 0.3s ease;
+    z-index: 2001;
+    border-radius: 10px;
+    flex-direction: column;
+  }
+
+  /* OPEN STATE: */
+  .dropdown-menu.open {
+    max-height: 200px;
+    opacity: 1;
+    overflow: visible; /* <--- CRITICAL: Show content when open */
+    pointer-events: auto;
+    padding: 1px 1px;
+    z-index: 2001;
+  }
+  .dropdown-menu a {
+    display: block;
+    
+    /* 1. Reduce padding (was 1rem) */
+    padding: 1rem 1rem; 
+    
+    /* 2. Force a smaller text size (overrides ID selectors) */
+    font-size: 1rem !important; 
+    
+    background-color: transparent;
+    border-radius: 10px;
+  }
+  .dropdown-menu a:hover {
+    background-color: var(--yellowgreen);  
+    color: var(--text-main);
+  }
+}
+/* END of Dropdown Menu Styles */
+
+
+/* ========================================= */
 /* Main Title Container */
 /* 1. Make the container a Flex column to center everything easily */
 /* .main-title-container-1 {
@@ -232,7 +424,7 @@ header {
   position: relative;
   width: 100vw;
   /* CHANGED: Let the height fit the content + some padding */
-  height: auto; 
+  height: auto;
   padding-top: 5rem; /* Manually control the top gap */
   padding-bottom: 5rem;
   display: flex;
@@ -240,10 +432,12 @@ header {
   row-gap: 1rem;
   align-items: center;
 }
-@media (max-width: 640px) {
+@media (max-width: 450px) {
   #title {
-    padding-bottom: 5rem;
-    row-gap: 3rem;
+    bottom: 0;
+    padding-top: 2rem;
+    padding-bottom: 1rem;
+    row-gap: 2rem;
   }
 }
 /* 3. Style "Welcome To" */
@@ -275,7 +469,7 @@ header {
   height: 100%;
   top: 0;
   left: 0;
-  z-index: 5; 
+  z-index: 5;
 }
 .deco-buttons img {
   width: 100%;
@@ -311,98 +505,100 @@ header {
 @media (max-width: 800px) {
   .deco-buttons {
     display: none; /* Hide decorations on small screens */
-}
- #red-btn {
-
-  top: 5%;
-  left: 10%;
-  width: 55%;
-  height: auto;
-  image-rendering: pixelated;
-}
- #green-btn {
-  
-  top: 5%;
-  right: 10%;
-  width: 35%;
-  height: auto;
-  image-rendering: pixelated;
-}
- #yellow-btn {
-  bottom: 5%;
-  left: 70%;
-  width: 25%;
-  height: auto;
-  image-rendering: pixelated;
-}
+  }
+  #red-btn {
+    top: 5%;
+    left: 10%;
+    width: 55%;
+    height: auto;
+    image-rendering: pixelated;
+  }
+  #green-btn {
+    top: 5%;
+    right: 10%;
+    width: 35%;
+    height: auto;
+    image-rendering: pixelated;
+  }
+  #yellow-btn {
+    bottom: 5%;
+    left: 70%;
+    width: 25%;
+    height: auto;
+    image-rendering: pixelated;
+  }
 }
 #start-exit-buttons {
   display: flex;
   flex-direction: row; /* Side by side */
-  justify-content: center; 
+  justify-content: center;
   align-items: center;
   gap: 1rem; /* Space between the buttons */
   margin-top: 2rem;
 }
 
-#exit, #lets-start {
-  /* 1. This keeps the absolute text INSIDE this box */
-  position: relative; 
-  
-  width: auto; 
+#exit,
+#lets-start {
+  position: relative;
+  width: auto;
   cursor: pointer;
-  
-  /* 2. Visual Scaling */
-  transform: scale(0.6); /* Adjust size: 1 = normal, 0.5 = half size */
+  transform: scale(0.5); /* Adjust size: 1 = normal, 0.5 = half size */
   transition: transform 0.2s ease; /* Makes hover smooth */
 }
-
+@media (max-width: 450px) {
+  #exit,
+  #lets-start {
+    transform: scale(0.7); /* Slightly smaller on small screens */
+  }
+}
 /* Optional: Make them pop when hovered */
-#exit:hover, #lets-start:hover {
-  transform: scale(0.65); 
+#exit:hover,
+#lets-start:hover {
+  transform: scale(0.55);
 }
 
 /* Ensure images don't have weird gaps */
-#exit img, #lets-start img {
-  display: block; 
+#exit img,
+#lets-start img {
+  display: block;
   width: 100%;
   height: auto;
 }
 
 /* 3. Text Styling & Centering */
-p#exit-text, p#lets-start-text {
+p#exit-text,
+p#lets-start-text {
   position: absolute;
-  
   /* CENTER THE TEXT OVER THE IMAGE */
   top: 45%;
   left: 50%;
-  transform: translate(-50%, -50%); 
-  
+  transform: translate(-50%, -50%);
   margin: 0; /* Remove default paragraph margins */
   width: 100%; /* Ensure text aligns relative to full width */
-  
-  font-size: clamp(3rem, 1vw, 5rem);
-  font-family: griffy, cursive;
+  font-size: clamp(1.7rem, 6vw, 8rem);
+  font-family: VT323, monospace;
   color: var(--text-main);
   text-align: center;
   pointer-events: none; /* Lets clicks pass through text to the button */
   white-space: nowrap; /* Stops text from wrapping weirdly */
 }
-#exit:hover, #lets-start:hover {
+
+#exit:hover,
+#lets-start:hover {
   transform: scale(0.55); /* Slightly larger on hover */
 }
 @media (max-width: 800px) {
   #welcome-to {
-    width: 50%; 
+    width: 50%;
   }
   #my-portfolio {
-    width: 80%; 
+    width: 80%;
   }
 }
 
 @media (max-width: 640px) {
   #welcome-to {
-    width: 50%; 
+    width: 50%;
     padding-top: 4rem;
   }
   #my-portfolio {
@@ -411,181 +607,6 @@ p#exit-text, p#lets-start-text {
 }
 
 
-
-
-/* Dropdown Menu Styles */
-/* =========================================
-   1. DESKTOP STYLES (Default)
-   Horizontal menu, No button, Always visible
-   ========================================= */
-
-.dropdown-wrapper {
-  position: relative;
-  display: flex;
-  /* FIX 1: Ensure the wrapper itself fills the available space */
-  width: 100%;
-  align-items: center;
-  justify-content: center;
-  background-color: transparent;
-  border-radius: 10px;
-  z-index: 100;
-  overflow: visible !important;
-  margin-left: auto; /* This pushes the wrapper all the way to the right side */
-}
-
-/* HIDE the button on desktop */
-.dropdown-btn {
-  display: none;
-}
-
-/* Reset the menu to be a normal row */
-.dropdown-menu {
-  position: static;
-  display: flex;
-  flex-direction: row;
-  /* FIX 2: Force the menu to stretch to 100% of the wrapper's width */
-  width: 100%;
-
-  /* FIX 3: Use 'space-evenly' for perfect gaps between all items and edges */
-  justify-content: space-evenly;
-
-  /* Override hiding properties */
-  background-color: transparent;
-  pointer-events: auto;
-  overflow: visible;
-  border: 1px dashed rgba(255, 255, 255, 0.06);
-  z-index: 101;
-}
-
-/* Desktop Link Styles */
-.dropdown-menu a {
-  color: whitesmoke;
-  text-decoration: none;
-  font-family: var(--font-family-base);
-  font-size: var(--font-size-base);
-  padding: 0.5rem;
-  transition: color 0.2s ease;
-  display: flex;
-  align-items: flex-start;
-  /* Optional: Center text if links have different widths */
-  justify-content: center;
-  width: 100%;
-}
-
-.dropdown-menu a:hover {
-  color: greenyellow;
-  text-decoration: underline wavy;
-}
-#site-navigation a {
-  gap: 1rem;
-  font-size: clamp(1.2rem, 2vw, 1.7rem);
-}
-
-/* =========================================
-   2. MOBILE STYLES (Max-width: 640px)
-   FIXED: Menu floats absolute so logo doesn't move
-   ========================================= */
-@media (max-width: 800px) {
-  header {
-    min-height: 4rem;
-    padding: 0.5rem 1rem;
-    position: relative;
-  }
-}
- @media (max-width: 640px) {
-  header {
-    /* Ensure header can grow if needed */
-    min-height: 5rem;
-    padding: 0.5rem 1rem;
-    position: relative;
-  }
-  /* 1. Push the logo down specifically on mobile */
-  .logo {
-    margin-top: 15px;
-  }
-
-  /* Optional: If the hamburger is too low, you can pull it up */
-  .nav-toggle {
-    margin-top: 0;
-    transform: translateY(-5px); /* Pulls it up slightly */
-  }
-
-  .dropdown-wrapper {
-    /* This keeps the wrapper small, fitting only the button */
-    position: relative;
-    align-items: flex-end;
-    flex-direction: column;
-    width: 100%;
-    background-color: transparent;
-    margin-left: 0; /* Reset left margin for mobile */
-    z-index: 2000; /* Ensure it stays above other elements */
-    overflow: visible !important;
-  }
-
-  /* SHOW the button */
-  .dropdown-btn {
-    display: block;
-    background-color: var(--yellowgreen);
-    color: var(--text-main);
-    padding: 0.5rem 1rem;
-    font-family: var(--font-family-base);
-    font-size: clamp(1rem, 2vw, 1.5rem);
-    border: none;
-    cursor: pointer;
-    border-radius: 10px;
-    transition: background-color 0.3s ease;
-    /* Width adjusted to look good next to logo */
-    width: auto;
-    min-width: 100px;
-    text-align: center;
-    align-items: center;
-  }
-
-  .dropdown-btn:hover {
-    background-color: yellowgreen;
-    font-size: clamp(1rem, 2vw, 1.5rem);
-  }
-
-  /* APPLY the Dropdown Logic */
-
-  .dropdown-menu {
-    position: absolute;
-    min-width: 160px;
-    max-width: 30vw;
-    background-color: rgb(255, 128, 159);
-
-    /* CLOSED STATE: */
-    max-height: 0;
-    opacity: 0;
-    overflow: hidden; /* <--- CRITICAL: Hide content when closed */
-    pointer-events: none;
-    /* Transition settings */
-    transition: max-height 0.3s ease, opacity 0.3s ease;
-    z-index: 2001;
-    border-radius: 10px;
-    flex-direction: column;
-    box-shadow: 0px 8px 16px rgba(57, 0, 0, 0.3);
-  }
-
-  /* OPEN STATE: */
-  .dropdown-menu.open {
-    max-height: 300px;
-    opacity: 1;
-    overflow: visible; /* <--- CRITICAL: Show content when open */
-    pointer-events: auto;
-    padding: 10px 0;
-    z-index: 2001;
-  }
-  .dropdown-menu a {
-    display: block;
-    padding: 0.75rem 1rem;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-  }
-  .dropdown-menu a:last-child {
-    border-bottom: none; /* Remove border from last item */
-  }
-}
-/* END of Dropdown Menu Styles */
 
 /* ========================================= */
 /* RPG Character Card Styles */
@@ -596,14 +617,10 @@ p#exit-text, p#lets-start-text {
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: clamp(1rem, 4vw, 2rem);
+  padding: clamp(1rem, 6vw, 2rem);
   box-sizing: border-box;
   position: relative; /* Acts as the boundary for the draggable card */
   overflow: hidden;
-  background-image: url("aboutme-images/aboutme-bg.png");
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
 }
 
 /* The RPG Card Container */
@@ -658,6 +675,8 @@ p#exit-text, p#lets-start-text {
   padding: 24px;
   gap: 24px;
 }
+
+
 
 /* --- Left Column: Avatar & Stats --- */
 .avatar-container {
@@ -736,39 +755,64 @@ p#exit-text, p#lets-start-text {
   border-bottom: 3px dashed #ffcaca;
   padding-bottom: 20px;
 }
+/* =========================================
+   RPG TABS (File Folder Style)
+   ========================================= */
 
-/* Tabs System */
+/* Container for the tabs */
 .rpg-tabs {
   display: flex;
-  gap: 8px;
-  margin-bottom: 20px;
-  border-bottom: 4px solid var(--pink);
-}
-
-.tab-btn {
-  background: none;
-  border: none;
-  font-family: var(--font-pixel);
-  font-size: var(--font-size-base);
-  cursor: pointer;
-  color: var(--text-main);
-  padding: 6px 30px;
+  align-items: flex-end; /* Align to bottom so they grow upwards */
+  gap: 5px; /* Default gap */
+  margin-bottom: 0; /* Remove margin, they sit directly on the content */
+  padding-left: 20px;
+  height: 50px; /* Reserve space for the tabs popping up */
   position: relative;
-  top: 4px; /* Push down to align with border */
-  transition: all 0.2s;
+  z-index: 5; /* Behind the content box slightly? No, on top usually */
+  top: 2px; /* Slight overlap with content border */
 }
 
+/* The Individual Tab Buttons */
+.tab-btn {
+  background-color: #ffe4c4; /* Light folder color */
+  border: 3px solid var(--dark-red);
+  border-bottom: none; /* Connect to body */
+  border-radius: 15px 15px 0 0; /* Round top corners */
+  
+  font-family: var(--font-pixel, monospace);
+  font-size: 1.2rem; /* BIGGER TEXT */
+  color: var(--dark-red);
+  font-weight: bold;
+  
+  padding: 10px 25px; /* BIGGER CLICK AREA */
+  cursor: pointer;
+  position: relative;
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); /* Bouncy transition */
+  transform-origin: bottom center;
+}
+
+/* Hover Effect */
 .tab-btn:hover {
-  color: yellowgreen;
+  background-color: #fff0d6;
+  padding-bottom: 15px; /* Grow slightly */
+  transform: translateY(-5px);
 }
 
+/* Active State (The selected tab) */
 .tab-btn.active {
+  background-color: #fff5f5; /* Matches the content body background */
   color: var(--primary-color);
-  background: #fff;
-  border: 4px solid var(--pink);
-  border-bottom: none; /* Hide bottom border to merge */
-  z-index: 1;
+  padding-bottom: 15px; /* Taller */
+  padding-top: 15px;
+  z-index: 10; /* Bring to front */
+  margin-bottom: -3px; /* Cover the border line of content */
+  box-shadow: 0 -5px 10px rgba(0,0,0,0.05);
 }
+
+/* =========================================
+   DRAG REACTION ( The Magic Part )
+   ========================================= */
+
 
 /* Tab Content */
 .tab-content {
@@ -783,10 +827,10 @@ p#exit-text, p#lets-start-text {
 .skill-list {
   list-style: none;
   padding: 0;
-  margin: 0;
+  margin: 20px;
 }
 .skill-list li {
-  margin-bottom: 12px;
+  margin-bottom: 25px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -804,25 +848,27 @@ p#exit-text, p#lets-start-text {
 }
 .item {
   border: 3px dashed var(--yellowgreen);
-  padding: 12px;
+  padding: 15px;
+  margin-top: 30px;
   text-align: center;
   font-size: var(--font-size-base);
   color: var(--text-main);
-  background: #fff5f5;
+  background: #ffffff;
   transition: transform 0.2s;
   cursor: help;
 }
 .item:hover {
   transform: scale(1.05);
   background: var(--pink);
-  color: #fff5f5;
+  color: #ffffff;
 }
 .item:active {
   transform: scale(0.95);
 }
 
 /* --- Mobile Responsive --- */
-@media (max-width: 640px) {
+@media (max-width: 800px) {
+
   .about-section {
     height: auto;
     min-height: auto;
@@ -1109,317 +1155,116 @@ span#x:hover {
   }
 }
 
+/* --- MAXIMIZE / FULLSCREEN MODE --- */
+.is-maximized {
+    /* Force width (95% of screen) */
+    width: 95vw !important;
+    height: 95vh !important;
+    max-width: none !important;
+    max-height: none !important;
+    
+    /* --- CENTERING LOGIC --- */
+    /* 1. Move the left edge to the middle of the screen */
+    left: 50% !important;
+    top: 50% !important;
+    /* 2. Pull the window back by half its own width to center it */
+    /* We use translateX because height is 100vh (so vertical centering isn't needed) */
+    transform: translateX(-50%) translateY(-50%) !important;
+    
+    /* 3. Ensure Top is 0 */
+    
+    margin: 0 !important;
+    
+    /* Ensure it sits on top of everything */
+    z-index: 99999 !important;
+    position: fixed !important;
+}
+/* Make sure the internal body stretches to fill the new space */
+/* --- MAXIMIZED CONTENT STYLES --- */
+
+/* 1. Increase spacing and center the text block */
+.is-maximized .window-body {
+    padding: 40px !important; /* More breathing room */
+    display: flex;
+    justify-content: center; /* Center content horizontally */
+}
+
+/* 2. Scale up the text inside the tabs */
+.is-maximized .tab-content {
+    line-height: 2;  /* More space between lines for readability */
+    max-width: 1200px; /* Stop lines from getting unreadably long */
+    width: 100%;       /* Fill the space up to the max-width */
+}
+.is-maximized #bio {
+    max-height: 600px; /* More height for reading */
+    max-width: 600px;
+  }
+/* 3. Specifically scale the Skill Lists */
+.is-maximized .skill-list li,
+.is-maximized .item {
+    margin-bottom: 20px; /* More space between items */
+    border-bottom: 1px dashed rgba(0,0,0,0.1); /* Optional: nice separator */
+    padding-bottom: 10px;
+    margin-top: 20px;
+}
+
 /* --- WORKS SECTION: LEVEL SELECT --- */
 
 .works-section {
   width: 100%;
   min-height: 100vh;
-  background-image: url(aboutme-images/aboutme-bg.png);
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-color: transparent; /* Darker background for contrast */
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 2rem;
-  position: relative;
-  color: whitesmoke;
+  padding: clamp(0rem, 4vw, 3rem);
+  color:var(--text-main);
 }
 
 .level-select-container {
-  max-width: 1000px;
+  max-width: 1920px;
   width: 100%;
   display: flex;
   flex-direction: column;
-  gap: 30px;
+  gap: 20px;
 }
 
 .level-header {
   text-align: center;
   font-family: "VT323", monospace;
+  background-color: transparent;
 }
 
 .level-header h2 {
-  font-size: 4rem;
+  font-size: var(--font-heading-size);
   color: var(--yellowgreen);
-  text-shadow: 4px 4px 0px #000;
+  text-shadow: 4px 2px 0px #b23d3d;
   margin-bottom: 5px;
-  animation: blink-text 2s infinite;
-}
-
-.header-decoration {
-  font-size: 1.5rem;
-  color: var(--pink);
-  letter-spacing: 2px;
-}
-
-/* --- THE MAP GRID --- */
-/* --- THE GEOCITIES MAP GRID --- */
-.world-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 25px;
-  padding: 10px;
-  /* No border on the grid itself, the windows ARE the border */
-}
-
-/* 1. The Window Frame (Standard Windows 95 Grey) */
-.geo-window {
-  background-color: #c0c0c0; /* Classic Silver */
-  border-top: 2px solid #fff;
-  border-left: 2px solid #fff;
-  border-right: 2px solid #000;
-  border-bottom: 2px solid #000;
-  box-shadow: 4px 4px 0px rgba(0, 0, 0, 0.5);
-  display: flex;
-  flex-direction: column;
-  padding: 3px;
-  cursor: pointer;
-  transition: transform 0.2s, box-shadow 0.2s;
-  height: 280px; /* Fixed height for uniformity */
-}
-
-.geo-window:hover {
-  transform: translateY(-5px);
-  box-shadow: 8px 8px 0px rgba(0, 0, 0, 0.5);
-  z-index: 10;
-}
-
-/* 2. The Title Bar (Blue Gradient) */
-.geo-title-bar {
-  background: linear-gradient(90deg, #000080, #1084d0); /* Navy to Blue */
-  color: white;
-  padding: 2px 4px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  font-family: sans-serif; /* System font */
-  font-size: 12px;
-  font-weight: bold;
-  letter-spacing: 0.5px;
-  margin-bottom: 3px;
-}
-
-.win-icon {
-  width: 14px;
-  height: 14px;
-  margin-right: 5px;
-}
-
-.win-btns {
-  display: flex;
-  gap: 2px;
-}
-.win-btns span {
-  background: #c0c0c0;
-  color: black;
-  border: 1px outset #fff;
-  width: 14px;
-  height: 14px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 10px;
-  line-height: 10px;
-  cursor: default;
-}
-
-/* 3. The "Webpage" Body (Inset look) */
-.geo-body {
-  flex-grow: 1;
-  border: 2px inset #fff; /* Sunken look */
-  background-color: #fff;
-  overflow: hidden;
+  left: 50%;
+  transform: translateX(-50%);
   position: relative;
-  font-family: "Times New Roman", Times, serif; /* The most important part! */
 }
 
-/* --- THEMES (Fake Tiled Backgrounds) --- */
 
-/* Forest: Green checkered pattern */
-.theme-forest {
-  background-color: #e0ffe0;
-  background-image: linear-gradient(
-      45deg,
-      #ccffcc 25%,
-      transparent 25%,
-      transparent 75%,
-      #ccffcc 75%,
-      #ccffcc
-    ),
-    linear-gradient(
-      45deg,
-      #ccffcc 25%,
-      transparent 25%,
-      transparent 75%,
-      #ccffcc 75%,
-      #ccffcc
-    );
-  background-size: 20px 20px;
-  background-position: 0 0, 10px 10px;
-}
-
-/* Space: Black with stars */
-.theme-space {
-  background-color: #000;
-  background-image: radial-gradient(white 1px, transparent 1px),
-    radial-gradient(white 1px, transparent 1px);
-  background-size: 50px 50px;
-  background-position: 0 0, 25px 25px;
-  color: white;
-}
-
-/* Tech: Grid lines */
-.theme-tech {
-  background-color: #000033;
-  background-image: linear-gradient(rgba(0, 255, 0, 0.2) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(0, 255, 0, 0.2) 1px, transparent 1px);
-  background-size: 20px 20px;
-  color: #00ff00;
-}
-
-/* Clouds: Blue with CSS clouds */
-.theme-clouds {
-  background-color: #87ceeb;
-  background-image: radial-gradient(white 20%, transparent 20%);
-  background-size: 30px 30px;
-  background-position: 0 0;
-}
-
-/* --- Content Styling --- */
-.geo-content {
-  padding: 10px;
-  text-align: center;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.geo-header {
-  font-size: 1.2rem;
-  margin: 5px 0;
-  text-align: center;
-  text-decoration: underline;
-}
-
-.geo-separator {
-  width: 80%;
-  border-bottom: 2px groove #c0c0c0;
-  margin: 5px auto;
-}
-
-.center-img {
-  font-size: 3rem;
-  margin: 10px 0;
-  animation: bounce 2s infinite;
-}
-
-.geo-link {
-  color: blue;
-  text-decoration: underline;
-  font-size: 0.9rem;
-  margin-bottom: auto; /* Pushes text to bottom */
-}
-.geo-link:visited {
-  color: purple;
-}
-.geo-link:active {
-  color: red;
-}
-
-/* The "Blinking New" GIF simulation */
-.blinking-new {
-  background: red;
-  color: yellow;
-  font-weight: bold;
-  font-size: 0.7rem;
-  padding: 2px 5px;
-  position: absolute;
-  top: 5px;
-  left: 5px;
-  border: 1px dotted yellow;
-  animation: blink-fast 0.5s infinite;
-  transform: rotate(-10deg);
-}
-
-/* Marquee Effect at Bottom */
-.scrolling-text {
-  width: 100%;
-  background: #000;
-  color: #00ff00;
-  font-family: "Courier New", monospace;
-  font-size: 10px;
-  white-space: nowrap;
-  overflow: hidden;
-  padding: 2px 0;
-  margin-top: 10px;
-  border: 1px inset #fff;
-}
-
-.scrolling-text span {
-  display: inline-block;
-  padding-left: 100%;
-  animation: marquee 8s linear infinite;
-}
-
-@keyframes marquee {
-  0% {
-    transform: translate(0, 0);
-  }
-  100% {
-    transform: translate(-100%, 0);
-  }
-}
-
-@keyframes blink-fast {
-  0%,
-  100% {
-    opacity: 1;
-  }
-  50% {
-    opacity: 0;
-  }
-}
-
-@keyframes bounce {
-  0%,
-  100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-5px);
-  }
-}
-
-/* Mobile Tweaks */
-@media (max-width: 640px) {
-  .world-grid {
-    grid-template-columns: 1fr; /* Stack 1 column on phone */
-  }
-  .geo-window {
-    height: auto;
-    min-height: 250px;
-  }
-}
 
 /* --- MISSION BRIEFING BOX --- */
+
 .mission-briefing {
-  background: #000;
+  background: #3f0000;
   border: 4px solid var(--pink);
   padding: 20px;
   font-family: "VT323", monospace;
   position: relative;
-  min-height: 120px; /* Prevents jumping when text changes */
-  box-shadow: 8px 8px 0px rgba(0, 0, 0, 0.5);
+  min-height: 120px; 
+  border-radius: 15px;
+  box-shadow: 10px 10px 0px rgba(96, 193, 52, 0.5);
 }
 
-.briefing-header {
+.briefing-tag {
   background: var(--pink);
-  color: var(--text-main);
+  border-radius: 5px;
+  color: whitesmoke;
   display: inline-block;
-  padding: 2px 8px;
+  padding: 4px 10px;
   font-weight: bold;
   margin-bottom: 10px;
 }
@@ -1432,13 +1277,13 @@ span#x:hover {
 
 #brief-desc {
   font-size: 1.4rem;
-  color: #ccc;
+  color: whitesmoke;
   margin: 5px 0;
 }
 
 .brief-stats {
   font-size: 1.2rem;
-  color: var(--pink);
+  color: greenyellow;
   margin-top: 10px;
   border-top: 1px dashed #333;
   padding-top: 5px;
@@ -1463,6 +1308,168 @@ span#x:hover {
     grid-template-columns: 1fr;
   } /* Stack cards on phone */
 }
+/* --- THE MAP GRID --- */
+/* --- THE GEOCITIES MAP GRID --- */
+.world-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 25px;
+  padding: 5px;
+  /* No border on the grid itself, the windows ARE the border */
+}
+
+.world-card {
+  background: transparent;
+  padding: 0px;
+  font-family: "VT323", monospace;
+  position: relative;
+  height: 300px; /* Fixed height for uniformity */
+  border-radius: 10px 10px 0 0;
+  box-shadow: 10px 10px 0px rgba(96, 193, 52, 0.5);
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.world-card:hover {
+  box-shadow: 8px 8px 0px rgba(0, 0, 0, 0.5);
+  scale: 1.02;
+  z-index: 10;
+}
+
+/* 2. The Title Bar (Blue Gradient) */
+.window-header-works {
+ background-color: var(--pink);
+ border-radius: 10px 10px 0 0;
+ color: whitesmoke;
+ padding: 8px 12px;
+ display: flex;
+ justify-content: space-between;
+ align-items: center;
+ font-size: var(--font-size-base);
+}
+.window-header-works.forest {
+  background-color: rgb(112, 183, 5);
+}
+.window-header-works.space {
+  background-color: var(--pink);
+}
+.window-header-works.tech {
+  background-color: rgb(255, 120, 3);
+}
+.window-header-works.clouds {
+  background-color: rgb(6, 226, 208);
+}
+.win-icon {
+  width: 14px;
+  height: 14px;
+  margin-right: 5px;
+}
+
+
+/* --- THEMES (Fake Tiled Backgrounds) --- */
+
+/* Forest: Green checkered pattern */
+.theme-forest {
+  background-color: #e0ffe0;
+ /* background-image: linear-gradient(
+      45deg,
+      #ccffcc 25%,
+      transparent 25%,
+      transparent 75%,
+      #ccffcc 75%,
+      #ccffcc
+    ),
+    linear-gradient(
+      45deg,
+      #ccffcc 25%,
+      transparent 25%,
+      transparent 75%,
+      #ccffcc 75%,
+      #ccffcc
+    ); */
+  background-size: 20px 20px;
+  background-position: 0 0, 10px 10px;
+}
+
+/* Space: Black with stars */
+.theme-space {
+  background-color: #ffdbdb;
+  /* background-image: radial-gradient(white 2px, transparent 1px),
+    radial-gradient(white 2px, transparent 1px); */
+  background-size: 50px 50px;
+  background-position: 0 0, 25px 25px;
+  color: var(--text-main);
+  font-size: var(--font-size-base);
+}
+
+/* Tech: Grid lines */
+.theme-tech {
+  background-color: rgb(255, 242, 232);
+  background-size: 10px 10px;
+  color: var(--text-main);
+}
+
+/* Clouds: Blue with CSS clouds */
+.theme-clouds {
+  background-color: #c0fff1;
+  background-image: radial-gradient(
+      circle at 20% 30%,
+      #ffffff 15%,
+      transparent 40%
+    ),
+    radial-gradient(circle at 70% 50%, #ffffff 15%, transparent 40%),
+    radial-gradient(circle at 50% 80%, #ffffff 15%, transparent 40%);
+  background-position: 0 0;
+  color: var(--text-main);
+}
+
+/* --- Content Styling --- */
+.win-content {
+  padding: 50px 15px 15px 15px;
+  font-size: var(--font-size-base);
+  text-align: center;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.center-img {
+  font-size: 3rem;
+  margin: 10px 0;
+  animation: bounce 2s infinite;
+}
+
+.win-link {
+  color: var(--pink);
+  text-decoration: underline;
+  font-size: var(--font-size-base);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+  height: 100%;
+  margin-bottom: auto; /* Pushes text to bottom */
+}
+.win-link:visited {
+  color: rgb(110, 0, 64);
+}
+.win-link:active {
+  color: greenyellow;
+}
+
+/* Mobile Tweaks */
+@media (max-width: 640px) {
+  .world-grid {
+    grid-template-columns: 1fr; /* Stack 1 column on phone */
+  }
+  .geo-window {
+    height: auto;
+    min-height: 250px;
+  }
+}
+
 
 /* --- CONTACT SECTION: WHIMSICAL STATIONERY --- */
 .contact-section {
@@ -1671,132 +1678,209 @@ span#x:hover {
   }
 }
 
-/* ==========================
-   Figma assets (main-images/) overrides
-   These rules render large artwork using background-images from the
-   `main-images/` folder as requested. They keep layout responsive via vw/vh.
-   ========================== */
 
-/* Background layers (use the same element IDs from HTML) */
-.bg-layer#overlay-background {
-  position: absolute;
-  inset: 0; /* fill container */
-  background-image: url("main-images/overlay-backgr.png");
-  background-size: cover;
-  background-position: center;
-  pointer-events: none;
-  z-index: 0;
-}
-
-.bg-layer#overlay {
-  position: absolute;
-  inset: 0;
-  background-image: url("main-images/overlay.png");
-  background-size: cover;
-  background-position: center;
-  opacity: 0.93;
-  mix-blend-mode: var(--overlay-blend);
-  pointer-events: none;
-  z-index: 1;
+/* --- CINEMA SCREEN (Bigger & Centered) --- */
+.cinema-screen {
+    position: relative;
+    width: 100%;       /* Full width */
+    max-width: none;   /* REMOVED the 800px limit */
+    margin: 0;         /* Removed auto margins since it fills the space */
+    
+    aspect-ratio: 16 / 9; 
+    
+    background: #000;
+    border: 3px solid #5c3a21;
+    overflow: hidden;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.5);
 }
 
-/* Main title as a background image so it scales nicely */
-.main-title-container {
-  position: relative;
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 5;
-}
-.main-title {
-  width: 70vw;
-  max-width: 980px;
-  height: 46vh;
-  background-image: url("main-images/main-title.png");
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: contain;
-  transform: rotate(-15deg);
-  pointer-events: none;
+/* Ensure inner items fit perfectly */
+#main-video-link {
+    display: block;
+    width: 100%;
+    height: 100%;
+    text-decoration: none;
 }
 
-/* Stickers (decorative elements) pulled from main-images */
-.sticker {
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-  z-index: 6;
-}
-.sticker-item {
-  position: absolute;
-  background-repeat: no-repeat;
-  background-size: contain;
-  background-position: center;
-  pointer-events: none;
+#main-preview-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.7;
+    transition: all 0.4s ease;
 }
 
-#frog-sticker {
-  left: 3.5vw;
-  top: 6vh;
-  width: 18vw;
-  height: 22vh;
-  background-image: url("main-images/frog-sticker.png");
-}
-#treelog {
-  left: 6vw;
-  top: 34vh;
-  width: 22vw;
-  height: 24vh;
-  background-image: url("main-images/treelog.png");
-}
-#tomato-sticker {
-  right: 6vw;
-  top: 18vh;
-  width: 12vw;
-  height: 14vh;
-  background-image: url("main-images/tomato-sticker.png");
-}
-#cat-sticker {
-  right: 3vw;
-  top: 6vh;
-  width: 12vw;
-  height: 12vh;
-  background-image: url("main-images/cat-sticker.png");
+/* Play Button Styling */
+.play-overlay {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    z-index: 10;
+    pointer-events: none; /* Click passes through to link */
 }
 
-/* Small adjustments for mobile */
-@media (max-width: 640px) {
-  .main-title {
-    width: 86vw;
-    height: 34vh;
-    transform: rotate(-10deg);
-  }
-  #frog-sticker {
-    left: 6vw;
-    top: 10vh;
-    width: 26vw;
-    height: 24vh;
-  }
-  #treelog {
-    left: 10vw;
-    top: 44vh;
-    width: 28vw;
-    height: 26vh;
-  }
-  #tomato-sticker {
-    right: 4vw;
-    top: 28vh;
-    width: 20vw;
-    height: 18vh;
-  }
-  #cat-sticker {
-    right: 3vw;
-    top: 10vh;
-    width: 18vw;
-    height: 18vh;
-  }
+.play-circle {
+    width: 80px; height: 80px;
+    background: rgba(0, 0, 0, 0.6);
+    border: 3px solid #b6ffea;
+    border-radius: 50%;
+    display: flex; justify-content: center; align-items: center;
+    margin: 0 auto 10px auto;
+    transition: transform 0.2s, background 0.2s;
 }
+
+.play-icon {
+    font-size: 2.5rem;
+    color: #b6ffea;
+    margin-left: 5px; /* Optical center */
+}
+
+.play-text {
+    font-family: 'VT323', monospace;
+    font-size: 1.2rem;
+    color: #fff;
+    background: #5c3a21;
+    padding: 4px 8px;
+    border-radius: 4px;
+}
+
+/* Hover Effects */
+.cinema-screen:hover #main-preview-image { opacity: 1; transform: scale(1.02); }
+.cinema-screen:hover .play-circle { background: #b6ffea; transform: scale(1.1); }
+.cinema-screen:hover .play-icon { color: #5c3a21; }
+
+/* --- PLAYLIST & HEADINGS --- */
+.retro-heading {
+    font-family: 'VT323'; 
+    margin: 0 0 10px 0; 
+    color: #b6ffea; 
+    border-bottom: 2px dashed #555;
+    padding-bottom: 5px;
+}
+
+.tape-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+/* --- NEW: INFO BOX STYLES --- */
+.video-details-panel {
+    background: #1a1a1a;
+    border: 2px solid #5c3a21;
+    padding: 15px;
+    font-family: 'VT323', monospace;
+    border-radius: 5px;
+}
+
+.video-details-panel h2 {
+    margin: 0 0 10px 0;
+    color: #ffb6b9; /* Pink title */
+    font-size: 1.8rem;
+    letter-spacing: 1px;
+}
+
+.details-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.detail-row {
+    display: flex;
+    gap: 10px;
+}
+
+.label {
+    color: #888;
+    min-width: 80px;
+    font-weight: bold;
+}
+
+.video-details-panel p {
+    margin: 0;
+    color: #ddd;
+    font-size: 1.1rem;
+}
+.mobile-nav {
+    display: none;
+}
+
+
+
+
+
+    .window-body {
+        padding: 15px;
+        flex-direction: column;
+        gap: 15px;
+    }
+    .cinema-playlist {
+       display: none; /* Hide playlist on small screens */
+   }
+    /* 3. Show & Style the Arrows */
+    .mobile-nav {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background: #1a1a1a;
+        border: 2px solid #5c3a21;
+        padding: 10px;
+        margin-bottom: 15px;
+    }
+
+    .nav-arrow {
+        background: #5c3a21;
+        color: white;
+        border: none;
+        font-family: 'VT323', monospace;
+        font-size: 1.2rem;
+        padding: 10px 20px;
+        cursor: pointer;
+        border-radius: 4px;
+    }
+    
+    .nav-arrow:active {
+        background: #b6ffea;
+        color: #5c3a21;
+    }
+
+    .nav-label {
+        color: #b6ffea;
+        font-family: 'VT323', monospace;
+        letter-spacing: 2px;
+    }
+
+
+.details-grid { flex-direction: column; gap: 10px; }
+/* FORCE VERTICAL STACKING */
+.window-body {
+    display: flex !important;
+    flex-direction: column !important; /* This forces Top-to-Bottom layout */
+    gap: 15px;
+    padding: 20px;
+    background-color: #2b2b2b;
+    color: white;
+}
+
+
+
+/* Ensure the screen takes full width */
+.cinema-screen {
+    width: 100% !important;
+    max-width: 100% !important;
+}
+
+
+.cinema-playlist {
+        display: none !important;
+    }
+    
+    /* Ensure the mobile nav is visible on mobile */
+.mobile-nav {
+        display: flex !important;
+    }
+
+
