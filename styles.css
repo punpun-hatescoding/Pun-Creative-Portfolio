@@ -22,7 +22,7 @@ html {
   scroll-padding-top: 20px; /*this is for sticky header height*/
 }
 /* 3. Mobile Size Adjustment */
-@media (max-width: 640px) {
+@media (max-width: 420px) {
   html {
     scroll-padding-top: 400px; /* bigger mobile header + padding */
   }
@@ -98,20 +98,6 @@ body {
 
 
  
-.figma-screen {
-    width: 100vw;
-    display: block;
-    background-color: #000;
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: cover;
-    position: relative;
-    z-index: 2;
-    /* target laptop canvas: 1440x900 */
-    max-width: 1440px;
-    margin: 0 auto;
-    aspect-ratio: 1440 / 900; /* keeps the section sized to a laptop canvas */
-  }
 
 /* ========================================= */
 #npc-follower {
@@ -308,7 +294,7 @@ header {
    FIXED: Menu floats absolute so logo doesn't move
    ========================================= */
 
-@media (max-width: 640px) {
+@media (max-width: 420px) {
   header {
     /* Ensure header can grow if needed */
     height: 4rem;
@@ -596,7 +582,7 @@ p#lets-start-text {
   }
 }
 
-@media (max-width: 640px) {
+@media (max-width: 420px) {
   #welcome-to {
     width: 50%;
     padding-top: 4rem;
@@ -668,6 +654,18 @@ p#lets-start-text {
   color: yellowgreen;
 }
 
+/* 1. By default, HIDE the maximize button (Mobile/Tablet/Laptop) */
+.win-btn.max-btn {
+    display: none !important;
+}
+
+/* 2. Only SHOW it if the screen is huge (1440px+) */
+@media (min-width: 1250px) {
+    .win-btn.max-btn {
+        display: inline-block !important;
+    }
+}
+
 /* Layout Grid */
 .rpg-content {
   display: grid;
@@ -696,6 +694,7 @@ p#lets-start-text {
 
 .pixel-frame img {
   width: 100%;
+  border-radius: 20px;
   height: auto;
   display: block;
   image-rendering: pixelated; /* Ensures pixel art stays crisp */
@@ -705,7 +704,7 @@ p#lets-start-text {
 .status-bars {
   font-size: var(--font-heading-size);
   border: var(--pink) 2px dashed;
-  padding: 12px;
+  padding: 10px;
   border-radius: 12px;
   background: white;
 }
@@ -717,7 +716,7 @@ p#lets-start-text {
   margin-bottom: 10px;
 }
 .bar-container {
-  flex-grow: 1;
+  flex-grow: 1; /* Bars take up remaining space */
   background: #ffffff;
   height: 20px;
   border: 2px solid #000;
@@ -892,6 +891,9 @@ p#lets-start-text {
 
     box-shadow: none; /* Optional: simplify shadow for mobile */
   }
+  .info-container {
+    margin-top: -60px;
+  }
 
   .window-header {
     cursor: none; /* Show normal cursor */
@@ -905,22 +907,33 @@ p#lets-start-text {
 
   .avatar-container {
     max-width: 350px;
+    height: 80%;
     margin: 0 auto;
+    scale: 0.8;
   }
 
   #likes,
   .skill-list li,
-  .item {
+  .item,
+  .active {
     text-align: flex-start;
     font-size: calc(var(--font-size-base));
-    margin-bottom: 20px;
+    margin-bottom: 10px;
     padding: 20px;
   }
   .rpg-tabs {
+    scale: 0.8;
     justify-content: flex-start;
-    font-size: calc(var(--font-size-base) * 1.2);
+    gap: 8px;
+    padding-left: 10px;
+    height: 10px;
+    top: 15px;
   }
-
+  .tab-btn {
+    height: 35px;
+    font-size: 1rem;
+    top: -12px;
+  }
   .char-name {
     text-align: center;
     font-size: calc(var(--font-heading-size) * 1.75);
@@ -929,6 +942,7 @@ p#lets-start-text {
     text-align: center;
     font-size: var(--font-heading-size);
   }
+
 }
 /* --- RETRO POPUP STYLES --- */
 span#x {
@@ -1059,7 +1073,7 @@ span#x:hover {
   overflow-y: auto;
   padding-right: 10px;
 }
-@media (max-width: 640px) {
+@media (max-width: 420px) {
   #bio.active {
     max-height: none;
     overflow-y: visible;
@@ -1156,10 +1170,11 @@ span#x:hover {
 }
 
 /* --- MAXIMIZE / FULLSCREEN MODE --- */
+
 .is-maximized {
-    /* Force width (95% of screen) */
+    /* Force width (85% of screen) */
     width: 95vw !important;
-    height: 95vh !important;
+    height: 99vh !important;
     max-width: none !important;
     max-height: none !important;
     
@@ -1182,30 +1197,62 @@ span#x:hover {
 /* Make sure the internal body stretches to fill the new space */
 /* --- MAXIMIZED CONTENT STYLES --- */
 
-/* 1. Increase spacing and center the text block */
-.is-maximized .window-body {
-    padding: 40px !important; /* More breathing room */
-    display: flex;
-    justify-content: center; /* Center content horizontally */
+.is-maximized .rpg-content {
+    /* Was: 300px 1fr */
+    grid-template-columns: 1fr 1fr !important; 
+    
+    /* Center items vertically */
+    align-items: center; 
+    
+    /* Add space between Avatar and Text */
+    gap: 50px; 
+    
+    /* Ensure the grid actually fills the height of the window */
+    height: 90%; 
 }
 
-/* 2. Scale up the text inside the tabs */
-.is-maximized .tab-content {
-    line-height: 2;  /* More space between lines for readability */
-    max-width: 1200px; /* Stop lines from getting unreadably long */
-    width: 100%;       /* Fill the space up to the max-width */
-}
+/* 2. Remove the size limits on the Text Box so it fills the right side */
 .is-maximized #bio {
-    max-height: 600px; /* More height for reading */
-    max-width: 600px;
-  }
-/* 3. Specifically scale the Skill Lists */
-.is-maximized .skill-list li,
-.is-maximized .item {
-    margin-bottom: 20px; /* More space between items */
-    border-bottom: 1px dashed rgba(0,0,0,0.1); /* Optional: nice separator */
-    padding-bottom: 10px;
-    margin-top: 20px;
+    max-width: none !important; /* Allow it to grow */
+    width: 100%;
+    
+    /* Optional: Make the text box tall enough to read easily */
+    max-height: 80vh !important; 
+}
+
+/* 3. Center the Avatar/Stats in the left column */
+.is-maximized .avatar-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centers the image and bars */
+    justify-content: center;
+}
+
+/* 4. Make the Avatar Image bigger in full screen (Optional) */
+.is-maximized .pixel-frame {
+    max-width: 400px; /* Make the picture larger */
+}
+.is-maximized .status-bars {
+    /* 1. Use 100% of the column space, but cap it at a wider size for desktop */
+    width: 100%;       
+    max-width: 500px;  /* 300px is very small for Desktop. 500px looks more "Heroic" */
+    
+    /* 2. Don't force fixed height. Use padding so it grows if text gets bigger */
+    height: auto;      
+    padding: 25px;     /* Adds the "height" visually by adding breathing room */
+    
+    /* 3. Center the box itself in the column */
+    margin: 0 auto;    
+    
+    /* 4. Make text bigger to match the huge screen */
+    font-size: 1.5rem; 
+}
+/* FIX 3: Ensure the rows inside also stretch */
+.is-maximized .bar-row {
+    width: 100%;
+    justify-content: space-between;
+    align-items: center; /* Keeps HP left and Numbers right */
 }
 
 /* --- WORKS SECTION: LEVEL SELECT --- */
@@ -1222,6 +1269,7 @@ span#x:hover {
 
 .level-select-container {
   max-width: 1920px;
+  min-height: 80vh;
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -1289,18 +1337,8 @@ span#x:hover {
   padding-top: 5px;
 }
 
-@keyframes blink-text {
-  0%,
-  100% {
-    opacity: 1;
-  }
-  50% {
-    opacity: 0.5;
-  }
-}
-
 /* Mobile Tweaks */
-@media (max-width: 640px) {
+@media (max-width: 420px) {
   .level-header h2 {
     font-size: 3rem;
   }
@@ -1315,6 +1353,7 @@ span#x:hover {
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   gap: 25px;
   padding: 5px;
+  margin-bottom: 50px;
   /* No border on the grid itself, the windows ARE the border */
 }
 
@@ -1460,7 +1499,7 @@ span#x:hover {
 }
 
 /* Mobile Tweaks */
-@media (max-width: 640px) {
+@media (max-width: 420px) {
   .world-grid {
     grid-template-columns: 1fr; /* Stack 1 column on phone */
   }
@@ -1486,7 +1525,7 @@ span#x:hover {
 .letter-container {
   position: relative;
   width: 100%;
-  max-width: 600px;
+  max-width: 700px;
   animation: float-paper 6s ease-in-out infinite;
 }
 
@@ -1496,26 +1535,27 @@ span#x:hover {
   border-radius: 10px;
   padding: 40px;
   box-shadow: 0 0 0 3px var(--dark-red),
-    /* Outer border */ 15px 15px 2px rgba(200, 77, 95, 0.4);
+  15px 15px 3px rgba(200, 77, 95, 0.4);
   position: relative;
 }
 
 .letter-header {
   text-align: center;
   margin-bottom: 20px;
-  font-family: "VT323", monospace;
-  font-size: var(--font-heading-size);
+  font-family: griffy, cursive;
+  font-size: calc(var(--font-heading-size) * 1.8);
   color: var(--pink);
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 15px;
+  gap: 25px;
 }
 
 .letter-header h2 {
   font-size: var(--font-heading-size);
+  font-family: griffy, cursive;
   margin: 0;
-  text-shadow: 2px 2px 0px #fff;
+  text-shadow: 4px 4px 0px #fff;
   color: var(--dark-red);
 }
 
@@ -1540,14 +1580,15 @@ span#x:hover {
   font-family: "VT323", monospace;
   font-size: var(--font-size-base);
   color: #555;
-  padding: 5px;
+  margin-top: 10px;
+  padding: 10px;
   outline: none;
   transition: border-color 0.3s;
 }
 
 .cute-input:focus {
   border-bottom: 2px solid var(--yellowgreen);
-  color: #000;
+  color: var(--dark-red);
 }
 
 .cute-divider {
@@ -1560,12 +1601,13 @@ span#x:hover {
     transparent 5px,
     transparent 10px
   );
+  margin: 10px 0;
 }
 
 /* The Lined Paper Text Area */
 .message-group {
-  margin-top: 20px;
-  background: #fff; /* White box for text */
+  margin-top: 40px;
+  background: rgb(255, 255, 255); /* White box for text */
   border: 3px solid var(--dark-red);
   border-radius: 10px;
   padding: 10px;
@@ -1583,7 +1625,7 @@ span#x:hover {
   padding: 0 10px;
   outline: none;
   resize: none;
-  color: #333;
+  color: var(--dark-red);
 }
 
 /* Footer & Button */
@@ -1591,7 +1633,8 @@ span#x:hover {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-top: 20px;
+  margin-top: 30px;
+  width: 100%;
 }
 
 .heart-btn {
@@ -1621,11 +1664,39 @@ span#x:hover {
   transform: translateY(0);
   box-shadow: 0 0 0;
 }
+ 
+@media (max-width: 550px) {
+  .heart-btn {
+    width: 40%;
+    padding: 8px 20px;
+    font-size: clamp(12px, 4vw, 16px);
+  }
+  .heart-btn span {
+    display: none;
+  }
+}
 
 .decor-sticker {
-  font-size: calc(var(--font-heading-size) * 2);
-  transform: rotate(10deg);
+  display: flex;
+  align-items: center;
+  margin-left: 10px;
+  gap: 50px;
   filter: drop-shadow(2px 2px 0px rgba(0, 0, 0, 0.1));
+}
+.decor-sticker img {
+  width: clamp(10px, 10vw, 50px);
+  height: auto;
+  align-items: center;
+  justify-content: center;
+}
+
+@media (max-width: 420px) {
+  .decor-sticker {
+  position: absolute;
+  left: 38%;
+  gap: 15px;
+  scale: 0.8;
+  }
 }
 
 /* Floating Decorations outside the paper */
@@ -1633,8 +1704,8 @@ span#x:hover {
 .bg-decoration-2 {
   position: absolute;
   font-size: 4rem;
-  opacity: 0.6;
-  z-index: -1;
+  opacity: 1;
+  z-index: 4;
   animation: float-medium 4s ease-in-out infinite;
 }
 
@@ -1655,7 +1726,7 @@ span#x:hover {
     transform: translateY(0);
   }
   50% {
-    transform: translateY(-10px);
+    transform: translateY(-15px);
   }
 }
 
@@ -1663,13 +1734,16 @@ span#x:hover {
   0% {
     transform: rotate(0deg);
   }
+  50%  {
+    transform: rotate(250deg);
+  }
   100% {
     transform: rotate(360deg);
   }
 }
 
 /* Mobile Tweaks */
-@media (max-width: 640px) {
+@media (max-width: 420px) {
   .stationery-paper {
     padding: 20px;
   }
