@@ -1974,28 +1974,48 @@ span#x:hover {
 }
 
 /* --- THE GRID --- */
+/* --- MASONRY LAYOUT (Pinterest Style) --- */
 .gallery-grid {
-    display: grid;
-    /* Big, responsive thumbnails (min 300px) */
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 30px; /* Generous whitespace */
+    /* Create vertical columns */
+    column-count: 3; 
+    column-gap: 30px; /* Space between columns */
+    
+    /* Optional: Ensure it fills the width */
+    width: 100%;
+}
+
+/* Responsive: Reduce columns on smaller screens */
+@media (max-width: 1000px) {
+    .gallery-grid {
+        column-count: 2;
+    }
+}
+@media (max-width: 600px) {
+    .gallery-grid {
+        column-count: 1;
+    }
 }
 
 /* --- ART ITEM CARD --- */
 /* --- ART ITEM CARD (Base State) --- */
 .art-item {
+    /* CRITICAL: Prevents the card from being cut in half at the bottom of a column */
+    break-inside: avoid; 
+    margin-bottom: 30px; /* Adds space at the bottom of each item */
+    
+    /* Keep your existing style */
     position: relative;
     cursor: pointer;
     border-radius: 8px;
-    overflow: hidden; /* Keeps the zoomed image inside the box */
     background: #fff;
     box-shadow: 0 4px 10px rgba(0,0,0,0.05);
     
-    /* SCROLL ANIMATION STARTING STATE: Hidden & pushed down */
+    /* Keep animation logic */
     opacity: 0;
     transform: translateY(30px);
     transition: opacity 0.6s ease-out, transform 0.6s ease-out, box-shadow 0.3s ease;
 }
+
 
 /* --- SCROLL ANIMATION VISIBLE STATE --- */
 /* This class is added by JavaScript when the item appears on screen */
@@ -2005,14 +2025,14 @@ span#x:hover {
 }
 
 /* --- IMAGE STYLING --- */
+/* THE IMAGE FIX */
 .art-item img {
-    width: 100%;
-    height: 300px;
-    object-fit: cover;
-    display: block;
-    /* Smooth zoom transition */
-    transition: transform 0.5s ease;
+    width: 100%;    /* Fill the width of the card */
+    height: auto;   /* <--- THIS IS KEY: Allows height to adjust naturally */
+    display: block; /* Removes weird gap at bottom */
+    border-radius: 8px; /* Smooth corners */
 }
+
 
 /* --- HOVER EFFECTS --- */
 .art-item:hover {
@@ -2104,4 +2124,59 @@ span#x:hover {
 }
 .close-lightbox:hover {
     color: var(--pink);
+}
+
+/* --- RETRO BACK BUTTON --- */
+.back-btn {
+    position: fixed; /* Stays in place when scrolling */
+    top: 50px;
+    left: 20px;
+    z-index: 1000; /* Stays on top of images */
+    
+    /* Typography */
+    font-family: 'VT323', monospace;
+    font-size: var(--font-subheading-size);
+    text-decoration: none;
+    color: var(--dark-red); /* Uses your existing variable */
+    background: rgba(255, 255, 255, 0.9); /* Semi-transparent white */
+    
+    /* Button Shape */
+    padding: 8px 15px;
+    border: 2px solid var(--dark-red);
+    border-radius: 50px; /* Rounded capsule shape */
+    box-shadow: 4px 4px 0px rgba(0,0,0,0.1);
+    
+    /* Animation */
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.back-btn .arrow {
+    font-size: 1.2rem;
+    transition: transform 0.2s ease;
+}
+
+/* Hover Effects */
+.back-btn:hover {
+    background: var(--pink); /* Your pink theme color */
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 4px 6px 10px rgba(0,0,0,0.15);
+    border-color: white;
+}
+
+.back-btn:hover .arrow {
+    transform: translateX(-4px); /* Arrow wiggles left */
+}
+
+/* --- MOBILE TWEAK --- */
+@media (max-width: 600px) {
+    .back-btn {
+        top: 50px;
+        left: 10px;
+        font-size: 1.2rem;
+        padding: 5px 12px;
+    }
 }
