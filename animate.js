@@ -417,3 +417,51 @@ function navigatePlaylist(direction) {
     // This triggers your existing updatePlayer() function automatically!
     tapes[newIndex].click();
 }
+
+/* --- MINIMAL LIGHTBOX LOGIC --- */
+
+function openArt(element) {
+    const lightbox = document.getElementById('clean-lightbox');
+    const img = element.querySelector('img');
+    const title = element.querySelector('h3').innerText;
+    
+    // Set Content
+    document.getElementById('lb-img').src = img.src;
+    document.getElementById('lb-title').innerText = title;
+    document.getElementById('lb-desc').innerText = img.getAttribute('data-desc');
+    
+    // Show
+    lightbox.classList.add('active');
+}
+
+function closeArt(e) {
+    // Close if clicking the background OR the X button
+    if (e.target.id === 'clean-lightbox' || e.target.classList.contains('close-lightbox')) {
+        document.getElementById('clean-lightbox').classList.remove('active');
+    }
+}
+
+/* --- SCROLL ANIMATION TRIGGER --- */
+document.addEventListener("DOMContentLoaded", function() {
+    
+    // 1. Create the observer
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            // If the element is visible
+            if (entry.isIntersecting) {
+                // Add the class that triggers the CSS animation
+                entry.target.classList.add('visible');
+                // Stop observing it (so it doesn't fade out again)
+                observer.unobserve(entry.target);
+            }
+        });
+    }, {
+        threshold: 0.1 // Trigger when 10% of the item is visible
+    });
+
+    // 2. Tell the observer to watch all art items
+    const artItems = document.querySelectorAll('.art-item');
+    artItems.forEach(item => {
+        observer.observe(item);
+    });
+});

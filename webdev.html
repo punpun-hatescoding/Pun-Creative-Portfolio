@@ -11,73 +11,11 @@
       href="https://fonts.googleapis.com/css2?family=Aldrich&family=Almendra:ital,wght@0,400;0,700;1,400;1,700&family=Audiowide&family=DotGothic16&family=DynaPuff:wght@400..700&family=Griffy&family=Irish+Grover&family=Jacquard+12&family=Jockey+One&family=Love+Ya+Like+A+Sister&family=Russo+One&family=UnifrakturMaguntia&family=VT323&display=swap"
       rel="stylesheet"
     />
-    <style>
-      /* Define CSS variables for easy adjustments. 
-           Colors are sampled directly from your source image.
-        */
-      :root {
-        --pattern-bg-color: #4a2521; /* The deep brown background */
-        --pattern-dot-color: #46a19f; /* The teal/cyan dot color */
-
-        /* Adjust sizes here to change the look pattern density.
-               Desktop/Tablet default sizes:
-            */
-        --dot-radius: 4px; /* How big the dots are */
-        --tile-size: 90px; /* The space between repeating dots */
-      }
-      header {
-        display: none;
-      }
-      body {
-        margin: 0;
-        padding: 0;
-        min-height: 100vh;
-
-        /* 1. Set the main background color */
-        background-color: var(--pattern-bg-color);
-
-        /* 2. Create the pattern using two radial-gradient layers */
-        background-image: 
-                /* Layer 1: The dots sitting in the "gaps" (shifted) */ radial-gradient(
-            circle,
-            var(--pattern-dot-color) var(--dot-radius),
-            transparent calc(var(--dot-radius) + 0.5px)
-          ),
-          /* Layer 2: The standard grid dots (corners) */
-            radial-gradient(
-              circle,
-              var(--pattern-dot-color) var(--dot-radius),
-              transparent calc(var(--dot-radius) + 0.5px)
-            );
-
-        /* 3. Define the size of the repeating square tile */
-        background-size: var(--tile-size) var(--tile-size);
-
-        /* 4. Position the layers.
-               The first layer is shifted down and right by exactly half 
-               the tile size to create the offset effect.
-               The second layer starts at 0 0.
-            */
-        background-position: calc(var(--tile-size) / 2)
-            calc(var(--tile-size) / 2),
-          /* Position for Layer 1 */ 0 0; /* Position for Layer 2 */
-      }
-
-      /* --- RESPONSIVE TWEAKS --- */
-
-      /* On smaller mobile devices, we slightly shrink the tile size 
-           so the pattern doesn't look too sparse or empty. */
-      @media (max-width: 450px) {
-        :root {
-          --dot-radius: 3.5px;
-          --tile-size: 70px;
-        }
-      }
-   
-  </style>
-    
   </head>
   <body> 
+    <div id="npc-follower"><img src="images/cursor.png" alt="" /></div>
+    <div class="sparkle"></div>
+
   <div id="window-cinema" class="project-window hidden">
     
     <div class="window-header">

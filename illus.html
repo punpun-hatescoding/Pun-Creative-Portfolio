@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pun's Folio</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Aldrich&family=Almendra:ital,wght@0,400;0,700;1,400;1,700&family=Audiowide&family=DotGothic16&family=DynaPuff:wght@400..700&family=Griffy&family=Irish+Grover&family=Jacquard+12&family=Jockey+One&family=Love+Ya+Like+A+Sister&family=Russo+One&family=UnifrakturMaguntia&family=VT323&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div id="npc-follower"><img src="images/cursor.png" alt="" /></div>
+    <div class="sparkle"></div>
+    <div id="window-cinema" class="project-window hidden">
+      <div class="window-header">
+        <span>digital_illustration.com</span>
+        <div class="window-controls">
+          <span class="win-btn" onclick="window.location.href='works.html'"
+            >-</span
+          >
+          <span class="win-btn" onclick="window.location.href='works.html'"
+            >✖</span
+          >
+        </div>
+      </div>
+    </div>
+    <section class="minimal-gallery">
+    
+    <h2 class="gallery-title">Selected Works</h2>
+
+    <div class="gallery-grid">
+        
+        <div class="art-item" onclick="openArt(this)">
+            <img src="images/art1.jpg" alt="Cat Study" data-desc="Digital illustration, 2024.">
+            <div class="art-info">
+                <h3>Cat Study</h3>
+            </div>
+        </div>
+
+        <div class="art-item" onclick="openArt(this)">
+            <img src="images/art2.jpg" alt="Space Girl" data-desc="Character Concept Art.">
+            <div class="art-info">
+                <h3>Space Girl</h3>
+            </div>
+        </div>
+
+        </div>
+
+    <div id="clean-lightbox" class="lightbox-overlay" onclick="closeArt(event)">
+        <div class="lightbox-content">
+            <img id="lb-img" src="" alt="">
+            <div class="lb-details">
+                <h2 id="lb-title">Title</h2>
+                <p id="lb-desc">Description</p>
+            </div>
+            <span class="close-lightbox">×</span>
+        </div>
+    </div>
+    <section class="minimal-gallery">
+    
+    <h2 class="gallery-title">Selected Works</h2>
+
+    <div class="gallery-grid">
+        
+        <div class="art-item" onclick="openArt(this)">
+            <img src="images/art1.jpg" alt="Cat Study" data-desc="Digital illustration, 2024.">
+            <div class="art-info">
+                <h3>Cat Study</h3>
+            </div>
+        </div>
+
+        <div class="art-item" onclick="openArt(this)">
+            <img src="images/art2.jpg" alt="Space Girl" data-desc="Character Concept Art.">
+            <div class="art-info">
+                <h3>Space Girl</h3>
+            </div>
+        </div>
+
+        </div>
+
+    <div id="clean-lightbox" class="lightbox-overlay" onclick="closeArt(event)">
+        <div class="lightbox-content">
+            <img id="lb-img" src="" alt="">
+            <div class="lb-details">
+                <h2 id="lb-title">Title</h2>
+                <p id="lb-desc">Description</p>
+            </div>
+            <span class="close-lightbox">×</span>
+        </div>
+    </div>
+
+</section>
+    <script src="animate.js"></script>
+  </body>
+</html>
