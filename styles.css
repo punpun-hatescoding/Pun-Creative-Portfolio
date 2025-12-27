@@ -52,7 +52,7 @@ html {
   --pattern-bg-color: #4a2521; /* The deep brown background */
   --pattern-dot-color: #46a19f; /* The teal/cyan dot color */
 
-        /* Adjust sizes here to change the look pattern density.
+  /* Adjust sizes here to change the look pattern density.
                Desktop/Tablet default sizes:
             */
   --dot-radius: 1.5px; /* How big the dots are */
@@ -73,18 +73,16 @@ body {
   padding: 0;
   min-height: 100vh;
   background-color: var(--pattern-bg-color);
-  background-image: 
-  radial-gradient(
+  background-image: radial-gradient(
       circle,
       var(--pattern-dot-color) var(--dot-radius),
       transparent calc(var(--dot-radius) + 0.5px)
     ),
-   
-      radial-gradient(
-        circle,
-        var(--pattern-dot-color) var(--dot-radius),
-        transparent calc(var(--dot-radius) + 0.5px)
-      );
+    radial-gradient(
+      circle,
+      var(--pattern-dot-color) var(--dot-radius),
+      transparent calc(var(--dot-radius) + 0.5px)
+    );
   background-size: var(--tile-size) var(--tile-size);
   background-position: calc(var(--tile-size) / 2) calc(var(--tile-size) / 2),
     0 0;
@@ -95,9 +93,6 @@ body {
     height: auto; /* allow scrolling on mobile */
   }
 }
-
-
- 
 
 /* ========================================= */
 #npc-follower {
@@ -172,7 +167,6 @@ header {
   margin-bottom: 1rem;
   overflow: visible !important;
   background-color: rgb(54, 200, 178);
- 
 }
 
 /* --- RESPONSIVE LOGO --- */
@@ -201,7 +195,6 @@ header {
    Horizontal menu, No button, Always visible
    ========================================= */
 
-
 .dropdown-wrapper {
   position: relative;
   display: flex;
@@ -228,7 +221,7 @@ header {
   flex-direction: row;
   /* FIX 2: Force the menu to stretch to 100% of the wrapper's width */
   width: 100%;
- 
+
   /* FIX 3: Use 'space-evenly' for perfect gaps between all items and edges */
   justify-content: space-evenly;
 
@@ -257,7 +250,6 @@ header {
 
 .dropdown-menu a:hover {
   color: greenyellow;
-
 }
 #site-navigation a {
   gap: 1rem;
@@ -266,7 +258,7 @@ header {
 
 @media (max-width: 1000px) {
   .dropdown-menu a {
-    padding: 0.5rem 2rem; 
+    padding: 0.5rem 2rem;
   }
 }
 /* HOVER / ACTIVE STATE (Popped Up Tab) */
@@ -278,7 +270,7 @@ header {
   transform: translateY(-4px);
 
   /* Brighten the border */
-  
+
   border-radius: 10px 10px 10px 10px;
   /* Add a shadow to make it pop */
   box-shadow: 0px -4px 18px rgba(21, 0, 0, 0.2);
@@ -294,7 +286,7 @@ header {
    FIXED: Menu floats absolute so logo doesn't move
    ========================================= */
 
-@media (max-width: 420px) {
+@media (max-width: 620px) {
   header {
     /* Ensure header can grow if needed */
     height: 4rem;
@@ -302,7 +294,7 @@ header {
     position: relative;
     margin-bottom: 1.4rem;
   }
-   .nav-toggle {
+  .nav-toggle {
     margin-top: 0;
     transform: translateY(-5px); /* Pulls it up slightly */
   }
@@ -371,23 +363,22 @@ header {
   }
   .dropdown-menu a {
     display: block;
-    
+
     /* 1. Reduce padding (was 1rem) */
-    padding: 1rem 1rem; 
-    
+    padding: 1rem 1rem;
+
     /* 2. Force a smaller text size (overrides ID selectors) */
-    font-size: 1rem !important; 
-    
+    font-size: 1rem !important;
+
     background-color: transparent;
     border-radius: 10px;
   }
   .dropdown-menu a:hover {
-    background-color: var(--yellowgreen);  
+    background-color: var(--yellowgreen);
     color: var(--text-main);
   }
 }
 /* END of Dropdown Menu Styles */
-
 
 /* ========================================= */
 /* Main Title Container */
@@ -592,8 +583,6 @@ p#lets-start-text {
   }
 }
 
-
-
 /* ========================================= */
 /* RPG Character Card Styles */
 /* About Section Styles */
@@ -656,14 +645,14 @@ p#lets-start-text {
 
 /* 1. By default, HIDE the maximize button (Mobile/Tablet/Laptop) */
 .win-btn.max-btn {
-    display: none !important;
+  display: none !important;
 }
 
 /* 2. Only SHOW it if the screen is huge (1440px+) */
 @media (min-width: 1250px) {
-    .win-btn.max-btn {
-        display: inline-block !important;
-    }
+  .win-btn.max-btn {
+    display: inline-block !important;
+  }
 }
 
 /* Layout Grid */
@@ -673,8 +662,6 @@ p#lets-start-text {
   padding: 24px;
   gap: 24px;
 }
-
-
 
 /* --- Left Column: Avatar & Stats --- */
 .avatar-container {
@@ -777,12 +764,12 @@ p#lets-start-text {
   border: 3px solid var(--dark-red);
   border-bottom: none; /* Connect to body */
   border-radius: 15px 15px 0 0; /* Round top corners */
-  
+
   font-family: var(--font-pixel, monospace);
   font-size: 1.2rem; /* BIGGER TEXT */
   color: var(--dark-red);
   font-weight: bold;
-  
+
   padding: 10px 25px; /* BIGGER CLICK AREA */
   cursor: pointer;
   position: relative;
@@ -805,13 +792,12 @@ p#lets-start-text {
   padding-top: 15px;
   z-index: 10; /* Bring to front */
   margin-bottom: -3px; /* Cover the border line of content */
-  box-shadow: 0 -5px 10px rgba(0,0,0,0.05);
+  box-shadow: 0 -5px 10px rgba(0, 0, 0, 0.05);
 }
 
 /* =========================================
    DRAG REACTION ( The Magic Part )
    ========================================= */
-
 
 /* Tab Content */
 .tab-content {
@@ -867,7 +853,6 @@ p#lets-start-text {
 
 /* --- Mobile Responsive --- */
 @media (max-width: 800px) {
-
   .about-section {
     height: auto;
     min-height: auto;
@@ -942,7 +927,6 @@ p#lets-start-text {
     text-align: center;
     font-size: var(--font-heading-size);
   }
-
 }
 /* --- RETRO POPUP STYLES --- */
 span#x {
@@ -1172,87 +1156,87 @@ span#x:hover {
 /* --- MAXIMIZE / FULLSCREEN MODE --- */
 
 .is-maximized {
-    /* Force width (85% of screen) */
-    width: 95vw !important;
-    height: 99vh !important;
-    max-width: none !important;
-    max-height: none !important;
-    
-    /* --- CENTERING LOGIC --- */
-    /* 1. Move the left edge to the middle of the screen */
-    left: 50% !important;
-    top: 50% !important;
-    /* 2. Pull the window back by half its own width to center it */
-    /* We use translateX because height is 100vh (so vertical centering isn't needed) */
-    transform: translateX(-50%) translateY(-50%) !important;
-    
-    /* 3. Ensure Top is 0 */
-    
-    margin: 0 !important;
-    
-    /* Ensure it sits on top of everything */
-    z-index: 99999 !important;
-    position: fixed !important;
+  /* Force width (85% of screen) */
+  width: 95vw !important;
+  height: 99vh !important;
+  max-width: none !important;
+  max-height: none !important;
+
+  /* --- CENTERING LOGIC --- */
+  /* 1. Move the left edge to the middle of the screen */
+  left: 50% !important;
+  top: 50% !important;
+  /* 2. Pull the window back by half its own width to center it */
+  /* We use translateX because height is 100vh (so vertical centering isn't needed) */
+  transform: translateX(-50%) translateY(-50%) !important;
+
+  /* 3. Ensure Top is 0 */
+
+  margin: 0 !important;
+
+  /* Ensure it sits on top of everything */
+  z-index: 99999 !important;
+  position: fixed !important;
 }
 /* Make sure the internal body stretches to fill the new space */
 /* --- MAXIMIZED CONTENT STYLES --- */
 
 .is-maximized .rpg-content {
-    /* Was: 300px 1fr */
-    grid-template-columns: 1fr 1fr !important; 
-    
-    /* Center items vertically */
-    align-items: center; 
-    
-    /* Add space between Avatar and Text */
-    gap: 50px; 
-    
-    /* Ensure the grid actually fills the height of the window */
-    height: 90%; 
+  /* Was: 300px 1fr */
+  grid-template-columns: 1fr 1fr !important;
+
+  /* Center items vertically */
+  align-items: center;
+
+  /* Add space between Avatar and Text */
+  gap: 50px;
+
+  /* Ensure the grid actually fills the height of the window */
+  height: 90%;
 }
 
 /* 2. Remove the size limits on the Text Box so it fills the right side */
 .is-maximized #bio {
-    max-width: none !important; /* Allow it to grow */
-    width: 100%;
-    
-    /* Optional: Make the text box tall enough to read easily */
-    max-height: 80vh !important; 
+  max-width: none !important; /* Allow it to grow */
+  width: 100%;
+
+  /* Optional: Make the text box tall enough to read easily */
+  max-height: 80vh !important;
 }
 
 /* 3. Center the Avatar/Stats in the left column */
 .is-maximized .avatar-container {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center; /* Centers the image and bars */
-    justify-content: center;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Centers the image and bars */
+  justify-content: center;
 }
 
 /* 4. Make the Avatar Image bigger in full screen (Optional) */
 .is-maximized .pixel-frame {
-    max-width: 400px; /* Make the picture larger */
+  max-width: 400px; /* Make the picture larger */
 }
 .is-maximized .status-bars {
-    /* 1. Use 100% of the column space, but cap it at a wider size for desktop */
-    width: 100%;       
-    max-width: 500px;  /* 300px is very small for Desktop. 500px looks more "Heroic" */
-    
-    /* 2. Don't force fixed height. Use padding so it grows if text gets bigger */
-    height: auto;      
-    padding: 25px;     /* Adds the "height" visually by adding breathing room */
-    
-    /* 3. Center the box itself in the column */
-    margin: 0 auto;    
-    
-    /* 4. Make text bigger to match the huge screen */
-    font-size: 1.5rem; 
+  /* 1. Use 100% of the column space, but cap it at a wider size for desktop */
+  width: 100%;
+  max-width: 500px; /* 300px is very small for Desktop. 500px looks more "Heroic" */
+
+  /* 2. Don't force fixed height. Use padding so it grows if text gets bigger */
+  height: auto;
+  padding: 25px; /* Adds the "height" visually by adding breathing room */
+
+  /* 3. Center the box itself in the column */
+  margin: 0 auto;
+
+  /* 4. Make text bigger to match the huge screen */
+  font-size: 1.5rem;
 }
 /* FIX 3: Ensure the rows inside also stretch */
 .is-maximized .bar-row {
-    width: 100%;
-    justify-content: space-between;
-    align-items: center; /* Keeps HP left and Numbers right */
+  width: 100%;
+  justify-content: space-between;
+  align-items: center; /* Keeps HP left and Numbers right */
 }
 
 /* --- WORKS SECTION: LEVEL SELECT --- */
@@ -1264,7 +1248,7 @@ span#x:hover {
   justify-content: center;
   align-items: center;
   padding: clamp(0rem, 4vw, 3rem);
-  color:var(--text-main);
+  color: var(--text-main);
 }
 
 .level-select-container {
@@ -1292,8 +1276,6 @@ span#x:hover {
   position: relative;
 }
 
-
-
 /* --- MISSION BRIEFING BOX --- */
 
 .mission-briefing {
@@ -1302,7 +1284,7 @@ span#x:hover {
   padding: 20px;
   font-family: "VT323", monospace;
   position: relative;
-  min-height: 120px; 
+  min-height: 120px;
   border-radius: 15px;
   box-shadow: 10px 10px 0px rgba(96, 193, 52, 0.5);
 }
@@ -1337,6 +1319,31 @@ span#x:hover {
   padding-top: 5px;
 }
 
+#explore {
+  display: block;
+  background-color: var(--pink);
+  color: whitesmoke;
+  padding: 0.5rem 1rem;
+  font-family: var(--font-family-base);
+  font-size: clamp(0.8rem, 4vw, 1.2rem);
+  cursor: pointer;
+  border: none;
+  border-radius: 10px;
+  transition: background-color 0.3s ease;
+  min-width: 100px;
+  height: 50px;
+  text-align: center;
+  align-items: center;
+}
+
+#explore:hover {
+  background-color: var(--yellowgreen);
+  color: var(--text-main);
+}
+#explore:active {
+  background-color: rgb(0, 225, 255);
+  color: whitesmoke;
+}
 /* Mobile Tweaks */
 @media (max-width: 420px) {
   .level-header h2 {
@@ -1368,6 +1375,7 @@ span#x:hover {
   display: flex;
   flex-direction: column;
   transition: transform 0.2s, box-shadow 0.2s;
+  position: relative;
 }
 
 .world-card:hover {
@@ -1375,17 +1383,57 @@ span#x:hover {
   scale: 1.02;
   z-index: 10;
 }
+.card-bg-img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Ensures image covers the whole card without stretching */
+
+  opacity: 0;
+  z-index: -10;
+
+  /* Smooth fade and slow zoom effect */
+  transition: opacity 0.2s ease, transform 3s ease;
+  filter: grayscale(20%); /* Optional: adds a slight retro vibe */
+}
+.world-card:hover .card-bg-img {
+  opacity: 1;
+  border-radius: 10px;
+}
+
+.world-card:hover {
+  background-color: #000;
+  border-color: var(--pink); /* Highlight border color */
+  scale: 1.05;
+  margin-bottom: 20px;
+}
+
+.world-card:hover .win-content h3,
+.world-card:hover .win-content span {
+  color: var(--yellowgreen);
+  margin: 0;
+  font-size: var(--font-size-base);
+  padding: 5px;
+
+  text-align: center;
+  line-height: 30px;
+  border-radius: 10px;
+  background-color: rgba(38, 38, 38, 0.588);
+}
 
 /* 2. The Title Bar (Blue Gradient) */
 .window-header-works {
- background-color: var(--pink);
- border-radius: 10px 10px 0 0;
- color: whitesmoke;
- padding: 8px 12px;
- display: flex;
- justify-content: space-between;
- align-items: center;
- font-size: var(--font-size-base);
+  background-color: var(--pink);
+  border-radius: 10px 10px 0 0;
+  color: whitesmoke;
+  padding: 8px 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: var(--font-size-base);
+  z-index: 10;
 }
 .window-header-works.forest {
   background-color: rgb(112, 183, 5);
@@ -1405,28 +1453,11 @@ span#x:hover {
   margin-right: 5px;
 }
 
-
 /* --- THEMES (Fake Tiled Backgrounds) --- */
 
 /* Forest: Green checkered pattern */
 .theme-forest {
   background-color: #e0ffe0;
- /* background-image: linear-gradient(
-      45deg,
-      #ccffcc 25%,
-      transparent 25%,
-      transparent 75%,
-      #ccffcc 75%,
-      #ccffcc
-    ),
-    linear-gradient(
-      45deg,
-      #ccffcc 25%,
-      transparent 25%,
-      transparent 75%,
-      #ccffcc 75%,
-      #ccffcc
-    ); */
   background-size: 20px 20px;
   background-position: 0 0, 10px 10px;
 }
@@ -1465,13 +1496,16 @@ span#x:hover {
 
 /* --- Content Styling --- */
 .win-content {
-  padding: 50px 15px 15px 15px;
+  padding: 20px 20px 20px 20px;
   font-size: var(--font-size-base);
-  text-align: center;
-  height: 100%;
+  z-index: 10;
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
+  gap: 35px;
+  height: auto;
+  margin-top: 25px;
 }
 
 .center-img {
@@ -1509,7 +1543,6 @@ span#x:hover {
   }
 }
 
-
 /* --- CONTACT SECTION: WHIMSICAL STATIONERY --- */
 .contact-section {
   width: 100%;
@@ -1534,8 +1567,7 @@ span#x:hover {
   background-color: rgb(203, 255, 239);
   border-radius: 10px;
   padding: 40px;
-  box-shadow: 0 0 0 3px var(--dark-red),
-  15px 15px 3px rgba(200, 77, 95, 0.4);
+  box-shadow: 0 0 0 3px var(--dark-red), 15px 15px 3px rgba(200, 77, 95, 0.4);
   position: relative;
 }
 
@@ -1664,7 +1696,7 @@ span#x:hover {
   transform: translateY(0);
   box-shadow: 0 0 0;
 }
- 
+
 @media (max-width: 550px) {
   .heart-btn {
     width: 40%;
@@ -1692,10 +1724,10 @@ span#x:hover {
 
 @media (max-width: 620px) {
   .decor-sticker {
-  position: absolute;
-  left: 32%;
-  gap: 10px;
-  scale: 0.8;
+    position: absolute;
+    left: 32%;
+    gap: 10px;
+    scale: 0.8;
   }
 }
 
@@ -1734,7 +1766,7 @@ span#x:hover {
   0% {
     transform: rotate(0deg);
   }
-  50%  {
+  50% {
     transform: rotate(250deg);
   }
   100% {
@@ -1752,431 +1784,537 @@ span#x:hover {
   }
 }
 
-
 /* --- CINEMA SCREEN (Bigger & Centered) --- */
 .cinema-screen {
-    position: relative;
-    width: 100%;       /* Full width */
-    max-width: none;   /* REMOVED the 800px limit */
-    margin: 0;         /* Removed auto margins since it fills the space */
-    
-    aspect-ratio: 16 / 9; 
-    
-    background: #000;
-    border: 3px solid #5c3a21;
-    overflow: hidden;
-    box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+  position: relative;
+  width: 100%; /* Full width */
+  max-width: none; /* REMOVED the 800px limit */
+  margin: 0; /* Removed auto margins since it fills the space */
+
+  aspect-ratio: 16 / 9;
+
+  background: #000;
+  border: 3px solid #5c3a21;
+  overflow: hidden;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
 }
 
 /* Ensure inner items fit perfectly */
 #main-video-link {
-    display: block;
-    width: 100%;
-    height: 100%;
-    text-decoration: none;
+  display: block;
+  width: 100%;
+  height: 100%;
+  text-decoration: none;
 }
 
 #main-preview-image {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    opacity: 0.7;
-    transition: all 0.4s ease;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.7;
+  transition: all 0.4s ease;
 }
 
 /* Play Button Styling */
 .play-overlay {
-    position: absolute;
-    top: 50%; left: 50%;
-    transform: translate(-50%, -50%);
-    text-align: center;
-    z-index: 10;
-    pointer-events: none; /* Click passes through to link */
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  z-index: 10;
+  pointer-events: none; /* Click passes through to link */
 }
 
 .play-circle {
-    width: 80px; height: 80px;
-    background: rgba(0, 0, 0, 0.6);
-    border: 3px solid #b6ffea;
-    border-radius: 50%;
-    display: flex; justify-content: center; align-items: center;
-    margin: 0 auto 10px auto;
-    transition: transform 0.2s, background 0.2s;
+  width: 80px;
+  height: 80px;
+  background: rgba(0, 0, 0, 0.6);
+  border: 3px solid #b6ffea;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto 10px auto;
+  transition: transform 0.2s, background 0.2s;
 }
 
 .play-icon {
-    font-size: 2.5rem;
-    color: #b6ffea;
-    margin-left: 5px; /* Optical center */
+  font-size: 2.5rem;
+  color: #b6ffea;
+  margin-left: 5px; /* Optical center */
 }
 
 .play-text {
-    font-family: 'VT323', monospace;
-    font-size: 1.2rem;
-    color: #fff;
-    background: #5c3a21;
-    padding: 4px 8px;
-    border-radius: 4px;
+  font-family: "VT323", monospace;
+  font-size: 1.2rem;
+  color: #fff;
+  background: #5c3a21;
+  padding: 4px 8px;
+  border-radius: 4px;
 }
 
 /* Hover Effects */
-.cinema-screen:hover #main-preview-image { opacity: 1; transform: scale(1.02); }
-.cinema-screen:hover .play-circle { background: #b6ffea; transform: scale(1.1); }
-.cinema-screen:hover .play-icon { color: #5c3a21; }
+.cinema-screen:hover #main-preview-image {
+  opacity: 1;
+  transform: scale(1.02);
+}
+.cinema-screen:hover .play-circle {
+  background: #b6ffea;
+  transform: scale(1.1);
+}
+.cinema-screen:hover .play-icon {
+  color: #5c3a21;
+}
 
 /* --- PLAYLIST & HEADINGS --- */
 .retro-heading {
-    font-family: 'VT323'; 
-    margin: 0 0 10px 0; 
-    color: #b6ffea; 
-    border-bottom: 2px dashed #555;
-    padding-bottom: 5px;
+  font-family: "VT323";
+  margin: 0 0 10px 0;
+  color: #b6ffea;
+  border-bottom: 2px dashed #555;
+  padding-bottom: 5px;
 }
 
 .tape-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-    gap: 10px;
-    margin-bottom: 20px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 10px;
+  margin-bottom: 20px;
 }
 
 /* --- NEW: INFO BOX STYLES --- */
 .video-details-panel {
-    background: #1a1a1a;
-    border: 2px solid #5c3a21;
-    padding: 15px;
-    font-family: 'VT323', monospace;
-    border-radius: 5px;
+  background: #1a1a1a;
+  border: 2px solid #5c3a21;
+  padding: 15px;
+  font-family: "VT323", monospace;
+  border-radius: 5px;
 }
 
 .video-details-panel h2 {
-    margin: 0 0 10px 0;
-    color: #ffb6b9; /* Pink title */
-    font-size: 1.8rem;
-    letter-spacing: 1px;
+  margin: 0 0 10px 0;
+  color: #ffb6b9; /* Pink title */
+  font-size: 1.8rem;
+  letter-spacing: 1px;
 }
 
 .details-grid {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 }
 
 .detail-row {
-    display: flex;
-    gap: 10px;
+  display: flex;
+  gap: 10px;
 }
 
 .label {
-    color: #888;
-    min-width: 80px;
-    font-weight: bold;
+  color: #888;
+  min-width: 80px;
+  font-weight: bold;
 }
 
 .video-details-panel p {
-    margin: 0;
-    color: #ddd;
-    font-size: 1.1rem;
+  margin: 0;
+  color: #ddd;
+  font-size: 1.1rem;
+}
+
+/* --- EXTRA SCREENSHOTS GRID (Gallery Style) --- */
+.preview-strip {
+    /* 1. Use Grid instead of Flex */
+    display: grid;
+    /* Creates columns that fill space (min 150px wide) */
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 30px; /* Space between items */
+
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 2px dashed #444; /* Separator from video */
+    width: 100%;
+}
+
+/* The Card Container */
+.strip-item {
+    position: relative;
+    cursor: pointer;
+    background: #230909; /* Dark red frame */
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+    
+    /* Animation for "Lift" effect */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Hover Effect: Lift Up */
+.strip-item:hover {
+    transform: translateY(-5px); /* Moves up */
+    box-shadow: 0 10px 15px rgba(0,0,0,0.5); /* Bigger shadow */
+    z-index: 10;
+}
+
+/* The Image */
+.strip-item img {
+    width: 100%;
+    height: 120px; /* Fixed height for uniformity */
+    object-fit: cover; /* Crops image cleanly */
+    display: block;
+    border-radius: 10px;
+    
+}
+
+/* Optional Label Styling */
+.strip-label {
+    display: block;
+    font-family: 'VT323', monospace;
+    font-size: 1rem;
+    color: #0f0606;
+    text-align: center;
+    margin-top: 5px;
+  
+}
+
+/* --- TRY IT YOURSELF BUTTON --- */
+.action-row {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center; /* Aligns button to the left */
+}
+
+.try-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    /* Retro Button Look */
+    background-color: yellowgreen; 
+    color: white;
+    font-family: 'VT323', monospace;
+    font-size: 1.4rem;
+    text-decoration: none;
+    padding: 10px 25px;
+    border: 2px solid white;
+    border-radius: 10px;
+    box-shadow: 4px 4px 0px rgba(0,0,0,0.5); /* Hard shadow */
+    transition: all 0.2s ease;
+}
+
+/* Hover Effect: "Presses" the button down */
+.try-btn:hover {
+    transform: translate(2px, 2px); /* Moves down-right */
+    box-shadow: 2px 2px 0px rgba(0,0,0,0.5); /* Shadow gets smaller */
+    background-color: #ff6b9d; /* Slightly lighter pink */
+}
+
+/* Blinking Icon Animation */
+.blink-icon {
+    animation: blink 1s infinite;
+}
+
+@keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
 }
 .mobile-nav {
-    display: none;
+  display: none;
 }
 
-    .window-body {
-        padding: 15px;
-        flex-direction: column;
-        gap: 15px;
-    }
-    .cinema-playlist {
-       display: none; /* Hide playlist on small screens */
-   }
-    /* 3. Show & Style the Arrows */
-    .mobile-nav {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        background: #1a1a1a;
-        border: 2px solid #5c3a21;
-        padding: 10px;
-        margin-bottom: 15px;
-    }
+.window-body {
+  padding: 15px;
+  flex-direction: column;
+  gap: 15px;
+}
+.cinema-playlist {
+  display: none; /* Hide playlist on small screens */
+}
+/* 3. Show & Style the Arrows */
+.mobile-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #1a1a1a;
+  border: 2px solid #5c3a21;
+  padding: 10px;
+  margin-bottom: 15px;
+}
 
-    .nav-arrow {
-        background: #5c3a21;
-        color: white;
-        border: none;
-        font-family: 'VT323', monospace;
-        font-size: 1.2rem;
-        padding: 10px 20px;
-        cursor: pointer;
-        border-radius: 4px;
-    }
-    
-    .nav-arrow:active {
-        background: #b6ffea;
-        color: #5c3a21;
-    }
+.nav-arrow {
+  background: #5c3a21;
+  color: white;
+  border: none;
+  font-family: "VT323", monospace;
+  font-size: 1.2rem;
+  padding: 10px 20px;
+  cursor: pointer;
+  border-radius: 4px;
+}
 
-    .nav-label {
-        color: #b6ffea;
-        font-family: 'VT323', monospace;
-        letter-spacing: 2px;
-    }
+.nav-arrow:active {
+  background: #b6ffea;
+  color: #5c3a21;
+}
 
+.nav-label {
+  color: #b6ffea;
+  font-family: "VT323", monospace;
+  letter-spacing: 2px;
+}
 
-.details-grid { flex-direction: column; gap: 10px; }
+.details-grid {
+  flex-direction: column;
+  gap: 10px;
+}
 /* FORCE VERTICAL STACKING */
 .window-body {
-    display: flex !important;
-    flex-direction: column !important; /* This forces Top-to-Bottom layout */
-    gap: 15px;
-    padding: 20px;
-    background-color: #2b2b2b;
-    color: white;
+  display: flex !important;
+  flex-direction: column !important; /* This forces Top-to-Bottom layout */
+  gap: 15px;
+  padding: 20px;
+  background-color: #2b2b2b;
+  color: white;
 }
-
-
 
 /* Ensure the screen takes full width */
 .cinema-screen {
-    width: 100% !important;
-    max-width: 100% !important;
+  width: 100% !important;
+  max-width: 100% !important;
 }
 
-
 .cinema-playlist {
-        display: none !important;
-    }
-    
-    /* Ensure the mobile nav is visible on mobile */
-.mobile-nav {
-        display: flex !important;
-    }
+  display: none !important;
+}
 
+/* Ensure the mobile nav is visible on mobile */
+.mobile-nav {
+  display: flex !important;
+}
 
 /* --- ART GALLERY SECTION --- */
 
 .minimal-gallery {
-    width: 100%;
-    max-width: 1400px; /* Limits width on huge screens */
-    margin: 0 auto;
-    padding: 40px 20px;
-    min-height: 100vh;
+  width: 100%;
+  max-width: 1400px; /* Limits width on huge screens */
+  margin: 0 auto;
+  padding: 40px 20px;
+  min-height: 100vh;
 }
 
 .gallery-title {
-    text-align: center;
-    font-family: var(--font-family-base); /* Keep your retro font */
-    font-size: 3rem;
-    color: var(--dark-red);
-    margin-bottom: 40px;
-    opacity: 0.8;
+  text-align: center;
+  font-family: var(--font-family-base); /* Keep your retro font */
+  font-size: 3rem;
+  color: var(--dark-red);
+  margin-bottom: 40px;
+  opacity: 0.8;
 }
 
 /* --- THE GRID --- */
 /* --- MASONRY LAYOUT (Pinterest Style) --- */
 .gallery-grid {
-    /* Create vertical columns */
-    column-count: 3; 
-    column-gap: 30px; /* Space between columns */
-    
-    /* Optional: Ensure it fills the width */
-    width: 100%;
+  /* Create vertical columns */
+  column-count: 3;
+  column-gap: 30px; /* Space between columns */
+
+  /* Optional: Ensure it fills the width */
+  width: 100%;
 }
 
 /* Responsive: Reduce columns on smaller screens */
 @media (max-width: 1000px) {
-    .gallery-grid {
-        column-count: 2;
-    }
+  .gallery-grid {
+    column-count: 2;
+  }
 }
 @media (max-width: 600px) {
-    .gallery-grid {
-        column-count: 1;
-    }
+  .gallery-grid {
+    column-count: 1;
+  }
 }
 
 /* --- ART ITEM CARD --- */
 /* --- ART ITEM CARD (Base State) --- */
 .art-item {
-    /* CRITICAL: Prevents the card from being cut in half at the bottom of a column */
-    break-inside: avoid; 
-    margin-bottom: 30px; /* Adds space at the bottom of each item */
-    
-    /* Keep your existing style */
-    position: relative;
-    cursor: pointer;
-    border-radius: 8px;
-    background: #fff;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-    
-    /* Keep animation logic */
-    opacity: 0;
-    transform: translateY(30px);
-    transition: opacity 0.6s ease-out, transform 0.6s ease-out, box-shadow 0.3s ease;
-}
+  /* CRITICAL: Prevents the card from being cut in half at the bottom of a column */
+  break-inside: avoid;
+  margin-bottom: 30px; /* Adds space at the bottom of each item */
 
+  /* Keep your existing style */
+  position: relative;
+  cursor: pointer;
+  border-radius: 8px;
+  background: #fff;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+
+  /* Keep animation logic */
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out,
+    box-shadow 0.3s ease;
+}
 
 /* --- SCROLL ANIMATION VISIBLE STATE --- */
 /* This class is added by JavaScript when the item appears on screen */
 .art-item.visible {
-    opacity: 1;
-    transform: translateY(0);
+  opacity: 1;
+  transform: translateY(0);
 }
 
 /* --- IMAGE STYLING --- */
 /* THE IMAGE FIX */
 .art-item img {
-    width: 100%;    /* Fill the width of the card */
-    height: auto;   /* <--- THIS IS KEY: Allows height to adjust naturally */
-    display: block; /* Removes weird gap at bottom */
-    border-radius: 8px; /* Smooth corners */
+  width: 100%; /* Fill the width of the card */
+  height: auto; /* <--- THIS IS KEY: Allows height to adjust naturally */
+  display: block; /* Removes weird gap at bottom */
+  border-radius: 8px; /* Smooth corners */
 }
-
 
 /* --- HOVER EFFECTS --- */
 .art-item:hover {
-    /* Lift the card up */
-    transform: translateY(-10px); 
-    /* Stronger shadow for depth */
-    box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+  /* Lift the card up */
+  transform: translateY(-10px);
+  /* Stronger shadow for depth */
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
 }
 
 .art-item:hover img {
-    /* Zoom the image in slightly */
-    transform: scale(1.1);
+  /* Zoom the image in slightly */
+  transform: scale(1.1);
 }
 /* Minimal Title on Hover (Optional) */
 .art-info {
-    padding: 15px;
-    text-align: center;
-    background: #fff;
+  padding: 15px;
+  text-align: center;
+  background: #fff;
 }
 
 .art-info h3 {
-    margin: 0;
-    font-size: 1.2rem;
-    color: #333;
-    font-weight: normal;
-    font-family: var(--font-family-base);
+  margin: 0;
+  font-size: 1.2rem;
+  color: #333;
+  font-weight: normal;
+  font-family: var(--font-family-base);
 }
 
 /* --- CLEAN LIGHTBOX OVERLAY --- */
 .lightbox-overlay {
-    position: fixed;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
-    background: rgba(0, 0, 0, 0.85); /* Dark focus background */
-    z-index: 99999;
-    
-    display: none; /* Hidden */
-    justify-content: center;
-    align-items: center;
-    
-    opacity: 0;
-    transition: opacity 0.3s ease;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.85); /* Dark focus background */
+  z-index: 99999;
+
+  display: none; /* Hidden */
+  justify-content: center;
+  align-items: center;
+
+  opacity: 0;
+  transition: opacity 0.3s ease;
 }
 
 /* Show State */
 .lightbox-overlay.active {
-    display: flex;
-    opacity: 1;
+  display: flex;
+  opacity: 1;
 }
 
 .lightbox-content {
-    max-width: 90%;
-    max-height: 90vh;
-    position: relative;
-    text-align: center;
+  max-width: 90%;
+  max-height: 90vh;
+  position: relative;
+  text-align: center;
 }
 
 #lb-img {
-    max-width: 100%;
-    max-height: 80vh; /* Leave room for text */
-    border-radius: 4px;
-    box-shadow: 0 0 20px rgba(0,0,0,0.5);
+  max-width: 100%;
+  max-height: 80vh; /* Leave room for text */
+  border-radius: 4px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
 }
 
 .lb-details {
-    color: white;
-    margin-top: 15px;
-    font-family: var(--font-family-base);
+  color: white;
+  margin-top: 15px;
+  font-family: var(--font-family-base);
 }
 
 #lb-title {
-    font-size: 2rem;
-    margin: 0;
-    color: var(--yellowgreen); /* Subtle pop of your theme color */
+  font-size: 2rem;
+  margin: 0;
+  color: var(--yellowgreen); /* Subtle pop of your theme color */
 }
 #lb-desc {
-    font-size: 1.2rem;
-    opacity: 0.8;
+  font-size: 1.2rem;
+  opacity: 0.8;
 }
 
 .close-lightbox {
-    position: absolute;
-    top: -40px;
-    right: 0;
-    color: white;
-    font-size: 3rem;
-    cursor: pointer;
-    line-height: 1;
+  position: absolute;
+  top: -40px;
+  right: 0;
+  color: white;
+  font-size: 3rem;
+  cursor: pointer;
+  line-height: 1;
 }
 .close-lightbox:hover {
-    color: var(--pink);
+  color: var(--pink);
 }
 
 /* --- RETRO BACK BUTTON --- */
 .back-btn {
-    position: fixed; /* Stays in place when scrolling */
-    top: 50px;
-    left: 20px;
-    z-index: 1000; /* Stays on top of images */
-    
-    /* Typography */
-    font-family: 'VT323', monospace;
-    font-size: var(--font-subheading-size);
-    text-decoration: none;
-    color: var(--dark-red); /* Uses your existing variable */
-    background: rgba(255, 255, 255, 0.9); /* Semi-transparent white */
-    
-    /* Button Shape */
-    padding: 8px 15px;
-    border: 2px solid var(--dark-red);
-    border-radius: 50px; /* Rounded capsule shape */
-    box-shadow: 4px 4px 0px rgba(0,0,0,0.1);
-    
-    /* Animation */
-    transition: all 0.2s ease;
-    display: flex;
-    align-items: center;
-    gap: 10px;
+  position: fixed; /* Stays in place when scrolling */
+  top: 50px;
+  left: 20px;
+  z-index: 1000; /* Stays on top of images */
+
+  /* Typography */
+  font-family: "VT323", monospace;
+  font-size: var(--font-subheading-size);
+  text-decoration: none;
+  color: var(--dark-red); /* Uses your existing variable */
+  background: rgba(255, 255, 255, 0.9); /* Semi-transparent white */
+
+  /* Button Shape */
+  padding: 8px 15px;
+  border: 2px solid var(--dark-red);
+  border-radius: 50px; /* Rounded capsule shape */
+  box-shadow: 4px 4px 0px rgba(0, 0, 0, 0.1);
+
+  /* Animation */
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
 .back-btn .arrow {
-    font-size: 1.2rem;
-    transition: transform 0.2s ease;
+  font-size: 1.2rem;
+  transition: transform 0.2s ease;
 }
 
 /* Hover Effects */
 .back-btn:hover {
-    background: var(--pink); /* Your pink theme color */
-    color: white;
-    transform: translateY(-2px);
-    box-shadow: 4px 6px 10px rgba(0,0,0,0.15);
-    border-color: white;
+  background: var(--pink); /* Your pink theme color */
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: 4px 6px 10px rgba(0, 0, 0, 0.15);
+  border-color: white;
 }
 
 .back-btn:hover .arrow {
-    transform: translateX(-4px); /* Arrow wiggles left */
+  transform: translateX(-4px); /* Arrow wiggles left */
 }
 
 /* --- MOBILE TWEAK --- */
 @media (max-width: 600px) {
-    .back-btn {
-        top: 50px;
-        left: 10px;
-        font-size: 1.2rem;
-        padding: 5px 12px;
-    }
+  .back-btn {
+    top: 50px;
+    left: 10px;
+    font-size: 1.2rem;
+    padding: 5px 12px;
+  }
 }

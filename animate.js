@@ -366,7 +366,7 @@ if (sendBtn) {
     }
 // --- 5. ANIMATION CHANNEL PLAYLIST LOGIC ---
 // Function to update Player AND Info Box
-function updatePlayer(vimeoID, imageSrc, title, desc, tools, btn) {
+function updatePlayer(vimeoID, imageSrc, title, desc, tools, btn, extraImages) {
     
     // 1. Update Link & Image
     const link = document.getElementById('main-video-link');
@@ -384,6 +384,21 @@ function updatePlayer(vimeoID, imageSrc, title, desc, tools, btn) {
     const allTapes = document.querySelectorAll('.tape-btn');
     allTapes.forEach(tape => tape.classList.remove('active'));
     if (btn) btn.classList.add('active');
+    const container = document.getElementById('screenshot-container');
+    if (container && extraImages) {
+        container.innerHTML = ''; // Clear old images
+        
+        // Loop through the new images and create div/img tags
+        extraImages.forEach(imgSrc => {
+            const div = document.createElement('div');
+            div.className = 'strip-item';
+            div.innerHTML = `
+                <img src="${imgSrc}" alt="Preview">
+                <span class="strip-label">Process</span>
+            `;
+            container.appendChild(div);
+        });
+    }
 }
 // Function to handle Mobile Arrow Navigation
 function navigatePlaylist(direction) {
